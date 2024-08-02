@@ -10,7 +10,7 @@
         <button class="btn btn-danger rounded-pill mx-2">Import</button>
         <button class="btn btn-danger rounded-pill mx-2">Select All</button>
     </div>
-
+    @include('layouts._message')
     <!-- Table and Filters -->
     <div class="card p-3 rounded shadow-sm">
         <div class="d-flex justify-content-between align-items-center mb-3">
@@ -64,54 +64,38 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-dark" id="addUserModalLabel">Add New User</h5>
+                <h5 class="modal-title text-dark" id="addUserModalLabel">Add User</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                
                 <!-- Form content here -->
-                <form>
-            <div class="mb-3">
-                <label for="adminName" class="form-label">Admin Name:</label>
-                <input type="text" class="form-control" id="adminName">
-            </div>
-            <div class="mb-3">
-                <label for="username" class="form-label">Username:</label>
-                <input type="text" class="form-control" id="username">
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password:</label>
-                <input type="password" class="form-control" id="password">
-            </div>
-            <div class="mb-3">
-                <label for="confirmPassword" class="form-label">Confirm Password:</label>
-                <input type="password" class="form-control" id="confirmPassword">
-            </div>
-            <div class="mb-3">
-                <label for="securityQuestion" class="form-label">Add Answer if Forgot Password:</label>
-                <select class="form-select" id="securityQuestion">
-                    <option selected>Choose...</option>
-                    <option value="1">Mother's Maiden Name</option>
-                    <option value="2">First Pet's Name</option>
-                    <option value="3">City You Were Born In</option>
-                    <option value="4">Name of Your Favorite Teacher</option>
-                    <option value="5">Model of Your First Car</option>
-                    <option value="6">Title of Your Favorite Book</option>
-                    <option value="7">Name of Your First School</option>
-                    <option value="8">Title of Your Favorite Movie</option>
-                    <option value="9">Your Favorite Color</option>
-                    <option value="10">Name of Your Best Friend in Childhood</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="answer" class="form-label">Answer:</label>
-                <input type="text" class="form-control" id="answer">
-            </div>
-        </form>
+                <form class="text-center" method="POST" action="{{ url('/SuperAdmin/Addadmin') }}">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name:</label>
+                        <input type="text" class="form-control underline-input" id="name" name="name" required>
+                        @if($errors->has('name'))
+                        <span class="text-danger">{{ $errors->first('name') }}</span>
+                        @endif
+                    </div>
+                    <div class="mb-3 ">
+                        <label for="username" class="form-label">Username:</label>
+                        <input type="text" class="form-control underline-input" id="username" name="username" required>
+                        @if($errors->has('username'))
+                        <span class="text-danger">{{ $errors->first('username') }}</span>
+                        @endif
+                    </div>
+                    <div class="mb-3 hidden">
+                        <label for="password" class="form-label">Password:</label>
+                        <input type="password" class="form-control underline-input" id="password" name="password" value="adminregistrar" required>
+                    </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white rounded-pill text-dark" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary rounded-pill text-dark">Add User</button>
+                <button type="submit" class="btn btn-primary rounded-pill text-dark">Add User</button>
             </div>
+            </form>
         </div>
     </div>
 </div>

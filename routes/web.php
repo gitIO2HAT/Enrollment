@@ -11,6 +11,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\MyAccountController;
 use App\Http\Controllers\GraduateController;
+use App\Http\Controllers\ProfileController;
 use App\Models\Attendance;
 
 /*
@@ -33,7 +34,9 @@ Route::group(['middleware' => 'superadmin'], function () {
     Route::get('/SuperAdmin/Enrollment', [EnrollmentController::class, 'enrollment']);
     Route::get('/SuperAdmin/Graduate', [GraduateController::class, 'graduate']);
     Route::get('/SuperAdmin/Adduser', [AdduserController::class, 'adduser']);
-
+    Route::post('/SuperAdmin/Addadmin', [AdduserController::class, 'addadmin']);
+    Route::get('/SuperAdmin/Profile', [ProfileController::class, 'profile']);
+    Route::post('/SuperAdmin/Updateprofile/{id}', [ProfileController::class, 'updateprofile']);
 
 
     Route::get('/SuperAdmin/Employee', [EmployeeController::class, 'employee']);

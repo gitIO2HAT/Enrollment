@@ -15,12 +15,13 @@
     <div class="d-flex align-items-center">
         <div class="vr mx-3"></div>
         <div class="dropdown border-start pe-3">
-            <a class="btn d-flex align-items-center" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="bi bi-person-circle fs-4" style="color: #000000;"></i>
+            <a class="btn d-flex align-items-center " type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                <img class="rounded-circle pe-3" style="height: 50px;" id="profilePicture" src="{{ asset('public/accountprofile/' . Auth::user()->profile_pic) }}">
+                <span>{{Auth::user()->name}}</span>
                 <i class="bi bi-caret-down-fill ms-2" style="color: #000000;"></i>
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><a class="dropdown-item" href="{{url('/SuperAdmin/Profile')}}">Profile</a></li>
                 <li><a class="dropdown-item" href="{{route('logoutButton')}}">Logout</a></li>
             </ul>
         </div>

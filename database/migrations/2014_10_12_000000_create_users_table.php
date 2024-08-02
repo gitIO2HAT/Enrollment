@@ -24,9 +24,9 @@ return new class extends Migration
             $table->string('admin_id', 20)->unique()->nullable(); // Add custom_id column here
             $table->enum('deleted', ['1', '2'])->default('1');
             $table->enum('civil_status', ['Single', 'Married', 'Widowed'])->nullable();
-            $table->text('fulladdress');
-            $table->enum('questions', ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']);
-            $table->string('answer');
+            $table->text('fulladdress')->nullable();
+            $table->enum('questions', ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'])->nullable();
+            $table->string('answer')->nullable();
             $table->string('profile_pic', 255)->default('default.png');
 
             $table->rememberToken();
