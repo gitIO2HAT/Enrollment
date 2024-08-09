@@ -36,7 +36,7 @@ class ProfileController extends Controller
         'name' => 'required|string|max:150',
         'sex' => 'nullable|in:Male,Female,Other',
         'civil_status' => 'nullable|in:Single,Married,Widowed',
-        'fulladdress' => 'nullable|string|max:150',
+        'description' => 'nullable|string|max:150',
         'username' => 'required|string|unique:users,username,' . $id,
         'password' => 'nullable|string|min:4',
         'questions' => 'required|string',
@@ -48,7 +48,7 @@ class ProfileController extends Controller
     $user->name = $request->name;
     $user->sex = $request->sex;
     $user->civil_status = $request->civil_status;
-    $user->fulladdress = $request->fulladdress;
+    $user->description = $request->description;
     $user->username = $request->username;
     $user->questions = $request->questions;
     $user->answer = $request->answer;
@@ -62,7 +62,7 @@ class ProfileController extends Controller
         $file = $request->file('profile_pic');
         $randomStr = date('Ymdhis') . Str::random(20);
         $filename = strtolower($randomStr) . '.' . $ext;
-        $file->move(public_path('accountprofile'), $filename);
+        $file->move(public_path('public/accountprofile'), $filename);
         $user->profile_pic = $filename;
     }
 

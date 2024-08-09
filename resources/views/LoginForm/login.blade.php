@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,201 +11,120 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
         }
 
         .background {
-            width: 100%;
-            height: 100vh;
-            background-image: url("img/SULOP.png");
+            background-image: url('img/BG.png');
             background-size: cover;
             background-position: center;
-            filter: blur(20px);
-        }
-
-        .container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 75%;
-            height: 550px;
-            background-image: url(img/SULOP.png);
-            background-size: cover;
-            background-position: center;
-            border-radius: 10px;
-            margin-top: 20px;
-
-        }
-
-        .logo {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 50%;
-            height: 100%;
-        }
-
-        .form {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 50%;
-            height: 100%;
-        }
-
-        .form .form-login {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            backdrop-filter: blur(20px);
-            border-top-right-radius: 10px;
-            border-bottom-right-radius: 10px;
-            color: #e4e4e4;
-        }
-
-        .form-login h4 {
-            font-size: 32px;
-            text-align: center;
-        }
-
-        .form-login .input-box {
+            background-repeat: no-repeat;
+            height: 95vh;
             position: relative;
-            width: 340px;
-            height: 50px;
-            border-bottom: 2px solid #e4e4e4;
-            margin: 30px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .input-box input {
+        .login-form {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2rem;
+    border: 1px solid #000; /* Added border */
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    z-index: 1;
+}
+
+
+
+        .login-form h1 {
+            margin-bottom: 1.5rem;
+        }
+
+        .login-form .form-control {
+            border: 1px solid #000;
+            border-radius: 30px;
+            margin-bottom: 1rem;
+        }
+
+      
+        .forgot-password {
+            margin-top: 1rem;
+        }
+
+        header {
             width: 100%;
-            height: 100%;
-            background: transparent;
-            border: none;
-            outline: none;
-            font-size: 16px;
-            color: #e4e4e4;
-            font-weight: 500;
-            padding-right: 28px;
-        }
-
-        .input-box label {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            transform: translateY(-50%);
-            font-size: 15px;
-            font-weight: 500;
-            pointer-events: none;
-            transition: .5s ease;
-        }
-
-        .input-box input:focus~label,
-        .input-box input:valid~label {
-            top: -5px;
-        }
-
-        .input-box .icon {
-            position: absolute;
-            top: 13px;
-            right: 0;
-            font-size: 16px;
-        }
-
-        .remember-forgot {
-            font-size: 14px;
-            font-weight: 500;
-            margin: -15px 0 15px;
             display: flex;
             justify-content: space-between;
-        }
-
-        .remember-forgot label input {
-            accent-color: #e4e4e4;
-            margin-right: 3px;
-        }
-
-        .remember-forgot a {
-            color: #e4e4e4;
-            text-decoration: none;
-        }
-
-        .remember-forgot a:hover {
-            text-decoration: underline;
-        }
-
-        .btn {
-            width: 100%;
-            height: 45px;
-            background-color: rgba(37, 116, 37, 0.699);
-            border: none;
-            outline: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            color: #e4e4e4;
-            font-weight: 500;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 2);
-        }
-
-        .btn:hover {
-            background-color: rgb(50, 158, 50);
+            align-items: center;
+            padding: 10px;
+            background-color: #e0e0e0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
     </style>
-
 </head>
 
 <body>
-    <div class="background"></div>
-    <div class="container">
-        <div class="logo">
-            <img src="{{asset('img/SULOP.png')}}" alt="logo" height="550px">
+    <header class="d-flex align-items-center justify-content-between p-2 bg-light border-bottom">
+        <div class="d-flex align-items-center">
+            <img src="{{ asset('img/registrar.png') }}" alt="Logo" class="me-3 pe-3 border-end" style="height: 50px;">
         </div>
-
-        <div class="form">
-            <div class="form-login">
-                <form method="post" action="{{ url('login') }}">
-                    @csrf
-                    <div class="text-center">
-                        <img src="{{ asset('img/HUMAN.png') }}" alt="logo" height="200px" weight="200px">
-                    </div>
-                    @if(Session::has('success'))
-                    <div class="alert alert-success">{{ Session::get('success') }}</div>
-                    @endif
-                    @include('layouts._message')
-
-                    <div class="input-box">
-                        <span class="icon"><i class='bx bxs-user'></i></span>
-                        <input name="username" type="text" required>
-                        <label>Username:</label>
-                    </div>
-
-                    <div class="input-box">
-                        <span class="icon"><i class='bx bxs-lock-alt'></i></span>
-                        <input name="password" type="password" required>
-                        <label>Password</label>
-                    </div>
-
-                    <div class="remember-forgot">
-                        <label>
-                            <input type="checkbox" name="remember"> Remember me
-                        </label>
-                        <a href="#">Forgot Password?</a>
-                    </div>
-
-                    <div class="login">
-                        <button type="submit" class="btn">Login</button>
-                    </div>
-                </form>
+        <div class="d-flex align-items-between justify-content-between  w-100">
+            <div class="d-flex align-items-center justify-content-center">
+                <h5>Office of the University Registrar</h5>
             </div>
-
+            <div class="me-3">
+                <div class="">
+                    <h5>University of Southeastern Philippines</h5>
+                </div>
+                <div class="text-end">
+                    <h5>Enrollment Report System</h5>
+                </div>
+            </div>
         </div>
 
+        <div class="d-flex align-items-center">
+
+            <div class=" border-start ">
+                <a class=" d-flex align-items-center ">
+                    <img class="ms-3" style="height: 50px;" src="{{ asset('img/usep.png') }}">
+                </a>
+
+            </div>
+        </div>
+    </header>
+    <div class="background">
+
+        <div class="secondary-background"></div>
+        <div class="login-form">
+            <h1>Log In</h1>
+            @include('layouts._message')
+            <form method="post" action="{{ url('login') }}" >
+            @csrf
+                <label>Username:</label>
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="username" required>
+                </div>
+                <label>Password:</label>
+                <div class="mb-3">
+                    <input type="password" class="form-control" name="password" required>
+                </div>
+                <button type="submit" class="btn w-100 rounded-pill" style="background-color: #fabd7f;">Confirm</button>
+            </form>
+            <div class="forgot-password">
+                <a href="#">Forgot Password? <span class="text-primary">Click here</span></a>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

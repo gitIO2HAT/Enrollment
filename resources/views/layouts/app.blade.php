@@ -106,6 +106,19 @@
     }
 </script>
 
+<script>
+document.querySelector('.close-button').addEventListener('click', function() {
+    document.querySelector('.sticky-widget').style.display = 'none';
+    document.querySelector('#show-widget').style.display = 'block'; // Show the 'Show Widget' button
+});
+
+document.querySelector('#show-widget').addEventListener('click', function() {
+    document.querySelector('.sticky-widget').style.display = 'block';
+    this.style.display = 'none'; // Hide the 'Show Widget' button
+});
+
+</script>
+
 
 
 
@@ -166,7 +179,24 @@
     });
 </script>
 
+<script>
+    function toggleEdit(field, id) {
+        var span = document.getElementById('editable-span-' + field + '-' + id);
+        var input = document.getElementById('editable-input-' + field + '-' + id);
 
+        if (span.style.display !== 'none') {
+            // Hide the span and show the input
+            span.style.display = 'none';
+            input.style.display = 'inline';
+            input.focus();
+        } else {
+            // Hide the input and show the span
+            span.style.display = 'inline';
+            input.style.display = 'none';
+            span.innerText = input.value;
+        }
+    }
+</script>
 
 
 </html>

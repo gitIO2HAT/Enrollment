@@ -5946,7 +5946,7 @@ class ComposerStaticInit9c491b8531eec05ba41a11d9276a5749
         'Symfony\\Component\\HttpKernel\\DependencyInjection\\LazyLoadingFragmentHandler' => __DIR__ . '/..' . '/symfony/http-kernel/DependencyInjection/LazyLoadingFragmentHandler.php',
         'Symfony\\Component\\HttpKernel\\DependencyInjection\\LoggerPass' => __DIR__ . '/..' . '/symfony/http-kernel/DependencyInjection/LoggerPass.php',
         'Symfony\\Component\\HttpKernel\\DependencyInjection\\MergeExtensionConfigurationPass' => __DIR__ . '/..' . '/symfony/http-kernel/DependencyInjection/MergeExtensionConfigurationPass.php',
-        'Symfony\\Component\\HttpKernel\\DependencyInjection\\RegisterControllerArgumentLocatorsPass' => __DIR__ . '/..' . '/symfony/http-kernel/DependencyInjection/RegisterControllerArgumentLocatorsPass.php',
+        'Symfony\\Component\\HttpKesnel\\DependencyInjection\\RegisterControllerArgumentLocatorsPass' => __DIR__ . '/..' . '/symfony/http-kernel/DependencyInjection/RegisterControllerArgumentLocatorsPass.php',
         'Symfony\\Component\\HttpKernel\\DependencyInjection\\RegisterLocaleAwareServicesPass' => __DIR__ . '/..' . '/symfony/http-kernel/DependencyInjection/RegisterLocaleAwareServicesPass.php',
         'Symfony\\Component\\HttpKernel\\DependencyInjection\\RemoveEmptyControllerArgumentLocatorsPass' => __DIR__ . '/..' . '/symfony/http-kernel/DependencyInjection/RemoveEmptyControllerArgumentLocatorsPass.php',
         'Symfony\\Component\\HttpKernel\\DependencyInjection\\ResettableServicePass' => __DIR__ . '/..' . '/symfony/http-kernel/DependencyInjection/ResettableServicePass.php',

@@ -2257,9 +2257,9 @@ progress {
 .form-control:focus {
     color: black;
     background-color: white;
-    border-color: #198754;
+    border-color: #000;
     outline: 0;
-    box-shadow: 0 0 0 .15rem #198754
+    
 }
 
 .form-control::-webkit-date-and-time-value {
@@ -5211,9 +5211,9 @@ fieldset:disabled .btn {
 .page-link {
     position: relative;
     display: block;
-    color: #1c9445;
+    color: #c63428;
     background-color: #fff;
-    border: 1px solid #1c9445;
+    border: 1px solid #000;
   
 }
 
@@ -5225,15 +5225,15 @@ fieldset:disabled .btn {
 
 .page-link:hover {
     z-index: 2;
-    color: #4E73DF;
-    background-color: #e9ecef;
-    border-color: #1c9445
+    color: #fff;
+    background-color: #c63428;
+    border-color: #c63428
 }
 
 .page-link:focus {
     z-index: 3;
     color: white;
-    background-color: #1c9445;
+    background-color: #c63428;
     outline: 0;
     
 }
@@ -5245,15 +5245,15 @@ fieldset:disabled .btn {
 .page-item.active .page-link {
     z-index: 3;
     color: #fff;
-    background-color: #1c9445;
-    border-color: #1c9445
+    background-color: #c63428;
+    border-color: #c63428
 }
 
 .page-item.disabled .page-link {
-    color: #4E73DF;
+    color: #c63428;
     pointer-events: none;
     background-color: #fff;
-    border-color: #1c9445;
+    border-color: #000;
 }
 
 .page-link {

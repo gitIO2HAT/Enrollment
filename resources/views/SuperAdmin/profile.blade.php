@@ -17,7 +17,7 @@
                                         <div class="fields">
                                             <div class="mt-2" id="profileContainer" style="position: relative; display: inline-block;">
                                                 <label for="profileImage" onclick="handleImageClick(event)" style="cursor: pointer; position: relative;">
-                                                    <img class="rounded-circle" id="profilePicture" src="{{ asset('public/accountprofile/' . Auth::user()->profile_pic) }}" alt="Profile" width="200px">
+                                                    <img class="rounded-circle" id="profilePicture" src="{{ asset('public/accountprofile/'. Auth::user()->profile_pic) }}" alt="Profile" width="200px">
                                                     <i class="fas fa-camera camera-icon"></i>
                                                 </label>
                                                 <input type="file" name="profile_pic" id="profileImage" style="display: none;" onchange="displayImage(this)">
@@ -107,10 +107,10 @@
                                                 @endif
                                             </div>
                                             <div class="mb-3">
-                                                <label for="fulladdress" class="form-label">Full Address:</label>
-                                                <input type="text" placeholder="Enter Full Address" class="form-control underline-input" name="fulladdress" value="{{ Auth::user()->fulladdress }}" required>
-                                                @if($errors->has('fulladdress'))
-                                                <span class="text-danger">{{ $errors->first('fulladdress') }}</span>
+                                                <label for="description" class="form-label">Description:</label>
+                                                <input type="text" placeholder="Enter Description" class="form-control underline-input" name="description" value="{{ Auth::user()->description }}" required>
+                                                @if($errors->has('description'))
+                                                <span class="text-danger">{{ $errors->first('description') }}</span>
                                                 @endif
                                             </div>
                                         </div>

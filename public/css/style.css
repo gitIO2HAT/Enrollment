@@ -703,3 +703,17 @@ footer a:hover {
     padding: 10px;
     transform: translate(50%, 50%);
 }
+.sticky-widget {
+    position: fixed;
+    right: 20px;
+    bottom: 50px;
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 1000;
+}
+
+.menu button {
+    display: block;
+    border: none;
+    cursor: pointer;
+}

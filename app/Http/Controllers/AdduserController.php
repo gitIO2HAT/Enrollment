@@ -9,15 +9,33 @@ use Carbon\Carbon;
 
 class AdduserController extends Controller
 {
-    public function adduser()
-    {
-    
-    $viewPath = Auth::user()->user_type == 0
-            ? 'superadmin.adduser'
-            : '' ;
-        return view($viewPath
-        );
+    public function adduser(Request $request)
+{
+    // Ensure the user is authenticated and authorized to access this method
+    if (Auth::check() && Auth::user()->user_type == 0) {
+        // Fetch all users
+        // or paginate if needed, e.g., User::paginate(10);
+
+        $search = $request->input('search');
+
+        $users = User::query();
+        if ($search) {
+            $users->where(function ($q) use ($search) {
+                $q->whereRaw("CONCAT(name, ' ', id) LIKE ?", ["%$search%"]);
+            });
+        }
+
+        $users->where('deleted', '=', 1);
+
+        $users = $users->paginate(10);
+
+        // Render the appropriate view
+        return view('superadmin.adduser', ['users' => $users]);
     }
+
+    // Handle unauthorized access
+    return redirect()->route('home')->with('error', 'Unauthorized access');
+}
 
     public function addadmin(Request $request)
     {
@@ -53,5 +71,32 @@ class AdduserController extends Controller
         $user->save();
     
         return redirect()->back()->with('success', 'Employee successfully added');
+    }
+    public function updateuser($id, Request $request)
+    {
+
+        $user = User::getId($id);
+        $request->validate([
+            'name' => 'required|string|max:50|unique:users,name,' . $request->id,
+        ],[
+            'name.unique' => 'This name has already been taken.',
+        ]);
+    
+        $user->name = $request->name;
+        $user->username = trim($request->username);
+        $user->description = $request->description;
+
+        $user->save();
+        return redirect()->back()->with('success', 'Department successfully updated');
+    }
+
+    public function delete($id)
+    {
+        $user = User::getId($id);
+        $user->deleted = 2;
+        $user->save();
+
+        return redirect()->back()->with('success', 'User successfully deleted!');
+
     }
 }

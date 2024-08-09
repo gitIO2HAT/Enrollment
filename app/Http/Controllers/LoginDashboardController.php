@@ -29,7 +29,7 @@ class LoginDashboardController extends Controller
     
             return redirect($viewPath);
         } else {
-            return redirect()->back()->with('error', 'Please input the correct email and password');
+            return redirect()->back()->with('error', 'Please input the correct username and password');
         }
     }
     

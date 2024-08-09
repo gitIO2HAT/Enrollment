@@ -3,13 +3,7 @@
 @section('content')
 <div class="container my-4">
         <!-- Button Group -->
-        <div class="mb-4">
-            <button class="btn btn-danger rounded-pill mx-2">Add Student</button>
-            <button class="btn btn-danger rounded-pill mx-2">Add College</button>
-            <button class="btn btn-danger rounded-pill mx-2">Export</button>
-            <button class="btn btn-danger rounded-pill mx-2">Import</button>
-            <button class="btn btn-danger rounded-pill mx-2">Select All</button>
-        </div>
+        @include('layouts.btn')
 
         <!-- Table and Filters -->
         <div class="card p-3 rounded shadow-sm">
