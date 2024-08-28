@@ -5,16 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Major extends Model
+class Semester extends Model
 {
+    public $table = 'semesters';
     use HasFactory;
 
-    protected $fillable = ['course_id', 'major','deleted'];
-
-    public function course()
-    {
-        return $this->belongsTo(Course::class);
-    }
     public function users()
     {
         return $this->hasMany(User::class);

@@ -17,4 +17,5 @@ class Department extends Model
     {
         return self::find($id);
     }
+
 }

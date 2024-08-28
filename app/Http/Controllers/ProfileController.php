@@ -34,10 +34,9 @@ class ProfileController extends Controller
 
     $request->validate([
         'name' => 'required|string|max:150',
-        'sex' => 'nullable|in:Male,Female,Other',
-        'civil_status' => 'nullable|in:Single,Married,Widowed',
-        'description' => 'nullable|string|max:150',
-        'username' => 'required|string|unique:users,username,' . $id,
+        'sex' => 'nullable|in:1,2,3',
+        'role' => 'nullable|string|max:30',
+        'username' => 'nullable|string|unique:users,username,' . $id,
         'password' => 'nullable|string|min:4',
         'questions' => 'required|string',
         'answer' => 'required|string|max:150',
@@ -47,8 +46,7 @@ class ProfileController extends Controller
 
     $user->name = $request->name;
     $user->sex = $request->sex;
-    $user->civil_status = $request->civil_status;
-    $user->description = $request->description;
+    $user->role = $request->role;
     $user->username = $request->username;
     $user->questions = $request->questions;
     $user->answer = $request->answer;

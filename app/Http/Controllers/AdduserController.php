@@ -42,7 +42,7 @@ class AdduserController extends Controller
 
          // Create a new user instance
          $user = new User;
-         
+
         $request->validate([
             'name' => 'required|string|max:150',
             'username' => 'required|string|unique:users,username',
@@ -50,27 +50,27 @@ class AdduserController extends Controller
             'name.required' => 'The name field is required.',
             'username.unique' => 'This username has already been taken.',
         ]);
-    
-       
-    
+
+
+
         // Assign values to user properties
         $user->name = $request->name;
         $user->username = trim($request->username);
         $user->password = Hash::make($request->password);
-    
+
         // Generate custom ID
         $currentYear = Carbon::now()->format('Y');
         $latestUserId = User::latest('id')->first(); // Get the latest user ID
         $nextUserId = ($latestUserId) ? $latestUserId->id + 1 : 1; // Increment the latest user ID
-        $admin_id = $currentYear . '-' . sprintf('%05d', $nextUserId); // Format the custom ID
-    
+        $admin_id = $currentYear . '-'.'adm' . sprintf('%03d', $nextUserId); // Format the custom ID
+
         // Assign the custom ID to the user
         $user->admin_id = $admin_id;
-    
+
         // Save the user to the database
         $user->save();
-    
-        return redirect()->back()->with('success', 'Employee successfully added');
+
+        return redirect()->back()->with('success', 'User successfully added');
     }
     public function updateuser($id, Request $request)
     {
@@ -81,7 +81,7 @@ class AdduserController extends Controller
         ],[
             'name.unique' => 'This name has already been taken.',
         ]);
-    
+
         $user->name = $request->name;
         $user->username = trim($request->username);
         $user->description = $request->description;

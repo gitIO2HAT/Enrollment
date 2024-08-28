@@ -8,6 +8,7 @@
         <div class="btn-group">
             <a class="btn btn-danger rounded-pill px-4 me-2" href="{{url('/SuperAdmin/Enrollment')}}">Enrollment Report</a>
             <a class="btn btn-danger rounded-pill px-4 me-2" href="{{url('/SuperAdmin/Graduate')}}">Graduate Report</a>
+            <a class="btn btn-danger rounded-pill me-2" href="{{url('/SuperAdmin/College')}}">College</a>
             <a class="btn btn-danger rounded-pill px-4" href="{{url('/SuperAdmin/Adduser')}}">Add User</a>
         </div>
     </div>

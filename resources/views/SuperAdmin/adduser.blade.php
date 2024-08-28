@@ -3,8 +3,8 @@
 @section('content')
 <div class="container my-4">
     <!-- Button Group -->
-   
-    @include('layouts.btn')
+
+
     @include('layouts._message')
     <!-- Table and Filters -->
     <div class="card p-3 rounded shadow-sm">
@@ -22,9 +22,9 @@
                 </div>
             </form>
             <div class="">
-                <button type="button" class="btn btn-warning text-white rounded-pill mx-2" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                <a type="button" class="btn btn-warning text-white rounded-pill mx-2" data-bs-toggle="modal" data-bs-target="#addUserModal">
                     Add User
-                </button>
+                </a>
             </div>
         </div>
         <table class="table table-striped table-hover">
@@ -33,7 +33,7 @@
                     <th>AdminID</th>
                     <th>Admin Name</th>
                     <th>Username</th>
-                    <th>Description</th>
+                    <th>Role</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -58,10 +58,10 @@
                             <input type="text" id="editable-input-username-{{ $user->id }}" name="username" value="{{ $user->username }}" class="form-control text-center" style="display:none;" onblur="toggleEdit('username', '{{ $user->id }}')">
                         </td>
                         <td class="">
-                            <span id="editable-span-description-{{ $user->id }}" onclick="toggleEdit('description', '{{ $user->id }}')">
-                                {{ $user->description }}
+                            <span id="editable-span-role-{{ $user->id }}" onclick="toggleEdit('role', '{{ $user->id }}')">
+                                {{ $user->role }}
                             </span>
-                            <input type="text" id="editable-input-description-{{ $user->id }}" name="description" value="{{ $user->description }}" class="form-control text-center" style="display:none;" onblur="toggleEdit('description', '{{ $user->id }}')">
+                            <input type="text" id="editable-input-role-{{ $user->id }}" name="role" value="{{ $user->role }}" class="form-control text-center" style="display:none;" onblur="toggleEdit('role', '{{ $user->id }}')">
                         </td>
                         <td class="">
                             <button type="submit" style="background: none; border: none; padding: 0; cursor: pointer;">

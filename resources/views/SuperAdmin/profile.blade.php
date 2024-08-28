@@ -86,38 +86,27 @@
                                                 <label for="sex" class="form-label">Sex:</label>
                                                 <select id="sex" class="form-control underline-input" name="sex">
                                                     <option selected disabled>--Select Sex--</option>
-                                                    <option value="Male" @if(Auth::user()->sex == 'Male') selected @endif>Male</option>
-                                                    <option value="Female" @if(Auth::user()->sex == 'Female') selected @endif>Female</option>
-                                                    <option value="Other" @if(Auth::user()->sex == 'Other') selected @endif>Other</option>
+                                                    <option value="1" @if(Auth::user()->sex == '1') selected @endif>Male</option>
+                                                    <option value="2" @if(Auth::user()->sex == '2') selected @endif>Female</option>
+                                                    <option value="3" @if(Auth::user()->sex == '3') selected @endif>Other</option>
                                                 </select>
                                                 @if($errors->has('sex'))
                                                 <span class="text-danger">{{ $errors->first('sex') }}</span>
                                                 @endif
                                             </div>
+
                                             <div class="mb-3">
-                                                <label for="civil_status" class="form-label">Civil Status:</label>
-                                                <select id="civil_status" class="form-control underline-input" name="civil_status">
-                                                    <option selected disabled>--Select Status--</option>
-                                                    <option value="Single" @if(Auth::user()->civil_status == 'Single') selected @endif>Single</option>
-                                                    <option value="Married" @if(Auth::user()->civil_status == 'Married') selected @endif>Married</option>
-                                                    <option value="Widowed" @if(Auth::user()->civil_status == 'Widowed') selected @endif>Widowed</option>
-                                                </select>
-                                                @if($errors->has('civil_status'))
-                                                <span class="text-danger">{{ $errors->first('civil_status') }}</span>
-                                                @endif
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="description" class="form-label">Description:</label>
-                                                <input type="text" placeholder="Enter Description" class="form-control underline-input" name="description" value="{{ Auth::user()->description }}" required>
-                                                @if($errors->has('description'))
-                                                <span class="text-danger">{{ $errors->first('description') }}</span>
+                                                <label for="role" class="form-label">Role:</label>
+                                                <input type="text" placeholder="Enter Role" class="form-control underline-input" name="role" value="{{ Auth::user()->role }}" required>
+                                                @if($errors->has('role'))
+                                                <span class="text-danger">{{ $errors->first('role') }}</span>
                                                 @endif
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-success">Submit</button>
-                                <a href="{{ url('Employee/Dashboard') }}" class="btn btn-primary">Done</a>
+                                <a href="{{ url('SuperAdmin/Enrollment') }}" class="btn btn-primary">Done</a>
                             </form>
                         </div>
                     </div>

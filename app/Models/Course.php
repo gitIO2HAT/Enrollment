@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     use HasFactory;
-    protected $fillable = ['college_id', 'course','deleted']; 
+    protected $fillable = ['college_id', 'course','deleted'];
     public function college()
     {
         return $this->belongsTo(College::class);
@@ -17,5 +17,14 @@ class Course extends Model
     {
         return $this->hasMany(Major::class);
     }
-    
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+    static public function getID($id)
+    {
+        return self::find($id);
+    }
+
 }

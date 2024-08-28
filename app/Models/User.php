@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-Use Carbon\Carbon;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -27,11 +27,11 @@ class User extends Authenticatable
         'password',
         'sex',
         'admin_id',
-        'civil_status',
-        'fulladdress',
-        'profile_pic',
+        'deleted',
+        'role',
         'questions',
         'answer',
+        'profile_pic',
     ];
 
     /**
@@ -55,21 +55,18 @@ class User extends Authenticatable
     ];
 
     public static function active()
-{
-    return self::where('user_type', '=', 1)
-    ->where('deleted', '=', 1);
-}
+    {
+        return self::where('user_type', '=', 1)
+            ->where('deleted', '=', 1);
+    }
 
-public static function offline()
-{
-    return self::where('user_type', '=', 2)
-    ->where('deleted', '=', 2);
-}
-static public function getID($id)
+    public static function offline()
+    {
+        return self::where('user_type', '=', 2)
+            ->where('deleted', '=', 2);
+    }
+    static public function getID($id)
     {
         return self::find($id);
     }
-
-
 }
-

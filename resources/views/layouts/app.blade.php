@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>HRMS - {{Request::segment(2)}} - {{Request::segment(3)}}</title>
+    <title>Enrollment Report - {{Request::segment(2)}} - {{Request::segment(3)}}</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -36,7 +36,7 @@
 
 <body>
 
-       
+
 
         <!-- sidebar-menu Start -->
 
@@ -44,7 +44,7 @@
 
 
 
-        <div class="content bg-white">
+        <div class="content bg-white ">
 
             <!-- header Start -->
             @include('layouts.header')
@@ -56,11 +56,11 @@
 
             <!-- Dashboard end -->
             @include('layouts.footer')
-            
+
         </div>
 
 
-    
+
 
 
     <!-- JavaScript Libraries -->
@@ -195,6 +195,104 @@ document.querySelector('#show-widget').addEventListener('click', function() {
             span.style.display = 'inline';
             input.style.display = 'none';
             span.innerText = input.value;
+        }
+    }
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const collegeSelect = document.getElementById('collegeSelect');
+        const courseSelect = document.getElementById('courseSelect');
+        const majorSelect = document.getElementById('majorSelect');
+
+        // Pre-selected IDs from the server-side data
+        const selectedCollegeId = {{ $studentdata->collegeId ?? 'null' }};
+        const selectedCourseId = {{ $studentdata->courseId ?? 'null' }};
+        const selectedMajorId = {{ $studentdata->majorId ?? 'null' }};
+
+        // Fetch and populate colleges on page load
+        fetch('/colleges')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(college => {
+                    let option = new Option(college.college, college.id);
+                    collegeSelect.add(option);
+                });
+
+                // Pre-select the college if available
+                if (selectedCollegeId) {
+                    collegeSelect.value = selectedCollegeId;
+                    collegeSelect.dispatchEvent(new Event('change')); // Trigger the change event to load courses
+                }
+            });
+
+        // Event listener for when college is selected
+        collegeSelect.addEventListener('change', function() {
+            courseSelect.length = 1; // Remove all options except the default
+            majorSelect.length = 1; // Remove all options except the default
+            majorSelect.disabled = true;
+
+            let selectedCollegeId = this.value;
+            if (selectedCollegeId) {
+                courseSelect.disabled = false;
+
+                fetch(`/courses/${selectedCollegeId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(course => {
+                            let option = new Option(course.course, course.id);
+                            courseSelect.add(option);
+                        });
+
+                        // Pre-select the course if available
+                        if (selectedCourseId) {
+                            courseSelect.value = selectedCourseId;
+                            courseSelect.dispatchEvent(new Event('change')); // Trigger the change event to load majors
+                        }
+                    });
+            } else {
+                courseSelect.disabled = true;
+                majorSelect.disabled = true;
+            }
+        });
+
+        // Event listener for when course is selected
+        courseSelect.addEventListener('change', function() {
+            majorSelect.length = 1; // Remove all options except the default
+
+            let selectedCourseId = this.value;
+            if (selectedCourseId) {
+                majorSelect.disabled = false;
+
+                fetch(`/majors/${selectedCourseId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(major => {
+                            let option = new Option(major.major, major.id);
+                            majorSelect.add(option);
+                        });
+
+                        // Pre-select the major if available
+                        if (selectedMajorId) {
+                            majorSelect.value = selectedMajorId;
+                        }
+                    });
+            } else {
+                majorSelect.disabled = true;
+            }
+        });
+    });
+</script>
+
+<script>
+    function setEndYear() {
+        const startYear = document.getElementById('academic_year_start').value;
+        const endYearInput = document.getElementById('academic_year_end');
+
+        if (startYear) {
+            endYearInput.min = parseInt(startYear) + 1;
+        } else {
+            endYearInput.min = 1900;
         }
     }
 </script>

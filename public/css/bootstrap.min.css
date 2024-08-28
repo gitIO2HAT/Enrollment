@@ -51,8 +51,8 @@ body {
     line-height: 1.5;
     color: #6C7293;
     background-color: #000;
-  
-   
+
+
 }
 
 hr {
@@ -158,7 +158,7 @@ abbr[title],
 abbr[data-bs-original-title] {
     text-decoration: underline dotted;
     cursor: help;
-  
+
 }
 
 address {
@@ -319,7 +319,7 @@ caption {
 
 th {
     text-align: inherit;
-  
+
 }
 
 thead,
@@ -2155,41 +2155,41 @@ progress {
 
 .table-responsive {
     overflow-x: auto;
-  
+
 }
 
 @media (max-width: 575.98px) {
     .table-responsive-sm {
         overflow-x: auto;
-    
+
     }
 }
 
 @media (max-width: 767.98px) {
     .table-responsive-md {
         overflow-x: auto;
-        
+
     }
 }
 
 @media (max-width: 991.98px) {
     .table-responsive-lg {
         overflow-x: auto;
-        
+
     }
 }
 
 @media (max-width: 1199.98px) {
     .table-responsive-xl {
         overflow-x: auto;
-        
+
     }
 }
 
 @media (max-width: 1399.98px) {
     .table-responsive-xxl {
         overflow-x: auto;
-       
+
     }
 }
 
@@ -2259,7 +2259,7 @@ progress {
     background-color: white;
     border-color: #000;
     outline: 0;
-    
+
 }
 
 .form-control::-webkit-date-and-time-value {
@@ -2491,7 +2491,7 @@ textarea.form-control-lg {
     background-size: contain;
     border: 1px solid rgba(0, 0, 0, 0.25);
     appearance: none;
-   
+
 }
 
 .form-check-input[type="checkbox"] {
@@ -4882,15 +4882,13 @@ fieldset:disabled .btn {
     border-radius: 5px
 }
 .card-modify {
-    position: relative;
-    display: flex;
-    flex-direction: column;
+
     min-width: 0;
     word-wrap: break-word;
     background-color: #fff;
     background-clip: border-box;
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-   
+
 }
 
 .card>hr {
@@ -5075,7 +5073,7 @@ fieldset:disabled .btn {
     background-color: #000;
     border: 0;
     border-radius: 0;
-  
+
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, border-radius 0.15s ease
 }
 
@@ -5225,7 +5223,7 @@ fieldset:disabled .btn {
     color: #c63428;
     background-color: #fff;
     border: 1px solid #000;
-  
+
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -5246,7 +5244,7 @@ fieldset:disabled .btn {
     color: white;
     background-color: #c63428;
     outline: 0;
-    
+
 }
 
 .page-item:not(:first-child) .page-link {
@@ -5454,7 +5452,7 @@ fieldset:disabled .btn {
     font-size: .75rem;
     background-color: #f0f0f0!;
     border-radius: 5px
-   
+
 }
 
 .progress-bar {
@@ -5472,7 +5470,7 @@ fieldset:disabled .btn {
 
 @media (prefers-reduced-motion: reduce) {
     .progress-bar {
-       
+
         transition: none
     }
 }
@@ -5924,7 +5922,7 @@ fieldset:disabled .btn {
 .btn-close:disabled,
 .btn-close.disabled {
     pointer-events: none;
-    
+
     opacity: .25
 }
 
@@ -6046,7 +6044,7 @@ fieldset:disabled .btn {
 
 .modal-dialog-centered {
     display: flex;
-    
+
     align-items: center;
     min-width: calc(100% - 1rem);
     min-height: calc(100% - 1rem)
@@ -6056,7 +6054,7 @@ fieldset:disabled .btn {
     position: relative;
     display: flex;
     flex-direction: column;
-  
+
     pointer-events: auto;
     background-color: #fff;
     background-clip: padding-box;
@@ -6064,7 +6062,7 @@ fieldset:disabled .btn {
     border-radius: .3rem;
     outline: 0
 
-    
+
 }
 
 .modal-backdrop {
@@ -8270,6 +8268,9 @@ fieldset:disabled .btn {
 .fs-6 {
     font-size: 1rem !important
 }
+.fs-7 {
+    font-size: 0.7rem !important
+}
 
 .fst-italic {
     font-style: italic !important
@@ -8425,6 +8426,7 @@ fieldset:disabled .btn {
 }
 
 
+
 .bg-secondary {
     background-color: #191C24 !important
 }
@@ -8448,7 +8450,7 @@ fieldset:disabled .btn {
 }
 
 .bg-light {
-    background-color: 
+    background-color:
     #dfe6e9 !important
 }
 
