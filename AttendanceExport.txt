@@ -1,0 +1,101 @@
+public function exportexcelattendance(Request $request)
+    {
+        $employeeIds = $request->input('custom_ids');
+        $month = $request->input('month');
+        $year = $request->input('year');
+
+        $tempDir = storage_path('app/public/temp_attendance_exports');
+
+        if (!file_exists($tempDir)) {
+            if (!mkdir($tempDir, 0777, true)) {
+                Log::error('Unable to create directory: ' . $tempDir);
+                return response()->json(['error' => 'Unable to create directory.'], 500);
+            }
+        }
+
+        $files = [];
+
+        foreach ($employeeIds as $employeeId) {
+            $attendance = Attendance::where('user_id', $employeeId)
+                ->whereYear('date', $year)
+                ->whereMonth('date', $month)
+                ->with('user')
+                ->get();
+
+            if ($attendance->isEmpty()) {
+                continue;
+            }
+
+            $user = $attendance->first()->user;
+
+            // Initialize total sum
+            $total = 0;
+
+            $data = $attendance->map(function ($record) use (&$total) {
+                $format = 'F, j Y, g:i a';
+
+                $amFirstPunch = $record->punch_in_am_first ? Carbon::parse($record->punch_in_am_first)->format($format) : 'N/A';
+                $amSecondPunch = $record->punch_in_am_second ? Carbon::parse($record->punch_in_am_second)->format($format) : 'N/A';
+                $pmFirstPunch = $record->punch_in_pm_first ? Carbon::parse($record->punch_in_pm_first)->format($format) : 'N/A';
+                $pmSecondPunch = $record->punch_in_pm_second ? Carbon::parse($record->punch_in_pm_second)->format($format) : 'N/A';
+
+                // Calculate total based on AM and PM statuses
+                $dayTotal = 0;
+                if ($record->punch_in_am_first && $record->punch_in_pm_first) {
+                    $dayTotal = 1; // Full day
+                } elseif (!$record->punch_in_am_first && $record->punch_in_pm_first) {
+                    $dayTotal = 0.5; // Half day
+                }
+
+                // Add day total to the overall total
+                $total += $dayTotal;
+
+                return [
+                    'Employee Name' => $record->user->name . ' ' . $record->user->lastname,
+                    'Date' => Carbon::parse($record->date)->format('F, j Y'),
+                    'AM First Punch' => $amFirstPunch,
+                    'AM Second Punch' => $amSecondPunch,
+                    'PM First Punch' => $pmFirstPunch,
+                    'PM Second Punch' => $pmSecondPunch,
+                    'Total' => $dayTotal, // Include the calculated total for the day
+                ];
+            })->toArray();
+
+            // Add a final row to show the sum of all totals for the employee
+            $data[] = [
+                'Employee Name' => 'Total Days of ' . $user->name . ' ' . $user->lastname,
+                'Date' => '',
+                'AM First Punch' => '',
+                'AM Second Punch' => '',
+                'PM First Punch' => '',
+                'PM Second Punch' => '',
+                'Total' => $total, // Sum total for the employee
+            ];
+
+            $fileName = $user->name . '_' . $user->lastname . '_attendance.xlsx';
+            $filePath = $tempDir . DIRECTORY_SEPARATOR . $fileName;
+
+            Excel::store(new AttendanceExport($data), 'public/temp_attendance_exports/' . $fileName);
+            $files[] = $filePath;
+        }
+
+        $zipFileName = 'attendance_records_' . $month . '_' . $year . '.zip';
+        $zipFilePath = $tempDir . DIRECTORY_SEPARATOR . $zipFileName;
+
+        $zip = new ZipArchive;
+        if ($zip->open($zipFilePath, ZipArchive::CREATE) === TRUE) {
+            foreach ($files as $file) {
+                $zip->addFile($file, basename($file));
+            }
+            $zip->close();
+        } else {
+            Log::error('Unable to create ZIP file: ' . $zipFilePath);
+            return response()->json(['error' => 'Unable to create ZIP file.'], 500);
+        }
+
+        foreach ($files as $file) {
+            unlink($file);
+        }
+
+        return response()->download($zipFilePath)->deleteFileAfterSend(true);
+    }

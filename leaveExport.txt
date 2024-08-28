@@ -1,0 +1,80 @@
+public function exportexcel(Request $request)
+{
+    // Ensure $employeeIds is an array, or set it to an empty array if null
+    $employeeIds = $request->input('employee_ids', []);
+
+    // Check if $employeeIds is empty
+    if (empty($employeeIds)) {
+        return response()->json(['error' => 'No employee IDs provided.'], 400);
+    }
+
+    $tempDir = storage_path('app/public/temp_leave_exports');
+
+    // Create the temp directory if it doesn't exist
+    if (!file_exists($tempDir)) {
+        if (!mkdir($tempDir, 0777, true)) {
+            Log::error('Unable to create directory: ' . $tempDir);
+            return response()->json(['error' => 'Unable to create directory.'], 500);
+        }
+    }
+
+    $files = [];
+
+    foreach ($employeeIds as $employeeId) {
+        $leaves = Leave::where('employee_id', $employeeId)
+            ->whereIn('status', ['Declined', 'Approved'])
+            ->with('user')
+            ->get();
+
+        if ($leaves->isEmpty()) {
+            continue;
+        }
+
+        $user = $leaves->first()->user;
+
+        $data = $leaves->map(function ($leave) {
+            return [
+                'Employee' => $leave->user->name . ' ' . $leave->user->lastname,
+                'Leave Type' => $leave->leave_type,
+                'Reason' => $leave->reason,
+                'Start Date' => \Carbon\Carbon::parse($leave->from)->format('Y, F j'),
+                'End Date' => \Carbon\Carbon::parse($leave->to)->format('Y, F j'),
+                'Leave Days' => $leave->leave_days,
+                'Status' => $leave->status,
+            ];
+        })->toArray();
+
+        $fileName = $user->name . '_' . $user->lastname . '_leaves.xlsx';
+        $filePath = $tempDir . DIRECTORY_SEPARATOR . $fileName;
+
+        Excel::store(new LeavesExport($data), 'public/temp_leave_exports/' . $fileName);
+        $files[] = $filePath;
+    }
+
+    // Check if no files were created
+    if (empty($files)) {
+        return response()->json(['error' => 'No leave records to export.'], 404);
+    }
+
+    $zipFileName = 'leave_records.zip';
+    $zipFilePath = $tempDir . DIRECTORY_SEPARATOR . $zipFileName;
+
+    $zip = new ZipArchive;
+    if ($zip->open($zipFilePath, ZipArchive::CREATE) === TRUE) {
+        foreach ($files as $file) {
+            $zip->addFile($file, basename($file));
+        }
+        $zip->close();
+    } else {
+        Log::error('Unable to create ZIP file: ' . $zipFilePath);
+        return response()->json(['error' => 'Unable to create ZIP file.'], 500);
+    }
+
+    foreach ($files as $file) {
+        unlink($file);
+    }
+
+    return response()->download($zipFilePath)->deleteFileAfterSend(true);
+}
+
+leave Export
