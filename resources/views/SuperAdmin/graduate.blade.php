@@ -1,109 +1,117 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('layouts._message')
+@include('layouts._message')
 
-    <!-- Button Group -->
-
-
-    <!-- Table and Filters -->
-    <div class="card p-3 rounded shadow-sm my-4">
-        <div >
-            <form action="{{ url('/SuperAdmin/Graduate') }}" method="GET" class="d-flex justify-content-between align-items-center mb-3">
-                @csrf
-
-                <div class="d-flex w-100">
-                    <button class="btn btn-success m-1" type="submit">Search</button>
-                    <button  type="hidden" class="btn btn-light m-1" onclick="clearSearch()">Clear</button>
-                    <span class="input-group-text bg-white border-end-0">
-                        <i class="bi bi-search"></i>
-                    </span>
-                    <input type="search" id="search" class="form-control border-start-0" name="search" placeholder="Search Here" value="{{ request('search') }}" style="width: 100%">
+<!-- Button Group -->
 
 
-                    <!-- College Selection -->
-                    <select id="collegeSelect" class="form-select mx-1" name="collegeId">
-                        <option value="" selected disabled>--College--</option>
-                        <!-- College options go here -->
-                    </select>
+<!-- Table and Filters -->
+<div class="card p-3 rounded shadow-sm my-4">
+    <div>
+        <form action="{{ url('/SuperAdmin/Graduate') }}" method="GET" class="d-flex justify-content-between align-items-center mb-3">
+            @csrf
 
-                    <!-- Course Selection -->
-                    <select id="courseSelect" class="form-select mx-1" name="courseId">
-                        <option value="" selected disabled>--Course--</option>
-                        <!-- Course options go here -->
-                    </select>
-
-                    <!-- Major Selection -->
-                    <select id="majorSelect" class="form-select mx-1" name="majorId">
-                        <option value="" selected disabled>--Major--</option>
-                        <!-- Major options go here -->
-                    </select>
+            <div class="d-flex w-100">
+                <button class="btn btn-success m-1" type="submit">Search</button>
+                <button type="hidden" class="btn btn-light m-1" onclick="clearSearch()">Clear</button>
+                <span class="input-group-text bg-white border-end-0">
+                    <i class="bi bi-search"></i>
+                </span>
+                <input type="search" id="search" class="form-control border-start-0" name="search" placeholder="Search Here" value="{{ request('search') }}" style="width: 100%">
 
 
+                <!-- College Selection -->
+                <select id="collegeSelect" class="form-select mx-1" name="collegeId">
+                    <option value="" selected disabled>--College--</option>
+                    <!-- College options go here -->
+                </select>
+
+                <!-- Course Selection -->
+                <select id="courseSelect" class="form-select mx-1" name="courseId">
+                    <option value="" selected disabled>--Course--</option>
+                    <!-- Course options go here -->
+                </select>
+
+                <!-- Major Selection -->
+                <select id="majorSelect" class="form-select mx-1" name="majorId">
+                    <option value="" selected disabled>--Major--</option>
+                    <!-- Major options go here -->
+                </select>
 
 
-                    <select id="awardsSelect" class="form-select mx-1" name="awardsId">
-                        <option selected disabled>--Awards--</option>
-                        @foreach ($awards as $award)
-                        <option value="{{ $award->id }}">{{ $award->status }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </form>
-        </div>
-
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Student ID</th>
-                    <th>Name</th>
-                    <th>College</th>
-                    <th>Course</th>
-                    <th>Major</th>
-                    <th>Year Level</th>
-
-                    <th>Academic Award</th>
-                    <th>Academic Year</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($studentdata as $index => $student)
-                    <tr>
-                        <td>{{ ($studentdata->currentPage() - 1) * $studentdata->perPage() + $index + 1 }}</td>
-                        <td>{{ $student->student_Id }}</td>
-                        <td>{{ $student->lastname }}, {{ $student->firstname }} {{ $student->middlename }}</td>
-                        <td>{{ $student->college ? $student->college->college : 'N/A' }}</td>
-                        <td>{{ $student->course ? $student->course->course : 'N/A' }}</td>
-                        <td>{{ $student->major ? $student->major->major : 'N/A' }}</td>
-                        <td>{{ $student->yearlevel->status }}</td>
-                        <td>{{ $student->awards->status }}</td>
-                        <td>{{ $student->academic_year_start }} - {{ $student->academic_year_end }}</td>
 
 
-                        <td>
-                            <a type="button" href="{{ url('/SuperAdmin/Student/' . $student->id) }}" >
-                                <i class="far fa-edit" style="color: #090909;"></i>
-                            </a>
-
-                        </td>
-                    </tr>
-                @endforeach
-
-            </tbody>
-        </table>
-
-        <div class="d-flex justify-content-between align-items-center mt-3">
-            <p class="text-muted">
-                Showing {{ $studentdata->firstItem() }} to {{ $studentdata->lastItem() }} of {{ $studentdata->total() }}
-                entries
-            </p>
-            <nav>
-                {{ $studentdata->links() }} <!-- This will generate the pagination links -->
-            </nav>
-        </div>
+                <select id="awardsSelect" class="form-select mx-1" name="awardsId">
+                    <option selected disabled>--Awards--</option>
+                    @foreach ($awards as $award)
+                    <option value="{{ $award->id }}">{{ $award->status }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </form>
     </div>
 
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Student ID</th>
+                <th>Name</th>
+                <th>Sex</th>
+                <th>College</th>
+                <th>Course</th>
+                <th>Major</th>
+                <th>Year Level</th>
 
-    @endsection
+                <th>Academic Award</th>
+                <th>Academic Year</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($studentdata as $index => $student)
+            <tr>
+                <td>{{ ($studentdata->currentPage() - 1) * $studentdata->perPage() + $index + 1 }}</td>
+                <td>{{ $student->student_Id }}</td>
+                <td>{{ $student->lastname }}, {{ $student->firstname }} {{ $student->middlename }} {{ $student->suffix ? $student->fix->status : '' }}</td>
+                <td>@if($student->sex == 1)
+                    Female
+                    @elseif($student->sex == 2)
+                    Male
+                    @elseif($student->sex == 3)
+                    Prefer not to say
+                    @endif</td>
+                <td>{{ $student->college ? $student->college->college : 'N/A' }}</td>
+                <td>{{ $student->course ? $student->course->course : 'N/A' }}</td>
+                <td>{{ $student->major ? $student->major->major : 'N/A' }}</td>
+                <td>{{ $student->yearlevel->status }}</td>
+                <td>{{ $student->awards->status }}</td>
+                <td>{{ $student->academic_year_start }} - {{ $student->academic_year_end }}</td>
+
+
+                <td>
+                    <a type="button" href="{{ url('/SuperAdmin/Student/' . $student->id) }}">
+                        <i class="far fa-edit" style="color: #090909;"></i>
+                    </a>
+
+                </td>
+            </tr>
+            @endforeach
+
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between align-items-center mt-3">
+        <p class="text-muted">
+            Showing {{ $studentdata->firstItem() }} to {{ $studentdata->lastItem() }} of {{ $studentdata->total() }}
+            entries
+        </p>
+        <nav>
+            {{ $studentdata->links() }} <!-- This will generate the pagination links -->
+        </nav>
+    </div>
+</div>
+
+
+@endsection

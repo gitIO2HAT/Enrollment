@@ -11,6 +11,7 @@ use App\Models\Major;
 use App\Models\Semester;
 use App\Models\Student;
 use App\Models\YearLevel;
+use App\Models\Suffix;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -21,9 +22,10 @@ class EnrollmentController extends Controller
     $yearlevels = YearLevel::all();
     $years = YearLevel::whereNot('id', '=', 6)->get();
     $semester = Semester::all();
+    $suffixs = Suffix::all();
 
 
-    $query = Student::with(['college', 'course', 'major', 'yearlevel', 'semesters', 'awards'])
+    $query = Student::with(['college', 'course', 'major', 'yearlevel', 'semesters', 'awards','fix'])
         ->whereNot('year_level', '=', 6)
         ->where('deleted', '=', 1);
 
@@ -68,6 +70,7 @@ class EnrollmentController extends Controller
         'studentdata' => $studentdata,
         'yearlevels' => $yearlevels,
         'years' => $years,
+        'suffixs' => $suffixs,
         'semester' => $semester
 
     ]);
@@ -78,8 +81,9 @@ public function student($id)
     $yearlevel = YearLevel::all();
     $semester = Semester::all();
     $award = Award::all();
+    $suffixs = Suffix::all();
 
-    $studentdata = Student::with(['college', 'course', 'major','yearlevel','semesters','awards'])
+    $studentdata = Student::with(['college', 'course', 'major','yearlevel','semesters','awards','fix'])
     ->where('id',$id)
     ->where('deleted', '=', 1)
     ->first();
@@ -92,6 +96,7 @@ $viewPath = Auth::user()->user_type == 0
     return view($viewPath, ['studentdata'=> $studentdata,
     'yearlevel'=> $yearlevel,
     'award'=> $award,
+    'suffixs'=> $suffixs,
     'semester'=> $semester
     ]
     );
@@ -107,6 +112,7 @@ public function addstudent(Request $request)
         'firstname' => 'required|string|max:30',
         'lastname' => 'required|string|max:30',
         'middlename' => 'nullable|string|max:30',
+        'sex' => 'required|in:1,2,3',
         'collegeId' => 'required|integer',
         'courseId' => 'required|integer',
         'majorId' => 'required|integer',
@@ -114,9 +120,11 @@ public function addstudent(Request $request)
         'academic_year_start' => 'required|integer',
         'academic_year_end' => 'required|integer',
         'semester' => 'required|integer',
+        'suffix' => 'nullable|integer',
     ],[
         'firstname.required' => 'The first name field is required.',
         'lastname.required' => 'The last name field is required.',
+        'sex.required' => 'The sex field is required.',
         'collegeId.required' => 'The college field is required.',
         'courseId.required' => 'The course field is required.',
         'majorId.required' => 'The major field is required.',
@@ -131,6 +139,7 @@ public function addstudent(Request $request)
     $student->firstname = $request->firstname;
     $student->lastname = $request->lastname;
     $student->middlename = $request->middlename;
+    $student->sex = $request->sex;
     $student->collegeId = $request->collegeId;
     $student->courseId = $request->courseId;
     $student->majorId = $request->majorId;
@@ -139,6 +148,7 @@ public function addstudent(Request $request)
     $student->academic_award = 4;
     $student->academic_year_start = $request->academic_year_start;
     $student->academic_year_end = $request->academic_year_end;
+    $student->suffix = $request->suffix;
 
     // Generate custom ID
     $currentYear = Carbon::now()->format('Y');
@@ -162,6 +172,7 @@ public function editstudent($id, Request $request){
         'firstname' => 'required|string|max:30',
         'lastname' => 'required|string|max:30',
         'middlename' => 'nullable|string|max:30',
+        'sex' => 'required|in:1,2,3',
         'collegeId' => 'nullable|integer',
         'courseId' => 'nullable|integer',
         'majorId' => 'nullable|integer',
@@ -169,6 +180,7 @@ public function editstudent($id, Request $request){
         'academic_year_start' => 'required|integer',
         'academic_year_end' => 'required|integer',
         'semester' => 'required|integer',
+        'suffix' => 'nullable|integer',
     ],[
         'firstname.required' => 'The first name field is required.',
         'lastname.required' => 'The last name field is required.',
@@ -184,6 +196,7 @@ public function editstudent($id, Request $request){
     $student->firstname = $request->firstname;
     $student->lastname = $request->lastname;
     $student->middlename = $request->middlename;
+    $student->sex = $request->sex;
     $student->collegeId = $request->collegeId;
     $student->courseId = $request->courseId;
     $student->majorId = $request->majorId;
@@ -192,6 +205,7 @@ public function editstudent($id, Request $request){
     $student->academic_award = $request->academic_award;
     $student->academic_year_start = $request->academic_year_start;
     $student->academic_year_end = $request->academic_year_end;
+    $student->suffix = $request->suffix;
 
     // Generate custom ID
 

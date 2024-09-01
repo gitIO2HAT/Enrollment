@@ -29,19 +29,40 @@ class CollegeController extends Controller
 
     public function addcollege(Request $request)
     {
+        // Log the incoming request data
+        Log::info('Add College Request:', $request->all());
+    
+        // Validation
         $request->validate([
-            'college' => 'required|string|max:100|unique:colleges,college',
+            'college' => 'required|string|max:10|unique:colleges,college', // Ensures exactly 10 characters
+            'description' => 'required|string|max:100', // Ensures exactly 100 characters
         ], [
+            'college.max' => 'The college name must be exactly 10 characters.',
+            'description.max' => 'The description must be exactly 100 characters.',
             'college.unique' => 'This college name has already been taken.',
         ]);
-
+    
+        // Log before creating the college
+        Log::info('Creating a new College record.');
+    
         $college = new College;
         $college->college = $request->college;
-        $college->description = $request->description;
+        $college->description = $request->description; // Ensure this line exists
+    
+        // Log the college data before saving
+        Log::info('College Data:', [
+            'college' => $college->college,
+            'description' => $college->description,
+        ]);
+    
         $college->save();
-
+    
+        // Log successful save
+        Log::info('College successfully added.');
+    
         return redirect()->back()->with('success', 'College successfully added');
     }
+    
 
     public function addcourse(Request $request)
     {
@@ -50,6 +71,7 @@ class CollegeController extends Controller
             'college_id' => 'required|integer|exists:colleges,id',
         ], [
             'course.required' => 'The course name field is required.',
+            'course.max' => 'The course must be exactly 100 characters.',
             'course.unique' => 'This course name has already been taken.',
             'college_id.required' => 'The college field is required.',
             'college_id.exists' => 'The selected college is invalid.',
@@ -71,6 +93,7 @@ class CollegeController extends Controller
             'course_id' => 'required|integer|exists:courses,id',
         ], [
             'major.required' => 'The major name field is required.',
+            'major.max' => 'The major must be exactly 100 characters.',
             'major.unique' => 'This major name has already been taken.',
             'course_id.required' => 'The course field is required.',
             'course_id.exists' => 'The selected course is invalid.',
@@ -96,6 +119,7 @@ class CollegeController extends Controller
             'college' => 'nullable|string|max:50|unique:colleges,college,' . $id,
             'description' => 'nullable|string|max:255',
         ], [
+            'college.max' => 'The college name must be exactly 10 characters.',
             'college.unique' => 'This college name has already been taken.',
         ]);
         $college = College::find($id);
@@ -121,13 +145,14 @@ class CollegeController extends Controller
     public function editcourse($id, Request $request)
     {
         // Log incoming request data
-        Log::info('Edit College Request Data:', [
+        Log::info('Edit Course Request Data:', [
             'id' => $id,
             'request' => $request->all()
         ]);
         $request->validate([
-            'course' => 'nullable|string|max:50|unique:courses,course,' . $id,
+            'course' => 'nullable|string|max:100|unique:courses,course,' . $id,
         ], [
+            'course.max' => 'The course name must be exactly 100 characters.',
             'course.unique' => 'This course name has already been taken.',
         ]);
         $course = Course::find($id);
@@ -151,6 +176,40 @@ class CollegeController extends Controller
         return redirect()->back()->with('success', 'Course successfully updated');
     }
 
+    public function editmajor($id, Request $request)
+    {
+        // Log incoming request data
+        Log::info('Edit Major Request Data:', [
+            'id' => $id,
+            'request' => $request->all()
+        ]);
+        $request->validate([
+            'major' => 'nullable|string|max:100|unique:majors,major,' . $id,
+        ], [
+            'major.max' => 'The major name must be exactly 100 characters.',
+            'major.unique' => 'This course name has already been taken.',
+        ]);
+        $major = Major::find($id);
+        // Log current state of the college record
+        Log::info('Current major Record:', [
+            'major' => $major
+        ]);
+        if (!$major) {
+            Log::error('major not found with ID: ' . $id);
+            return redirect()->back()->with('error', 'major not found');
+        }
+        $major->major = $request->major;
+
+        // Log updated values before saving
+        Log::info('Updating major Record:', [
+            'major' => $major
+        ]);
+        $major->save();
+        // Log success message
+        Log::info('major successfully updated with ID: ' . $id);
+        return redirect()->back()->with('success', 'Major successfully updated');
+    }
+
     public function deletecollege($id){
         $college = College::getId($id);
 
@@ -164,5 +223,12 @@ class CollegeController extends Controller
         $course->deleted = 2;
         $course->save();
         return redirect()->back()->with('success', 'Course successfully DELETED');
+    }
+    public function deletemajor($id){
+        $major = Major::getId($id);
+
+        $major->deleted = 2;
+        $major->save();
+        return redirect()->back()->with('success', 'Major successfully DELETED');
     }
 }

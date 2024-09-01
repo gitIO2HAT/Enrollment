@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Semester;
 use App\Models\Student;
 use App\Models\YearLevel;
+use App\Models\Suffix;
+
 
 class GraduateController extends Controller
 {
@@ -17,8 +19,9 @@ class GraduateController extends Controller
         $yearlevels = YearLevel::all();
         $semester = Semester::all();
         $awards = Award::all();
+        $suffixs = Suffix::all();
 
-        $query = Student::with(['college', 'course', 'major', 'yearlevel', 'semesters', 'awards'])
+        $query = Student::with(['college', 'course', 'major', 'yearlevel', 'semesters', 'awards','fix'])
         ->where('year_level', '=', 6)
         ->where('deleted', '=', 1);
 
@@ -58,6 +61,7 @@ class GraduateController extends Controller
         return view($viewPath,['studentdata'=> $studentdata,
         'yearlevels'=> $yearlevels,
         'awards'=> $awards,
+        'suffixs'=> $suffixs,
         'semester'=> $semester]
         );
     }

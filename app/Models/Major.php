@@ -15,8 +15,12 @@ class Major extends Model
     {
         return $this->belongsTo(Course::class);
     }
-    public function users()
+    public function students()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Student::class);
+    }
+    static public function getID($id)
+    {
+        return self::find($id);
     }
 }

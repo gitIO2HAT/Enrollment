@@ -17,7 +17,7 @@
                                         <div class="fields">
                                             <div class="mt-2" id="profileContainer" style="position: relative; display: inline-block;">
                                                 <label for="profileImage" onclick="handleImageClick(event)" style="cursor: pointer; position: relative;">
-                                                    <img class="rounded-circle" id="profilePicture" src="{{ asset('public/accountprofile/'. Auth::user()->profile_pic) }}" alt="Profile" width="200px">
+                                                    <img class="rounded-circle" id="profilePicture" src="{{ asset('public/accountprofile/'. Auth::user()->profile_pic) }}" alt="Profile" style="width: 200px; height: 200px; object-fit: cover;">
                                                     <i class="fas fa-camera camera-icon"></i>
                                                 </label>
                                                 <input type="file" name="profile_pic" id="profileImage" style="display: none;" onchange="displayImage(this)">
@@ -27,7 +27,6 @@
                                                 <h6 class="text-light">{{ Auth::user()->admin_id }}</h6>
                                             </div>
                                         </div>
-
                                     </div>
                                     <div class="col-sm-4 col-xl-4">
                                         <div class="fields">

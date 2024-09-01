@@ -10,7 +10,7 @@ class Award extends Model
     use HasFactory;
     public $table = 'awards';
     protected $fillable = ['status'];
-    public function users()
+    public function students()
     {
         return $this->hasMany(Student::class);
     }

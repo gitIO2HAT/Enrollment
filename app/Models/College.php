@@ -15,9 +15,9 @@ class College extends Model
     {
         return $this->hasMany(Course::class);
     }
-    public function users()
+    public function students()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Student::class);
     }
     static public function getID($id)
     {

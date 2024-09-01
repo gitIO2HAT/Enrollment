@@ -3374,6 +3374,27 @@ fieldset:disabled .btn {
     background-color: #bb2d3b;
     border-color: #b02a37
 }
+.bg-gradient-test {
+    background: linear-gradient(to left, #ed6262, #833131); /* From deep red to light red */
+    border: none; /* Optional: Remove border if any */
+    color: white; /* Optional: Change text color */
+}
+
+.bg-gradient-test:hover {
+    background: linear-gradient(to right, #ed6262, #833131); /* From deep red to light red */
+}
+
+.bg-hover {
+   color: #000;
+}
+
+.bg-hover:hover {
+    color: #ffffff;
+    background: linear-gradient(to right, #ed6262, #833131); /* From deep red to light red */
+}
+
+
+
 
 .btn-check:focus+.btn-danger,
 .btn-danger:focus {

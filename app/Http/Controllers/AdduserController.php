@@ -24,22 +24,16 @@ class AdduserController extends Controller
                 $q->whereRaw("CONCAT(name, ' ', id) LIKE ?", ["%$search%"]);
             });
         }
-
         $users->where('deleted', '=', 1);
-
         $users = $users->paginate(10);
-
         // Render the appropriate view
         return view('superadmin.adduser', ['users' => $users]);
     }
-
     // Handle unauthorized access
     return redirect()->route('home')->with('error', 'Unauthorized access');
 }
-
     public function addadmin(Request $request)
     {
-
          // Create a new user instance
          $user = new User;
 
@@ -50,26 +44,19 @@ class AdduserController extends Controller
             'name.required' => 'The name field is required.',
             'username.unique' => 'This username has already been taken.',
         ]);
-
-
-
         // Assign values to user properties
         $user->name = $request->name;
         $user->username = trim($request->username);
         $user->password = Hash::make($request->password);
-
         // Generate custom ID
         $currentYear = Carbon::now()->format('Y');
         $latestUserId = User::latest('id')->first(); // Get the latest user ID
         $nextUserId = ($latestUserId) ? $latestUserId->id + 1 : 1; // Increment the latest user ID
         $admin_id = $currentYear . '-'.'adm' . sprintf('%03d', $nextUserId); // Format the custom ID
-
         // Assign the custom ID to the user
         $user->admin_id = $admin_id;
-
         // Save the user to the database
         $user->save();
-
         return redirect()->back()->with('success', 'User successfully added');
     }
     public function updateuser($id, Request $request)
@@ -81,21 +68,17 @@ class AdduserController extends Controller
         ],[
             'name.unique' => 'This name has already been taken.',
         ]);
-
         $user->name = $request->name;
         $user->username = trim($request->username);
         $user->description = $request->description;
-
         $user->save();
         return redirect()->back()->with('success', 'Department successfully updated');
     }
-
     public function delete($id)
     {
         $user = User::getId($id);
         $user->deleted = 2;
         $user->save();
-
         return redirect()->back()->with('success', 'User successfully deleted!');
 
     }

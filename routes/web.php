@@ -58,6 +58,8 @@ Route::group(['middleware' => 'superadmin'], function () {
     Route::get('/SuperAdmin/College/DeletedCollege/{id}', [CollegeController::class, 'deletecollege']);
     Route::post('/SuperAdmin/College/EditCourse/{id}', [CollegeController::class, 'editcourse']);
     Route::get('/SuperAdmin/College/DeletedCourse/{id}', [CollegeController::class, 'deletecourse']);
+    Route::post('/SuperAdmin/College/EditMajor/{id}', [CollegeController::class, 'editmajor']);
+    Route::get('/SuperAdmin/College/DeletedMajor/{id}', [CollegeController::class, 'deletemajor']);
 
 
 });

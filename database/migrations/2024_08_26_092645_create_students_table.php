@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('firstname', 30);
             $table->string('lastname',30);
             $table->string('middlename',30)->nullable();
+            $table->unsignedBigInteger('suffix')->nullable();
             $table->unsignedBigInteger('collegeId');
             $table->unsignedBigInteger('courseId');
             $table->unsignedBigInteger('majorId');
@@ -26,6 +27,7 @@ return new class extends Migration
             $table->year('academic_year_end');
             $table->unsignedBigInteger('academic_award')->nullable();
             $table->enum('deleted',['1','2'])->default(1);
+            $table->enum('sex',['1','2','3']);
             $table->timestamps();
 
             $table->foreign('collegeId')->references('id')->on('colleges')->onDelete('cascade');
@@ -34,6 +36,7 @@ return new class extends Migration
             $table->foreign('year_level')->references('id')->on('year_level')->onDelete('cascade');
             $table->foreign('semester')->references('id')->on('semesters')->onDelete('cascade');
             $table->foreign('academic_award')->references('id')->on('awards')->onDelete('cascade');
+            $table->foreign('suffix')->references('id')->on('suffix')->onDelete('cascade');
         });
     }
 

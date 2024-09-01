@@ -11,8 +11,8 @@ class YearLevel extends Model
 
     public $table = 'year_level';
 
-    public function users()
+    public function students()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Student::class);
     }
 }

@@ -23,8 +23,10 @@ class Student extends Model
         'year_level',
         'semester',
         'academic_year',
+        'suffix',
         'academic_award',
         'deleted',
+        'sex',
     ];
 
     static public function getID($id)
@@ -58,4 +60,9 @@ class Student extends Model
     {
         return $this->belongsTo(Award::class, 'academic_award');
     }
+    public function fix()
+    {
+        return $this->belongsTo(Suffix::class, 'suffix');
+    }
+    
 }

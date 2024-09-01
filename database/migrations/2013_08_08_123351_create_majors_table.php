@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('majors', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('course_id');
-            $table->string('major',10);
-
+            $table->string('major',100);
             $table->enum('deleted', ['1', '2'])->default('1');
             $table->timestamps();
 

@@ -12,23 +12,26 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('awards', function (Blueprint $table) {
+        Schema::create('suffix', function (Blueprint $table) {
             $table->id();
-            $table->string('status',17);
+            $table->string('status',5);
             $table->timestamps();
         });
-        DB::table('awards')->insert([
+        DB::table('suffix')->insert([
             [
-                'status' => 'Magna Cum Laude',
+                'status' => 'Jr.',
             ],
             [
-                'status' => 'Summa Cum Laude',
+                'status' => 'Sr.',
             ],
             [
-                'status' => 'Cum Laude',
+                'status' => 'I',
             ],
             [
-                'status' => 'N/A',
+                'status' => 'II',
+            ],
+            [
+                'status' => 'III',
             ],
 
         ]);
@@ -39,6 +42,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('awards');
+        Schema::dropIfExists('suffix');
     }
 };

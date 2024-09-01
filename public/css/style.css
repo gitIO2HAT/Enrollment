@@ -723,6 +723,7 @@ footer a:hover {
 .bg-gradient-test {
     background: linear-gradient(to left, #ed6262, #833131) ; /* From deep red to light red */
 }
+
 .hover-container .delete-icon {
     opacity: 0; /* Hidden by default */
     transition: opacity 0.3s ease; /* Smooth transition */

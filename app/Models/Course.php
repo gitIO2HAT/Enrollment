@@ -18,9 +18,9 @@ class Course extends Model
         return $this->hasMany(Major::class);
     }
 
-    public function users()
+    public function students()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Student::class);
     }
     static public function getID($id)
     {

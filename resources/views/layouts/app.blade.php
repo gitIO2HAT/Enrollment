@@ -3,13 +3,14 @@
 
 <head>
     <meta charset="utf-8">
+ 
     <title>Enrollment Report - {{Request::segment(2)}} - {{Request::segment(3)}}</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="{{ asset('img/registrar.png') }}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -199,6 +200,7 @@ document.querySelector('#show-widget').addEventListener('click', function() {
     }
 </script>
 
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const collegeSelect = document.getElementById('collegeSelect');
@@ -207,8 +209,13 @@ document.querySelector('#show-widget').addEventListener('click', function() {
 
         // Pre-selected IDs from the server-side data
         const selectedCollegeId = {{ $studentdata->collegeId ?? 'null' }};
-        const selectedCourseId = {{ $studentdata->courseId ?? 'null' }};
+        let selectedCourseId = {{ $studentdata->courseId ?? 'null' }};
         const selectedMajorId = {{ $studentdata->majorId ?? 'null' }};
+
+        // Handle cases where Blade might return a string 'null' instead of actual null
+        const validSelectedCollegeId = selectedCollegeId === 'null' ? null : selectedCollegeId;
+        selectedCourseId = selectedCourseId === 'null' ? null : selectedCourseId;
+        const validSelectedMajorId = selectedMajorId === 'null' ? null : selectedMajorId;
 
         // Fetch and populate colleges on page load
         fetch('/colleges')
@@ -220,8 +227,8 @@ document.querySelector('#show-widget').addEventListener('click', function() {
                 });
 
                 // Pre-select the college if available
-                if (selectedCollegeId) {
-                    collegeSelect.value = selectedCollegeId;
+                if (validSelectedCollegeId) {
+                    collegeSelect.value = validSelectedCollegeId;
                     collegeSelect.dispatchEvent(new Event('change')); // Trigger the change event to load courses
                 }
             });
@@ -232,7 +239,7 @@ document.querySelector('#show-widget').addEventListener('click', function() {
             majorSelect.length = 1; // Remove all options except the default
             majorSelect.disabled = true;
 
-            let selectedCollegeId = this.value;
+            const selectedCollegeId = this.value;
             if (selectedCollegeId) {
                 courseSelect.disabled = false;
 
@@ -248,6 +255,7 @@ document.querySelector('#show-widget').addEventListener('click', function() {
                         if (selectedCourseId) {
                             courseSelect.value = selectedCourseId;
                             courseSelect.dispatchEvent(new Event('change')); // Trigger the change event to load majors
+                            selectedCourseId = null; // Reset to avoid conflict if the user changes the selection
                         }
                     });
             } else {
@@ -260,7 +268,7 @@ document.querySelector('#show-widget').addEventListener('click', function() {
         courseSelect.addEventListener('change', function() {
             majorSelect.length = 1; // Remove all options except the default
 
-            let selectedCourseId = this.value;
+            selectedCourseId = this.value; // Assign value to the already declared variable
             if (selectedCourseId) {
                 majorSelect.disabled = false;
 
@@ -273,8 +281,8 @@ document.querySelector('#show-widget').addEventListener('click', function() {
                         });
 
                         // Pre-select the major if available
-                        if (selectedMajorId) {
-                            majorSelect.value = selectedMajorId;
+                        if (validSelectedMajorId) {
+                            majorSelect.value = validSelectedMajorId;
                         }
                     });
             } else {
@@ -283,6 +291,91 @@ document.querySelector('#show-widget').addEventListener('click', function() {
         });
     });
 </script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const collegeSelect = document.getElementById('collegeSelectSearch');
+        const courseSelect = document.getElementById('courseSelectSearch');
+        const majorSelect = document.getElementById('majorSelectSearch');
+
+       
+        // Fetch and populate colleges on page load
+        fetch('/colleges')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(college => {
+                    let option = new Option(college.college, college.id);
+                    collegeSelect.add(option);
+                });
+
+                // Pre-select the college if available
+                if (validSelectedCollegeId) {
+                    collegeSelect.value = validSelectedCollegeId;
+                    collegeSelect.dispatchEvent(new Event('change')); // Trigger the change event to load courses
+                }
+            });
+
+        // Event listener for when college is selected
+        collegeSelect.addEventListener('change', function() {
+            courseSelect.length = 1; // Remove all options except the default
+            majorSelect.length = 1; // Remove all options except the default
+            majorSelect.disabled = true;
+
+            const selectedCollegeId = this.value;
+            if (selectedCollegeId) {
+                courseSelect.disabled = false;
+
+                fetch(`/courses/${selectedCollegeId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(course => {
+                            let option = new Option(course.course, course.id);
+                            courseSelect.add(option);
+                        });
+
+                        // Pre-select the course if available
+                        if (selectedCourseId) {
+                            courseSelect.value = selectedCourseId;
+                            courseSelect.dispatchEvent(new Event('change')); // Trigger the change event to load majors
+                            selectedCourseId = null; // Reset to avoid conflict if the user changes the selection
+                        }
+                    });
+            } else {
+                courseSelect.disabled = true;
+                majorSelect.disabled = true;
+            }
+        });
+
+        // Event listener for when course is selected
+        courseSelect.addEventListener('change', function() {
+            majorSelect.length = 1; // Remove all options except the default
+
+            selectedCourseId = this.value; // Assign value to the already declared variable
+            if (selectedCourseId) {
+                majorSelect.disabled = false;
+
+                fetch(`/majors/${selectedCourseId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(major => {
+                            let option = new Option(major.major, major.id);
+                            majorSelect.add(option);
+                        });
+
+                        // Pre-select the major if available
+                        if (validSelectedMajorId) {
+                            majorSelect.value = validSelectedMajorId;
+                        }
+                    });
+            } else {
+                majorSelect.disabled = true;
+            }
+        });
+    });
+</script>
+
+
 
 <script>
     function setEndYear() {
@@ -296,6 +389,29 @@ document.querySelector('#show-widget').addEventListener('click', function() {
         }
     }
 </script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const courseSelect = document.getElementById('course');
+    const majorsList = document.getElementById('majors-list');
+
+    courseSelect.addEventListener('change', function () {
+        const selectedCourseId = this.value;
+        const majors = majorsList.querySelectorAll('.major-row');
+
+        majors.forEach(function (major) {
+            const majorCourseId = major.getAttribute('data-course-id');
+            if (selectedCourseId === majorCourseId || selectedCourseId === '') {
+                major.style.display = '';
+            } else {
+                major.style.display = 'none';
+            }
+        });
+    });
+});
+
+    </script>
 
 
 </html>
