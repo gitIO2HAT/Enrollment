@@ -34,67 +34,65 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="lastname" class="form-label">Last Name:</label>
-                                            <input type="text" class="form-control underline-input" id="firstname" name="lastname" value="{{$studentdata->lastname}}" >
+                                            <input type="text" class="form-control underline-input" id="firstname" name="lastname" value="{{$studentdata->lastname}}">
                                             @if($errors->has('lastname'))
                                             <span class="text-danger">{{ $errors->first('lastname') }}</span>
                                             @endif
                                         </div>
                                         <div class="mb-3">
                                             <label for="middlename" class="form-label">Middle Name:</label>
-                                            <input type="text" class="form-control underline-input" id="firstname" name="middlename" value="{{$studentdata->middlename}}" >
+                                            <input type="text" class="form-control underline-input" id="firstname" name="middlename" value="{{$studentdata->middlename}}">
                                             @if($errors->has('middlename'))
                                             <span class="text-danger">{{ $errors->first('middlename') }}</span>
                                             @endif
                                         </div>
                                         <div class="mb-3">
-                                                <label for="suffix" class="form-label">Suffix:</label>
-                                                <select id="suffix"  class="form-control underline-input" name="suffix">
-                                                    <option selected disabled>--Select Suffix--</option>
-                                                    @foreach ($suffixs as $fex )
-                                                    <option value="{{$fex->id}}" @if($studentdata->suffix == $fex->id) selected @endif>{{$fex->status}}</option>
-                                                    @endforeach
-                                                    <!-- Course options go here -->
-                                                </select>
-                                                @if ($errors->has('suffix'))
-                                                    <span class="text-danger">{{ $errors->first('suffix') }}</span>
-                                                @endif
-                                            </div>
-                                       
+                                            <label for="suffix" class="form-label">Suffix:</label>
+                                            <select id="suffix" class="form-control underline-input" name="suffix">
+                                                <option selected disabled>--Select Suffix--</option>
+                                                @foreach ($suffixs as $fex )
+                                                <option value="{{$fex->id}}" @if($studentdata->suffix == $fex->id) selected @endif>{{$fex->status}}</option>
+                                                @endforeach
+                                                <!-- Course options go here -->
+                                            </select>
+                                            @if ($errors->has('suffix'))
+                                            <span class="text-danger">{{ $errors->first('suffix') }}</span>
+                                            @endif
+                                        </div>
+
                                     </div>
                                     <div class="col-sm-4 col-xl-4">
                                         <div class="fields">
                                             <div class="mb-3">
-                                                <label for="collegeSelect" class="form-label">College<span
-                                                        class="text-primary">*</span>:</label>
-                                                <select id="collegeSelect" class="form-control underline-input" name="collegeId">
-                                                    <option  selected  value="">--Select College--</option>
+                                                <label for="collegeSelectEdit" class="form-label">College<span class="text-primary">*</span>:</label>
+                                                <select id="collegeSelectEdit" class="form-control underline-input" name="collegeId">
+                                                    <option selected value="">--Select College--</option>
                                                     <!-- College options go here -->
                                                 </select>
                                                 @if ($errors->has('collegeId'))
-                                                    <span class="text-danger">{{ $errors->first('collegeId') }}</span>
+                                                <span class="text-danger">{{ $errors->first('collegeId') }}</span>
                                                 @endif
                                             </div>
                                             <!-- Course -->
                                             <div class="mb-3">
-                                                <label for="courseSelect" class="form-label">Course<span
-                                                        class="text-primary">*</span>:</label>
-                                                <select id="courseSelect" disabled class="form-control underline-input" name="courseId">
+                                                <label for="courseSelectEdit" class="form-label">Course<span class="text-primary">*</span>:</label>
+                                                <select id="courseSelectEdit" disabled class="form-control underline-input" name="courseId">
                                                     <option value=""></option>
                                                     <!-- Course options go here -->
                                                 </select>
                                                 @if ($errors->has('courseId'))
-                                                    <span class="text-danger">{{ $errors->first('courseId') }}</span>
+                                                <span class="text-danger">{{ $errors->first('courseId') }}</span>
                                                 @endif
                                             </div>
                                             <!-- Major -->
                                             <div class="mb-3">
-                                                <label for="majorSelect" class="form-label">Major<span class="text-primary">*</span>:</label>
-                                                <select id="majorSelect" disabled class="form-control underline-input" name="majorId">
+                                                <label for="majorSelectEdit" class="form-label">Major<span class="text-primary">*</span>:</label>
+                                                <select id="majorSelectEdit" disabled class="form-control underline-input" name="majorId">
                                                     <option value=""></option>
                                                     <!-- Major options go here -->
                                                 </select>
                                                 @if ($errors->has('majorId'))
-                                                    <span class="text-danger">{{ $errors->first('majorId') }}</span>
+                                                <span class="text-danger">{{ $errors->first('majorId') }}</span>
                                                 @endif
                                             </div>
                                             <div class="mb-3">
@@ -119,22 +117,22 @@
                                     </div>
                                     <div class="col-sm-4 col-xl-4">
                                         <div class="fields">
-                                        <div class="mb-3">
+                                            <div class="mb-3">
                                                 <label for="sex" class="form-label">Sex<span
                                                         class="text-primary">*</span>:</label>
                                                 <select id="sex" class="form-control underline-input" name="sex">
-                                                    <option  selected disabled="">--Select sex--</option>
-                                                    <option  value="1" @if($studentdata->sex == 1) selected @endif>Female</option>
-                                                    <option  value="2" @if($studentdata->sex == 2) selected @endif>Male</option>
-                                                    <option  value="3" @if($studentdata->sex == 3) selected @endif>Prefer not to say</option>
+                                                    <option selected disabled="">--Select sex--</option>
+                                                    <option value="1" @if($studentdata->sex == 1) selected @endif>Female</option>
+                                                    <option value="2" @if($studentdata->sex == 2) selected @endif>Male</option>
+                                                    <option value="3" @if($studentdata->sex == 3) selected @endif>Prefer not to say</option>
                                                 </select>
                                                 @if ($errors->has('sex'))
-                                                    <span class="text-danger">{{ $errors->first('sex') }}</span>
+                                                <span class="text-danger">{{ $errors->first('sex') }}</span>
                                                 @endif
                                             </div>
                                             <div class="mb-3">
                                                 <label for="academic_award" class="form-label">Academic Award:</label>
-                                                <select id="academic_award"  class="form-control underline-input" name="academic_award">
+                                                <select id="academic_award" class="form-control underline-input" name="academic_award">
                                                     <option selected disabled>--Select Awards--</option>
                                                     @foreach ($award as $awards )
                                                     <option value="{{$awards->id}}" @if($studentdata->academic_award == $awards->id) selected @endif>{{$awards->status}}</option>
@@ -142,7 +140,7 @@
                                                     <!-- Course options go here -->
                                                 </select>
                                                 @if ($errors->has('academic_award'))
-                                                    <span class="text-danger">{{ $errors->first('academic_award') }}</span>
+                                                <span class="text-danger">{{ $errors->first('academic_award') }}</span>
                                                 @endif
                                             </div>
                                             <div class="mb-3">
@@ -155,12 +153,12 @@
                                                     <!-- Course options go here -->
                                                 </select>
                                                 @if ($errors->has('year_level'))
-                                                    <span class="text-danger">{{ $errors->first('year_level') }}</span>
+                                                <span class="text-danger">{{ $errors->first('year_level') }}</span>
                                                 @endif
                                             </div>
                                             <div class="mb-3">
                                                 <label for="semester" class="form-label">Semester:</label>
-                                                <select id="semester"  class="form-control underline-input" name="semester">
+                                                <select id="semester" class="form-control underline-input" name="semester">
                                                     <option selected disabled>--Select Semester--</option>
                                                     @foreach ($semester as $sem )
                                                     <option value="{{$sem->id}}" @if($studentdata->semester == $sem->id) selected @endif>{{$sem->status}}</option>
@@ -168,7 +166,7 @@
                                                     <!-- Course options go here -->
                                                 </select>
                                                 @if ($errors->has('semester'))
-                                                    <span class="text-danger">{{ $errors->first('semester') }}</span>
+                                                <span class="text-danger">{{ $errors->first('semester') }}</span>
                                                 @endif
                                             </div>
                                         </div>
@@ -183,4 +181,5 @@
         </div>
     </div>
 </div>
-    @endsection
+
+@endsection

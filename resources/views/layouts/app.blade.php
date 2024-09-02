@@ -201,37 +201,49 @@ document.querySelector('#show-widget').addEventListener('click', function() {
 </script>
 
 
+
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const collegeSelect = document.getElementById('collegeSelect');
         const courseSelect = document.getElementById('courseSelect');
         const majorSelect = document.getElementById('majorSelect');
 
-        // Pre-selected IDs from the server-side data
-        const selectedCollegeId = {{ $studentdata->collegeId ?? 'null' }};
-        let selectedCourseId = {{ $studentdata->courseId ?? 'null' }};
-        const selectedMajorId = {{ $studentdata->majorId ?? 'null' }};
-
-        // Handle cases where Blade might return a string 'null' instead of actual null
-        const validSelectedCollegeId = selectedCollegeId === 'null' ? null : selectedCollegeId;
-        selectedCourseId = selectedCourseId === 'null' ? null : selectedCourseId;
-        const validSelectedMajorId = selectedMajorId === 'null' ? null : selectedMajorId;
-
-        // Fetch and populate colleges on page load
-        fetch('/colleges')
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(college => {
-                    let option = new Option(college.college, college.id);
-                    collegeSelect.add(option);
+        // Function to fetch and populate colleges
+        function fetchAndPopulateColleges() {
+            fetch('/colleges')
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(college => {
+                        let option = new Option(college.college, college.id);
+                        collegeSelect.add(option);
+                    });
                 });
+        }
 
-                // Pre-select the college if available
-                if (validSelectedCollegeId) {
-                    collegeSelect.value = validSelectedCollegeId;
-                    collegeSelect.dispatchEvent(new Event('change')); // Trigger the change event to load courses
-                }
-            });
+        // Function to fetch and populate courses based on selected college
+        function fetchAndPopulateCourses(collegeId) {
+            fetch(`/courses/${collegeId}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(course => {
+                        let option = new Option(course.course, course.id);
+                        courseSelect.add(option);
+                    });
+                });
+        }
+
+        // Function to fetch and populate majors based on selected course
+        function fetchAndPopulateMajors(courseId) {
+            fetch(`/majors/${courseId}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(major => {
+                        let option = new Option(major.major, major.id);
+                        majorSelect.add(option);
+                    });
+                });
+        }
 
         // Event listener for when college is selected
         collegeSelect.addEventListener('change', function() {
@@ -242,22 +254,7 @@ document.querySelector('#show-widget').addEventListener('click', function() {
             const selectedCollegeId = this.value;
             if (selectedCollegeId) {
                 courseSelect.disabled = false;
-
-                fetch(`/courses/${selectedCollegeId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        data.forEach(course => {
-                            let option = new Option(course.course, course.id);
-                            courseSelect.add(option);
-                        });
-
-                        // Pre-select the course if available
-                        if (selectedCourseId) {
-                            courseSelect.value = selectedCourseId;
-                            courseSelect.dispatchEvent(new Event('change')); // Trigger the change event to load majors
-                            selectedCourseId = null; // Reset to avoid conflict if the user changes the selection
-                        }
-                    });
+                fetchAndPopulateCourses(selectedCollegeId);
             } else {
                 courseSelect.disabled = true;
                 majorSelect.disabled = true;
@@ -268,29 +265,20 @@ document.querySelector('#show-widget').addEventListener('click', function() {
         courseSelect.addEventListener('change', function() {
             majorSelect.length = 1; // Remove all options except the default
 
-            selectedCourseId = this.value; // Assign value to the already declared variable
+            const selectedCourseId = this.value;
             if (selectedCourseId) {
                 majorSelect.disabled = false;
-
-                fetch(`/majors/${selectedCourseId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        data.forEach(major => {
-                            let option = new Option(major.major, major.id);
-                            majorSelect.add(option);
-                        });
-
-                        // Pre-select the major if available
-                        if (validSelectedMajorId) {
-                            majorSelect.value = validSelectedMajorId;
-                        }
-                    });
+                fetchAndPopulateMajors(selectedCourseId);
             } else {
                 majorSelect.disabled = true;
             }
         });
+
+        // Initialize the process by fetching colleges
+        fetchAndPopulateColleges();
     });
 </script>
+
 
 
 <script>
@@ -299,22 +287,41 @@ document.querySelector('#show-widget').addEventListener('click', function() {
         const courseSelect = document.getElementById('courseSelectSearch');
         const majorSelect = document.getElementById('majorSelectSearch');
 
-       
-        // Fetch and populate colleges on page load
-        fetch('/colleges')
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(college => {
-                    let option = new Option(college.college, college.id);
-                    collegeSelect.add(option);
+        // Function to fetch and populate colleges
+        function fetchAndPopulateColleges() {
+            fetch('/colleges')
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(college => {
+                        let option = new Option(college.college, college.id);
+                        collegeSelect.add(option);
+                    });
                 });
+        }
 
-                // Pre-select the college if available
-                if (validSelectedCollegeId) {
-                    collegeSelect.value = validSelectedCollegeId;
-                    collegeSelect.dispatchEvent(new Event('change')); // Trigger the change event to load courses
-                }
-            });
+        // Function to fetch and populate courses based on selected college
+        function fetchAndPopulateCourses(collegeId) {
+            fetch(`/courses/${collegeId}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(course => {
+                        let option = new Option(course.course, course.id);
+                        courseSelect.add(option);
+                    });
+                });
+        }
+
+        // Function to fetch and populate majors based on selected course
+        function fetchAndPopulateMajors(courseId) {
+            fetch(`/majors/${courseId}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(major => {
+                        let option = new Option(major.major, major.id);
+                        majorSelect.add(option);
+                    });
+                });
+        }
 
         // Event listener for when college is selected
         collegeSelect.addEventListener('change', function() {
@@ -325,22 +332,7 @@ document.querySelector('#show-widget').addEventListener('click', function() {
             const selectedCollegeId = this.value;
             if (selectedCollegeId) {
                 courseSelect.disabled = false;
-
-                fetch(`/courses/${selectedCollegeId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        data.forEach(course => {
-                            let option = new Option(course.course, course.id);
-                            courseSelect.add(option);
-                        });
-
-                        // Pre-select the course if available
-                        if (selectedCourseId) {
-                            courseSelect.value = selectedCourseId;
-                            courseSelect.dispatchEvent(new Event('change')); // Trigger the change event to load majors
-                            selectedCourseId = null; // Reset to avoid conflict if the user changes the selection
-                        }
-                    });
+                fetchAndPopulateCourses(selectedCollegeId);
             } else {
                 courseSelect.disabled = true;
                 majorSelect.disabled = true;
@@ -351,29 +343,20 @@ document.querySelector('#show-widget').addEventListener('click', function() {
         courseSelect.addEventListener('change', function() {
             majorSelect.length = 1; // Remove all options except the default
 
-            selectedCourseId = this.value; // Assign value to the already declared variable
+            const selectedCourseId = this.value;
             if (selectedCourseId) {
                 majorSelect.disabled = false;
-
-                fetch(`/majors/${selectedCourseId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        data.forEach(major => {
-                            let option = new Option(major.major, major.id);
-                            majorSelect.add(option);
-                        });
-
-                        // Pre-select the major if available
-                        if (validSelectedMajorId) {
-                            majorSelect.value = validSelectedMajorId;
-                        }
-                    });
+                fetchAndPopulateMajors(selectedCourseId);
             } else {
                 majorSelect.disabled = true;
             }
         });
+
+        // Initialize the process by fetching colleges
+        fetchAndPopulateColleges();
     });
 </script>
+
 
 
 
@@ -436,6 +419,98 @@ document.querySelector('#show-widget').addEventListener('click', function() {
         let actionLinks = document.getElementById('action-links');
         actionLinks.style.display = anyChecked ? 'block' : 'none';
     }
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Fetch pre-existing values from server-side data and store them in JavaScript variables
+        const selectedCollegeId = "{{ old('collegeId', $studentdata->collegeId ?? '') }}";
+        const selectedCourseId = "{{ old('courseId', $studentdata->courseId ?? '') }}";
+        const selectedMajorId = "{{ old('majorId', $studentdata->majorId ?? '') }}";
+
+        const collegeSelect = document.getElementById('collegeSelectEdit');
+        const courseSelect = document.getElementById('courseSelectEdit');
+        const majorSelect = document.getElementById('majorSelectEdit');
+
+        // Fetch and populate colleges on page load
+        fetch('/colleges')
+            .then(response => response.json())
+            .then(colleges => {
+                colleges.forEach(college => {
+                    const option = document.createElement('option');
+                    option.value = college.id;
+                    option.textContent = college.college;
+                    collegeSelect.appendChild(option);
+                });
+
+                // Pre-select the college if editing an existing student
+                if (selectedCollegeId) {
+                    collegeSelect.value = selectedCollegeId;
+                    collegeSelect.dispatchEvent(new Event('change')); // Trigger the change event to load courses
+                }
+            });
+
+        // Event listener for when a college is selected
+        collegeSelect.addEventListener('change', function() {
+            const selectedCollegeId = this.value;
+
+            // Reset and disable course and major select boxes
+            courseSelect.innerHTML = '<option value="">--Select Course--</option>';
+            majorSelect.innerHTML = '<option value="">--Select Major--</option>';
+            courseSelect.disabled = true;
+            majorSelect.disabled = true;
+
+            if (selectedCollegeId) {
+                courseSelect.disabled = false;
+
+                fetch(`/courses/${selectedCollegeId}`)
+                    .then(response => response.json())
+                    .then(courses => {
+                        courses.forEach(course => {
+                            const option = document.createElement('option');
+                            option.value = course.id;
+                            option.textContent = course.course;
+                            courseSelect.appendChild(option);
+                        });
+
+                        // Pre-select the course if editing an existing student
+                        if (selectedCourseId) {
+                            courseSelect.value = selectedCourseId;
+                            courseSelect.dispatchEvent(new Event('change')); // Trigger the change event to load majors
+                        }
+                    });
+            }
+        });
+
+        // Event listener for when a course is selected
+        courseSelect.addEventListener('change', function() {
+            const selectedCourseId = this.value;
+
+            // Reset and disable the major select box
+            majorSelect.innerHTML = '<option value="">--Select Major--</option>';
+            majorSelect.disabled = true;
+
+            if (selectedCourseId) {
+                majorSelect.disabled = false;
+
+                fetch(`/majors/${selectedCourseId}`)
+                    .then(response => response.json())
+                    .then(majors => {
+                        majors.forEach(major => {
+                            const option = document.createElement('option');
+                            option.value = major.id;
+                            option.textContent = major.major;
+                            majorSelect.appendChild(option);
+                        });
+
+                        // Pre-select the major if editing an existing student
+                        if (selectedMajorId) {
+                            majorSelect.value = selectedMajorId;
+                        }
+                    });
+            }
+        });
+    });
 </script>
 
 
