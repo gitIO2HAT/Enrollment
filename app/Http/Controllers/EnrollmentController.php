@@ -12,9 +12,15 @@ use App\Models\Semester;
 use App\Models\Student;
 use App\Models\YearLevel;
 use App\Models\Suffix;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Exports\StudentExport;
+
+use App\Imports\StudentsImport;
+
+use Maatwebsite\Excel\Facades\Excel;
 class EnrollmentController extends Controller
 {
     public function enrollment(Request $request)
@@ -236,5 +242,56 @@ public function getMajors($course_id)
                    ->where('deleted', '1')
                    ->get();
     return response()->json($majorss);
+}
+
+
+
+public function importStudents(Request $request)
+{
+    // Validate the uploaded file
+    $request->validate([
+        'file' => 'required|mimes:xlsx,xls,csv'
+    ]);
+
+    try {
+        // Attempt to import the students using the uploaded file
+        Excel::import(new StudentsImport, $request->file('file'));
+        
+        // If successful, redirect back with a success message
+        return redirect()->back()->with('success', 'Students imported successfully!');
+        
+    } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+        // Handle validation exceptions from the Excel import process
+        $failures = $e->failures();
+        
+        // Log the validation errors for debugging
+        Log::error('Excel import validation errors:', ['errors' => $failures]);
+        
+        // Return the user back with validation error messages
+        return redirect()->back()->with('error', 'There were validation errors in the imported file. Please check and try again.');
+        
+    } catch (\Exception $e) {
+        // Handle any other exceptions that might occur
+        Log::error('Error importing students:', ['exception' => $e]);
+        
+        // Redirect back with a general error message
+        return redirect()->back()->with('error', 'An error occurred while importing students. Please try again.');
+    }
+}
+// Function to generate a unique student ID
+
+
+
+public function ExportStudents(Request $request){
+
+    $studentIds = $request->input('student_Ids');
+
+    if (empty($studentIds)) {
+        return redirect()->back()->with('error', 'No items selected for export.');
+    }
+
+    // Use a custom export class to handle the export
+    return Excel::download(new StudentExport($studentIds), 'selected_student.xlsx');
+
 }
 }

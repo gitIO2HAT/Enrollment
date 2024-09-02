@@ -57,12 +57,12 @@
             </div>
 
             <div>
-                <a type="button" class="btn btn-info text-white rounded-2 mx-1" data-bs-toggle="modal" data-bs-target="#importModal">
+                <a type="button" class="btn bg-gradient-test rounded-2 mx-1" data-bs-toggle="modal" data-bs-target="#importModal">
                     Import
                 </a>
             </div>
             <div>
-                <a type="button" class="btn btn-warning text-white rounded-2 mx-1" data-bs-toggle="modal" data-bs-target="#studentModal">
+                <a type="button" class="btn bg-gradient-test  rounded-2 mx-1" data-bs-toggle="modal" data-bs-target="#studentModal">
                     Student
                 </a>
             </div>
@@ -72,6 +72,7 @@
     <table class="table table-striped table-hover">
         <thead>
             <tr>
+                <th>Select</th>
                 <th>#</th>
                 <th>Student ID</th>
                 <th>Name</th>
@@ -86,11 +87,20 @@
             </tr>
         </thead>
         <tbody>
+        <form id="export-form" action="{{ url('SuperAdmin/Export') }}" method="POST">
+        @csrf
             @foreach ($studentdata as $index => $student)
             <tr>
+                <td>
+                   
+                      
+                <input type="checkbox" name="student_Ids[]" value="{{ $student->id }}" onclick="toggleActionLinks();">
+                    
+
+                </td>
                 <td>{{ ($studentdata->currentPage() - 1) * $studentdata->perPage() + $index + 1 }}</td>
                 <td>{{ $student->student_Id }}</td>
-                <<td>{{ $student->lastname }}, {{ $student->firstname }} {{ $student->middlename }} {{ $student->suffix ? $student->fix->status : '' }}</td>
+                <td>{{ $student->lastname }}, {{ $student->firstname }} {{ $student->middlename }} {{ $student->suffix ? $student->fix->status : '' }}</td>
 
                 <td>@if($student->sex == 1)
                     Female
@@ -112,10 +122,12 @@
                 </td>
             </tr>
             @endforeach
+            </form>
 
         </tbody>
     </table>
-
+    
+   
     <div class="d-flex justify-content-between align-items-center mt-3">
         <p class="text-muted">
             Showing {{ $studentdata->firstItem() }} to {{ $studentdata->lastItem() }} of {{ $studentdata->total() }}
@@ -125,7 +137,13 @@
             {{ $studentdata->links() }} <!-- This will generate the pagination links -->
         </nav>
     </div>
+    <div id="action-links" style="display: none;">
+    <a class= " p-2 rounded-1 mx-2 bg-hover" href="#" onclick="document.getElementById('export-form').submit();">Export</a>
+    <a class= " p-2 rounded-1 mx-2 bg-hover" href="#" id="select-all" onclick="selectAllCheckboxes(); return false;">Select All</a>
+    <a class= " p-2 rounded-1 mx-2 bg-hover" href="#" id="deselect-all" onclick="deselectAllCheckboxes(); return false;">Deselect All</a>
 </div>
+</div>
+
 
 <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -135,38 +153,17 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-
                 <!-- Form content here -->
-                <form class="text-center" method="POST" action="{{ url('') }}">
+                <form class="text-center" id="import_file" method="POST" action="{{ url('SuperAdmin/Student/Import') }}" enctype="multipart/form-data">
                     @csrf
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Name:</label>
-                        <input type="text" class="form-control underline-input" id="name" name="name"
-                            required>
-                        @if ($errors->has('name'))
-                        <span class="text-danger">{{ $errors->first('name') }}</span>
-                        @endif
-                    </div>
-                    <div class="mb-3 ">
-                        <label for="username" class="form-label">Username:</label>
-                        <input type="text" class="form-control underline-input" id="username" name="username"
-                            required>
-                        @if ($errors->has('username'))
-                        <span class="text-danger">{{ $errors->first('username') }}</span>
-                        @endif
-                    </div>
-                    <div class="mb-3 hidden">
-                        <label for="password" class="form-label">Password:</label>
-                        <input type="password" class="form-control underline-input" id="password" name="password"
-                            value="adminregistrar" required>
-                    </div>
+                    <input type="file" class="form-control" name="file" required>
+                    <!-- Corrected the download link -->
+                    <a href="{{ asset('public/accountprofile/Format.xlsx') }}" download>Download Excel Format Here</a>
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-white rounded-pill text-dark"
-                    data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary rounded-pill text-dark">Add User</button>
+                <button type="submit" class="btn btn-primary rounded-pill text-dark" form="import_file">Import</button>
             </div>
-            </form>
         </div>
     </div>
 </div>
@@ -239,7 +236,6 @@
                         <span class="text-danger">{{ $errors->first('sex') }}</span>
                         @endif
                     </div>
-
                     <!-- College -->
                     <div class="mb-3">
                         <label for="collegeSelect" class="form-label">College<span
@@ -252,7 +248,6 @@
                         <span class="text-danger">{{ $errors->first('collegeId') }}</span>
                         @endif
                     </div>
-
                     <!-- Course -->
                     <div class="mb-3">
                         <label for="courseSelect" class="form-label">Course<span
@@ -265,7 +260,6 @@
                         <span class="text-danger">{{ $errors->first('courseId') }}</span>
                         @endif
                     </div>
-
                     <!-- Major -->
                     <div class="mb-3">
                         <label for="majorSelect" class="form-label">Major<span class="text-primary">*</span>:</label>
@@ -277,7 +271,6 @@
                         <span class="text-danger">{{ $errors->first('majorId') }}</span>
                         @endif
                     </div>
-
                     <!-- Year Level -->
                     <div class="mb-3">
                         <label for="year_levelSelect" class="form-label">Year Level<span
@@ -292,7 +285,6 @@
                         <span class="text-danger">{{ $errors->first('year_level') }}</span>
                         @endif
                     </div>
-
                     <!-- Semester -->
                     <div class="mb-3">
                         <label for="semesterSelect" class="form-label">Semester<span
@@ -325,14 +317,12 @@
                         <span class="text-danger">{{ $errors->first('academic_year_end') }}</span>
                         @endif
                     </div>
-
                     <div class="modal-footer">
                         <button type="button" class="btn btn-white rounded-pill text-dark"
                             data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-primary rounded-pill text-dark">Add Student</button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>

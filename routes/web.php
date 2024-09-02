@@ -39,6 +39,9 @@ Route::group(['middleware' => 'superadmin'], function () {
     Route::post('/SuperAdmin/Enrollment/AddStudent', [EnrollmentController::class, 'addstudent']);
     Route::get('/SuperAdmin/Student/{id}', [EnrollmentController::class, 'student']);
     Route::post('/SuperAdmin/Student/Edit/{id}', [EnrollmentController::class, 'editstudent']);
+    Route::post('/SuperAdmin/Student/Import', [EnrollmentController::class, 'importStudents']);
+    Route::post('/SuperAdmin/Export', [EnrollmentController::class, 'ExportStudents']);
+
 
     Route::get('/SuperAdmin/Graduate', [GraduateController::class, 'graduate']);
 
@@ -61,5 +64,5 @@ Route::group(['middleware' => 'superadmin'], function () {
     Route::post('/SuperAdmin/College/EditMajor/{id}', [CollegeController::class, 'editmajor']);
     Route::get('/SuperAdmin/College/DeletedMajor/{id}', [CollegeController::class, 'deletemajor']);
 
-
+   
 });

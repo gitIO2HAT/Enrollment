@@ -55,6 +55,7 @@
     <table class="table table-striped table-hover">
         <thead>
             <tr>
+                <th>Select</th>
                 <th>#</th>
                 <th>Student ID</th>
                 <th>Name</th>
@@ -70,8 +71,13 @@
             </tr>
         </thead>
         <tbody>
+        <form id="export-form" action="{{ url('SuperAdmin/Export') }}" method="POST">
+        @csrf
             @foreach ($studentdata as $index => $student)
             <tr>
+                <td>
+                <input type="checkbox" name="student_Ids[]" value="{{ $student->id }}" onclick="toggleActionLinks();">
+                </td>
                 <td>{{ ($studentdata->currentPage() - 1) * $studentdata->perPage() + $index + 1 }}</td>
                 <td>{{ $student->student_Id }}</td>
                 <td>{{ $student->lastname }}, {{ $student->firstname }} {{ $student->middlename }} {{ $student->suffix ? $student->fix->status : '' }}</td>
@@ -98,6 +104,7 @@
                 </td>
             </tr>
             @endforeach
+        </form>
 
         </tbody>
     </table>
@@ -110,7 +117,14 @@
         <nav>
             {{ $studentdata->links() }} <!-- This will generate the pagination links -->
         </nav>
+        </div>
+    <div id="action-links" style="display: none;">
+    <a class= " p-2 rounded-1 mx-2 bg-hover" href="#" onclick="document.getElementById('export-form').submit();">Export</a>
+    <a class= " p-2 rounded-1 mx-2 bg-hover" href="#" id="select-all" onclick="selectAllCheckboxes(); return false;">Select All</a>
+    <a class= " p-2 rounded-1 mx-2 bg-hover" href="#" id="deselect-all" onclick="deselectAllCheckboxes(); return false;">Deselect All</a>
+</div>
     </div>
+    
 </div>
 
 

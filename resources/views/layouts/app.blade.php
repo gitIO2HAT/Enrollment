@@ -413,5 +413,30 @@ document.querySelector('#show-widget').addEventListener('click', function() {
 
     </script>
 
+<script>
+    function selectAllCheckboxes() {
+        let checkboxes = document.querySelectorAll('input[name="student_Ids[]"]');
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = true;
+        });
+        toggleActionLinks();
+    }
+
+    function deselectAllCheckboxes() {
+        let checkboxes = document.querySelectorAll('input[name="student_Ids[]"]');
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = false;
+        });
+        toggleActionLinks();
+    }
+
+    function toggleActionLinks() {
+        let checkboxes = document.querySelectorAll('input[name="student_Ids[]"]');
+        let anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+        let actionLinks = document.getElementById('action-links');
+        actionLinks.style.display = anyChecked ? 'block' : 'none';
+    }
+</script>
+
 
 </html>

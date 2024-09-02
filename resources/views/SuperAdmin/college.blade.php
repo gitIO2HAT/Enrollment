@@ -15,6 +15,7 @@
                         <input type="text" id="editable-input-college-{{ $college->id }}" name="college"
                             value="{{ $college->college }}" class="form-control text-center" style="display:none;"
                             onblur="toggleEdit('college', '{{ $college->id }}')" maxlength="10">
+                       
                         <span id="editable-span-college-{{ $college->id }}" class="text-start"
                             onclick="toggleEdit('college', '{{ $college->id }}')"> {{ $college->college }}</span>
                     </div>
@@ -47,6 +48,7 @@
             @csrf
             <div class="row card-modify  rounded-1 text-dark hover-container">
                 <div class="col-11 text-start">
+      
                     <span id="editable-span-course-{{ $course->id }}" style="font-size: 14px"
                         onclick="toggleEdit('course', '{{ $course->id }}')">{{ $course->course }}</span>
                     <input type="text" id="editable-input-course-{{ $course->id }}" name="course"
@@ -212,6 +214,7 @@
                             @csrf
                             <div class="row hover-container major-row" data-course-id="{{ $major->course_id }}">
                                 <div class="col-11 text-start">
+                              
                                     <span id="editable-span-major-{{ $major->id }}" class="text-start" onclick="toggleEdit('major', '{{ $major->id }}')">{{ $major->major }}</span>
                                     <input type="text" id="editable-input-major-{{ $major->id }}" name="major" value="{{ $major->major }}" class="form-control text-center" style="display:none;" onblur="toggleEdit('major', '{{ $major->id }}')" maxlength="100">
                                 </div>
