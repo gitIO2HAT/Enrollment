@@ -18,14 +18,15 @@ return new class extends Migration
             $table->id();
             $table->string('name',120);
             $table->string('username',30)->unique();
+            $table->string('email')->unique();
             $table->tinyInteger('user_type')->default(0);
-            $table->string('password');
+            $table->string('password',100);
             $table->enum('sex', ['1', '2', '3']);
             $table->string('admin_id', 20)->unique()->nullable(); // Add custom_id column here
             $table->enum('deleted', ['1', '2'])->default('1');
             $table->text('role',30)->nullable();
             $table->enum('questions', ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'])->nullable();
-            $table->string('answer',30)->nullable();
+            $table->string('answer',100)->nullable();
             $table->string('profile_pic', 100)->default('default.png');
 
             $table->rememberToken();
@@ -36,6 +37,7 @@ return new class extends Migration
         DB::table('users')->insert([
             [
                 'name' => 'SuperAdmin',
+                'email' => 'ccmcapon@usep.edu.ph',
                 'username' => 'superadmin',
                 'password' => '$2y$12$rtB0bLm5O.eHAz8czKUCwee.JBk1kziejszCU4FYP8TXobrQ5rLE2',
                 'user_type' => 0,
@@ -44,7 +46,7 @@ return new class extends Migration
                 'admin_id' => '2024-adm-001',
                 'deleted' => '1',
                 'questions' => '7',
-                'answer' => 'usep',
+                'answer' => 'USeP',
                 'role' => 'Usep Obrero',
                 'remember_token' => Str::random(10),
                 'created_at' => now(),

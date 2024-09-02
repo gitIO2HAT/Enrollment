@@ -12,6 +12,7 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CollegeController;
 use App\Http\Controllers\GraduateController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ResetPasswordController;
 use App\Models\Attendance;
 
 /*
@@ -25,9 +26,13 @@ use App\Models\Attendance;
 |
 */
 
-Route::get('/', [LoginDashboardController::class, 'login']);
+Route::get('/', [LoginDashboardController::class, 'login'])->name('login');
 Route::post('login', [LoginDashboardController::class, 'AuthLogin']);
+Route::get('/ForgetPassword', [LoginDashboardController::class, 'forgetpassword']);
+Route::post('/ForgetPassword/Reset', [LoginDashboardController::class, 'sendResetLinkEmail']);
 Route::get('/logout', [LoginDashboardController::class, 'logoutButton'])->name('logoutButton');
+Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('/password/reset', [ResetPasswordController::class, 'reset']);
 
 
 

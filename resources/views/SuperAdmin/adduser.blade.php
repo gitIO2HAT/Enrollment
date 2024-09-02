@@ -33,6 +33,7 @@
                     <th>AdminID</th>
                     <th>Admin Name</th>
                     <th>Username</th>
+                    <th>Email</th>
                     <th>Role</th>
                     <th>Action</th>
                 </tr>
@@ -56,6 +57,12 @@
                                 {{ $user->username }}
                             </span>
                             <input type="text" id="editable-input-username-{{ $user->id }}" name="username" value="{{ $user->username }}" class="form-control text-center" style="display:none;" onblur="toggleEdit('username', '{{ $user->id }}')">
+                        </td>
+                        <td class="">
+                            <span id="editable-span-email-{{ $user->id }}" onclick="toggleEdit('email', '{{ $user->id }}')">
+                                {{ $user->email }}
+                            </span>
+                            <input type="email" id="editable-input-email-{{ $user->id }}" name="email" value="{{ $user->email }}" class="form-control text-center" style="display:none;" onblur="toggleEdit('email', '{{ $user->id }}')">
                         </td>
                         <td class="">
                             <span id="editable-span-role-{{ $user->id }}" onclick="toggleEdit('role', '{{ $user->id }}')">
@@ -113,6 +120,13 @@
                         <input type="text" class="form-control underline-input" id="username" name="username" required>
                         @if($errors->has('username'))
                         <span class="text-danger">{{ $errors->first('username') }}</span>
+                        @endif
+                    </div>
+                    <div class="mb-3 ">
+                        <label for="email" class="form-label">Email:</label>
+                        <input type="email" class="form-control underline-input" id="email" name="email" required>
+                        @if($errors->has('email'))
+                        <span class="text-danger">{{ $errors->first('email') }}</span>
                         @endif
                     </div>
                     <div class="mb-3 hidden">

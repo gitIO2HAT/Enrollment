@@ -1,6 +1,8 @@
-<header class="d-flex align-items-center justify-content-between p-2 bg-light border-bottom">
+<header class="d-flex align-items-center justify-content-between p-2  border-bottom" style="background-color:#f6f8fa;">
     <div class="d-flex align-items-center">
-        <img src="{{ asset('img/registrar.png') }}" alt="Logo" class="me-3 pe-3 border-end" style="height: 50px;">
+        
+        <img class="rounded-circle mx-1"  src="{{ asset('img/registrar.png') }}"
+        alt="Profile Picture" style="width: 30px; height: 30px; object-fit: cover;">
         <div class="vr mx-3"></div>
     </div>
 
@@ -35,7 +37,7 @@
         <div class="dropdown border-start pe-3">
             <a class="btn d-flex align-items-center " type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                 <img class="rounded-circle mx-1"  src="{{ asset('public/accountprofile/' . Auth::user()->profile_pic) }}"
-                    alt="Profile Picture" style="width: 50px; height: 50px; object-fit: cover;">
+                    alt="Profile Picture" style="width: 30px; height: 30px; object-fit: cover;">
 
                 <span>{{Auth::user()->name}}</span>
                 <i class="bi bi-caret-down-fill ms-2" style="color: #000000;"></i>

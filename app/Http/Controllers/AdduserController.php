@@ -22,6 +22,7 @@ class AdduserController extends Controller
         if ($search) {
             $users->where(function ($q) use ($search) {
                 $q->whereRaw("CONCAT(name, ' ', id) LIKE ?", ["%$search%"]);
+                $q->whereRaw("CONCAT(email, ' ', id) LIKE ?", ["%$search%"]);
             });
         }
         $users->where('deleted', '=', 1);
@@ -40,13 +41,16 @@ class AdduserController extends Controller
         $request->validate([
             'name' => 'required|string|max:150',
             'username' => 'required|string|unique:users,username',
+            'email' => 'required|email|unique:users,email',
         ],[
             'name.required' => 'The name field is required.',
             'username.unique' => 'This username has already been taken.',
+            'email.unique' => 'This email has already been taken.',
         ]);
         // Assign values to user properties
         $user->name = $request->name;
         $user->username = trim($request->username);
+        $user->email = trim($request->email);
         $user->password = Hash::make($request->password);
         // Generate custom ID
         $currentYear = Carbon::now()->format('Y');
@@ -61,18 +65,19 @@ class AdduserController extends Controller
     }
     public function updateuser($id, Request $request)
     {
-
         $user = User::getId($id);
         $request->validate([
-            'name' => 'required|string|max:50|unique:users,name,' . $request->id,
+            'name' => 'required|string|max:150',
+            'email' => 'required|email|unique:users,email,' . $request->id,
         ],[
-            'name.unique' => 'This name has already been taken.',
+            'email.unique' => 'This name has already been taken.',
         ]);
         $user->name = $request->name;
+        $user->email = trim($request->email);
         $user->username = trim($request->username);
-        $user->description = $request->description;
+        $user->role = $request->role;
         $user->save();
-        return redirect()->back()->with('success', 'Department successfully updated');
+        return redirect()->back()->with('success', 'Users successfully updated');
     }
     public function delete($id)
     {

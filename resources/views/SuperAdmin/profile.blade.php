@@ -65,7 +65,7 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label for="answer" class="form-label">Answer:</label>
-                                                <input type="text" placeholder="Answer" class="form-control underline-input" name="answer" value="{{ Auth::user()->answer }}" required>
+                                                <input type="password" placeholder="Answer" class="form-control underline-input" name="answer" value="{{ Auth::user()->answer }}" required>
                                                 @if($errors->has('answer'))
                                                 <span class="text-danger">{{ $errors->first('answer') }}</span>
                                                 @endif
@@ -74,6 +74,13 @@
                                     </div>
                                     <div class="col-sm-4 col-xl-4">
                                         <div class="fields">
+                                        <div class="mb-3">
+                                                <label for="email" class="form-label">Email:</label>
+                                                <input type="email" placeholder="Enter Email" class="form-control underline-input" name="email" value="{{ Auth::user()->email }}" required>
+                                                @if($errors->has('email'))
+                                                <span class="text-danger">{{ $errors->first('email') }}</span>
+                                                @endif
+                                            </div>
                                             <div class="mb-3">
                                                 <label for="name" class="form-label">Full Name:</label>
                                                 <input type="text" placeholder="Enter Full Name" class="form-control underline-input" name="name" value="{{ Auth::user()->name }}" required>
@@ -114,4 +121,5 @@
         </div>
     </div>
 </div>
+
 @endsection

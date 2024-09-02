@@ -37,8 +37,9 @@ class ProfileController extends Controller
         'sex' => 'nullable|in:1,2,3',
         'role' => 'nullable|string|max:30',
         'username' => 'nullable|string|unique:users,username,' . $id,
+        'email' => 'nullable|email|unique:users,email,' . $id,
         'password' => 'nullable|string|min:4',
-        'questions' => 'required|string',
+        'questions' => 'required|in:1,2,3,4,5,6,7,8,9,10',
         'answer' => 'required|string|max:150',
     ], $messages);
 
@@ -48,8 +49,10 @@ class ProfileController extends Controller
     $user->sex = $request->sex;
     $user->role = $request->role;
     $user->username = $request->username;
+    $user->email = $request->email;
     $user->questions = $request->questions;
-    $user->answer = $request->answer;
+    $user->answer =  trim($request->answer);
+
 
     if (!empty($request->password)) {
         $user->password = Hash::make($request->password);
