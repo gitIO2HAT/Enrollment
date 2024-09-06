@@ -19,15 +19,15 @@ return new class extends Migration
             $table->string('middlename',30)->nullable();
             $table->unsignedBigInteger('suffix')->nullable();
             $table->unsignedBigInteger('collegeId');
-            $table->unsignedBigInteger('courseId');
-            $table->unsignedBigInteger('majorId');
-            $table->unsignedBigInteger('year_level');
-            $table->unsignedBigInteger('semester');
+            $table->unsignedBigInteger('courseId')->nullable();
+            $table->unsignedBigInteger('majorId')->nullable();
+            $table->unsignedBigInteger('year_level')->nullable();
+            $table->unsignedBigInteger('semester')->nullable();
             $table->year('academic_year_start');
             $table->year('academic_year_end');
             $table->unsignedBigInteger('academic_award')->nullable();
             $table->enum('deleted',['1','2'])->default(1);
-            $table->enum('sex',['1','2','3']);
+            $table->enum('sex',['1','2']);
             $table->timestamps();
 
             $table->foreign('collegeId')->references('id')->on('colleges')->onDelete('cascade');

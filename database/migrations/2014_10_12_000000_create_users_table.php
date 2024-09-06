@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->tinyInteger('user_type')->default(0);
             $table->string('password',100);
-            $table->enum('sex', ['1', '2', '3']);
+            $table->enum('sex', ['1', '2']);
             $table->string('admin_id', 20)->unique()->nullable(); // Add custom_id column here
             $table->enum('deleted', ['1', '2'])->default('1');
             $table->text('role',30)->nullable();
@@ -31,8 +31,6 @@ return new class extends Migration
 
             $table->rememberToken();
             $table->timestamps();
-
-
         });
         DB::table('users')->insert([
             [
@@ -42,7 +40,7 @@ return new class extends Migration
                 'password' => '$2y$12$rtB0bLm5O.eHAz8czKUCwee.JBk1kziejszCU4FYP8TXobrQ5rLE2',
                 'user_type' => 0,
                 'profile_pic' => 'superadmin.png',
-                'sex' => '3',
+                'sex' => '1',
                 'admin_id' => '2024-adm-001',
                 'deleted' => '1',
                 'questions' => '7',
@@ -55,7 +53,6 @@ return new class extends Migration
             // Add other users as needed
         ]);
     }
-
     /**
      * Reverse the migrations.
      */

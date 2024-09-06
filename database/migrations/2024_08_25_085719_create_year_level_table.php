@@ -35,6 +35,10 @@ return new class extends Migration
                 'status' => '5th Year',
             ],
             [
+                'status' => '6th Year',
+            ],
+            
+            [
                 'status' => 'Graduated',
             ],
         ]);

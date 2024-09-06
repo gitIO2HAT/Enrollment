@@ -65,6 +65,7 @@
                 <a type="button" class="btn bg-gradient-test  rounded-2 mx-1" data-bs-toggle="modal" data-bs-target="#studentModal">
                     Student
                 </a>
+                
             </div>
         </form>
     </div>
@@ -106,8 +107,6 @@
                     Female
                     @elseif($student->sex == 2)
                     Male
-                    @elseif($student->sex == 3)
-                    Prefer not to say
                     @endif</td>
                 <td>{{ $student->college ? $student->college->college : 'N/A' }}</td>
                 <td>{{ $student->course ? $student->course->course : 'N/A' }}</td>
@@ -142,9 +141,6 @@
     <a class= " p-2 rounded-1 mx-2 bg-hover" href="#" id="select-all" onclick="selectAllCheckboxes(); return false;">Select All</a>
     <a class= " p-2 rounded-1 mx-2 bg-hover" href="#" id="deselect-all" onclick="deselectAllCheckboxes(); return false;">Deselect All</a>
 </div>
-</div>
-
-
 <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -166,6 +162,7 @@
             </div>
         </div>
     </div>
+    
 </div>
 <div class="modal fade" id="studentModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -230,7 +227,6 @@
                             <option value="" selected disabled>--Select Sex--</option>
                             <option value="1">Female</option>
                             <option value="2">Male</option>
-                            <option value="3">Prefer not to say</option>
                         </select>
                         @if ($errors->has('sex'))
                         <span class="text-danger">{{ $errors->first('sex') }}</span>
@@ -250,8 +246,7 @@
                     </div>
                     <!-- Course -->
                     <div class="mb-3">
-                        <label for="courseSelect" class="form-label">Course<span
-                                class="text-primary">*</span>:</label>
+                        <label for="courseSelect" class="form-label">Course:</label>
                         <select id="courseSelect" disabled class="form-control underline-input" name="courseId">
                             <option value="">Select Course</option>
                             <!-- Course options go here -->
@@ -262,7 +257,7 @@
                     </div>
                     <!-- Major -->
                     <div class="mb-3">
-                        <label for="majorSelect" class="form-label">Major<span class="text-primary">*</span>:</label>
+                        <label for="majorSelect" class="form-label">Major:</label>
                         <select id="majorSelect" disabled class="form-control underline-input" name="majorId">
                             <option value="">Select Major</option>
                             <!-- Major options go here -->
@@ -274,7 +269,7 @@
                     <!-- Year Level -->
                     <div class="mb-3">
                         <label for="year_levelSelect" class="form-label">Year Level<span
-                                class="text-primary">*</span>:</label>
+                        class="text-primary">*</span>:</label>
                         <select id="year_levelSelect" class="form-control underline-input" name="year_level">
                             <option value="" selected disabled>--Select Year Level--</option>
                             @foreach ($yearlevels as $year)
@@ -300,7 +295,8 @@
                         @endif
                     </div>
                     <div class="mb-3">
-                        <label for="academic_year" class="form-label">Academic Year:</label>
+                        <label for="academic_year" class="form-label">Academic Year<span
+                        class="text-primary">*</span>:</label>
                         <div class="row">
                             <div class="col-5">
                                 <input type="number" class="form-control underline-input" id="academic_year_start" name="academic_year_start" min="1900" max="2099" step="1" oninput="setEndYear()">
@@ -326,5 +322,6 @@
             </div>
         </div>
     </div>
-
+</div>
+</div>
     @endsection

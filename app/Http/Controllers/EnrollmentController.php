@@ -32,8 +32,10 @@ class EnrollmentController extends Controller
 
 
     $query = Student::with(['college', 'course', 'major', 'yearlevel', 'semesters', 'awards','fix'])
-        ->whereNot('year_level', '=', 6)
-        ->where('deleted', '=', 1);
+        ->whereNot('year_level', '=', 7)
+        ->where('deleted', '=', 1)
+        ->orderBy('id', 'desc');
+
 
     // Apply filters
     if ($request->has('search')) {
@@ -118,10 +120,10 @@ public function addstudent(Request $request)
         'firstname' => 'required|string|max:30',
         'lastname' => 'required|string|max:30',
         'middlename' => 'nullable|string|max:30',
-        'sex' => 'required|in:1,2,3',
+        'sex' => 'required|in:1,2',
         'collegeId' => 'required|integer',
-        'courseId' => 'required|integer',
-        'majorId' => 'required|integer',
+        'courseId' => 'nullable|integer',
+        'majorId' => 'nullable|integer',
         'year_level' => 'required|integer',
         'academic_year_start' => 'required|integer',
         'academic_year_end' => 'required|integer',
@@ -132,8 +134,6 @@ public function addstudent(Request $request)
         'lastname.required' => 'The last name field is required.',
         'sex.required' => 'The sex field is required.',
         'collegeId.required' => 'The college field is required.',
-        'courseId.required' => 'The course field is required.',
-        'majorId.required' => 'The major field is required.',
         'year_level.required' => 'The year level field is required.',
         'semester.required' => 'The semester field is required.',
         'academic_year_start.required' => 'The academic year field is required.',
@@ -178,7 +178,7 @@ public function editstudent($id, Request $request){
         'firstname' => 'required|string|max:30',
         'lastname' => 'required|string|max:30',
         'middlename' => 'nullable|string|max:30',
-        'sex' => 'required|in:1,2,3',
+        'sex' => 'required|in:1,2',
         'collegeId' => 'nullable|integer',
         'courseId' => 'nullable|integer',
         'majorId' => 'nullable|integer',

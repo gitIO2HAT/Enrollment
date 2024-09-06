@@ -23,7 +23,8 @@ class GraduateController extends Controller
 
         $query = Student::with(['college', 'course', 'major', 'yearlevel', 'semesters', 'awards','fix'])
         ->where('year_level', '=', 6)
-        ->where('deleted', '=', 1);
+        ->where('deleted', '=', 1)
+        ->orderBy('id', 'desc');
 
         if ($request->has('search')) {
             $searchTerm = '%' . $request->search . '%';

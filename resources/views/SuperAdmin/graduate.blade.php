@@ -85,8 +85,6 @@
                     Female
                     @elseif($student->sex == 2)
                     Male
-                    @elseif($student->sex == 3)
-                    Prefer not to say
                     @endif</td>
                 <td>{{ $student->college ? $student->college->college : 'N/A' }}</td>
                 <td>{{ $student->course ? $student->course->course : 'N/A' }}</td>
@@ -124,8 +122,4 @@
     <a class= " p-2 rounded-1 mx-2 bg-hover" href="#" id="deselect-all" onclick="deselectAllCheckboxes(); return false;">Deselect All</a>
 </div>
     </div>
-    
-</div>
-
-
 @endsection

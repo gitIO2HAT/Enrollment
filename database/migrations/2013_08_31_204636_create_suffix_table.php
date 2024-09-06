@@ -33,7 +33,27 @@ return new class extends Migration
             [
                 'status' => 'III',
             ],
-
+            [
+                'status' => 'IV',
+            ],
+            [
+                'status' => 'V',
+            ],
+            [
+                'status' => 'VI',
+            ],
+            [
+                'status' => 'VII',
+            ],
+            [
+                'status' => 'VIII',
+            ],
+            [
+                'status' => 'IX',
+            ],
+            [
+                'status' => 'X',
+            ],
         ]);
     }
 

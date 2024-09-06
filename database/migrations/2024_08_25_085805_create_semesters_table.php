@@ -25,6 +25,9 @@ return new class extends Migration
                 'status' => '2nd Semester',
             ],
             [
+                'status' => 'Off Semester',
+            ],
+            [
                 'status' => 'N/A',
             ],
 

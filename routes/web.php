@@ -54,6 +54,8 @@ Route::group(['middleware' => 'superadmin'], function () {
     Route::post('/SuperAdmin/Addadmin', [AdduserController::class, 'addadmin']);
     Route::post('/SuperAdmin/Adduser/UpdateUser/{id}', [AdduserController::class, 'updateuser']);
     Route::get('/SuperAdmin/Adduser/Deleted/{id}', [AdduserController::class, 'delete']);
+    Route::get('/SuperAdmin/Adduser/Restore/{id}', [AdduserController::class, 'restore']);
+    Route::get('/SuperAdmin/Adduser/DeleteUser', [AdduserController::class, 'deleteuser']);
 
     Route::get('/SuperAdmin/Profile', [ProfileController::class, 'profile']);
     Route::post('/SuperAdmin/Updateprofile/{id}', [ProfileController::class, 'updateprofile']);

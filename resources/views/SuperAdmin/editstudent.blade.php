@@ -59,7 +59,6 @@
                                             <span class="text-danger">{{ $errors->first('suffix') }}</span>
                                             @endif
                                         </div>
-
                                     </div>
                                     <div class="col-sm-4 col-xl-4">
                                         <div class="fields">
@@ -124,7 +123,6 @@
                                                     <option selected disabled="">--Select sex--</option>
                                                     <option value="1" @if($studentdata->sex == 1) selected @endif>Female</option>
                                                     <option value="2" @if($studentdata->sex == 2) selected @endif>Male</option>
-                                                    <option value="3" @if($studentdata->sex == 3) selected @endif>Prefer not to say</option>
                                                 </select>
                                                 @if ($errors->has('sex'))
                                                 <span class="text-danger">{{ $errors->first('sex') }}</span>
@@ -133,7 +131,7 @@
                                             <div class="mb-3">
                                                 <label for="academic_award" class="form-label">Academic Award:</label>
                                                 <select id="academic_award" class="form-control underline-input" name="academic_award">
-                                                    <option selected disabled>--Select Awards--</option>
+                                                    <option value="">--Select Awards--</option>
                                                     @foreach ($award as $awards )
                                                     <option value="{{$awards->id}}" @if($studentdata->academic_award == $awards->id) selected @endif>{{$awards->status}}</option>
                                                     @endforeach

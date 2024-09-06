@@ -32,17 +32,13 @@ class StudentsImport implements ToModel, WithHeadingRow
         $majorId = Major::where('major', $row['major'])->first();
         $awardId = Award::where('status', $row['awards'])->first();
         $semesterId = Semester::where('status', $row['semester'])->first();
-
         // Handle sex value mapping
         $sex = null;
         if ($row['sex'] == 'Female') {
             $sex = 1;
         } elseif ($row['sex'] == 'Male') {
             $sex = 2;
-        } elseif ($row['sex'] == 'Prefer not to say') {
-            $sex = 3;
-        }
-
+        } 
         return new Student([
             'student_Id'           => $student_Id,
             'firstname'            => $row['firstname'],

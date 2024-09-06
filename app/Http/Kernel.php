@@ -68,14 +68,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'superadmin' => \App\Http\Middleware\SuperAdminMiddleware::class,
-        'admin' => \App\Http\Middleware\AdminMiddleware::class,
-        'employee' => \App\Http\Middleware\EmployeeMiddleware::class,
-        
     ];
-    protected function schedule(Schedule $schedule)
-{
-    $schedule->call(function () {
-        User::query()->update(['age' => DB::raw('TIMESTAMPDIFF(YEAR, birth_date, NOW())')]);
-    })->daily();
-}
+    
 }
