@@ -5,20 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{ asset('img/registrar.png') }}" rel="icon">
-    <title>Login Form</title>
+    <title>Forget Password</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
     <style>
-        body,
-        html {
+        body, html {
             height: 100%;
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         .background {
-            background-image: url('img/BG.png');
+         
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -32,8 +32,7 @@
         .login-form {
             background: rgba(255, 255, 255, 0.9);
             padding: 2rem;
-            border: 1px solid #000;
-            /* Added border */
+            
             border-radius: 15px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             max-width: 400px;
@@ -41,8 +40,6 @@
             text-align: center;
             z-index: 1;
         }
-
-
 
         .login-form h1 {
             margin-bottom: 1.5rem;
@@ -54,80 +51,75 @@
             margin-bottom: 1rem;
         }
 
+        .logo-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .vertical-line {
+            width: 2px;
+            height: 80px;
+            background-color: #000;
+        }
 
         .forgot-password {
             margin-top: 1rem;
         }
 
-        header {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            background-color: #e0e0e0;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        .btn-forget {
+            background-color: #a00000;
+            color: white;
+            font-weight: bold;
+            padding: 0.75rem;
+            border-radius: 20px;
+            border: none;
         }
+
+        .btn-forget:hover {
+            background-color: #800000;
+        }
+
     </style>
 </head>
 
 <body>
-    <header class="d-flex align-items-center justify-content-between p-2 bg-light border-bottom" style="background-color:#f6f8fa;">
-        <div class="d-flex align-items-center border-end mb-2">
-            <img class="rounded-circle mx-1" src="{{ asset('img/registrar.png') }}"
-                alt="Profile Picture" style="width: 30px; height: 30px; object-fit: cover;">
-        </div>
-        <div class="d-flex align-items-between justify-content-between  w-100">
-            <div class="mx-3 d-flex align-items-center justify-content-center">
-                <h6>Office of the University Registrar</h6>
-            </div>
-            <div class="me-3">
-                <div class="">
-                    <h6>University of Southeastern Philippines</h6>
-                </div>
-                <div class="text-end">
-                    <h6>Enrollment Report System</h6>
-                </div>
-            </div>
-        </div>
-
-        <div class="d-flex align-items-center">
-
-            <div class=" border-start ">
-                <a class=" d-flex align-items-center ">
-
-                    <img class="rounded-circle mx-1" src="{{ asset('img/usep.png') }}"
-                        alt="Profile Picture" style="width: 30px; height: 30px; object-fit: cover;">
-                </a>
-
-            </div>
-        </div>
-    </header>
     <div class="background">
-
-        <div class="secondary-background"></div>
         <div class="login-form">
+            <!-- Logo Section -->
+            <div class="logo-section">
+                <img src="{{ asset('img/usep.png') }}" alt="University Logo" style="width: 80px; height: 80px;">
+                <div class="vertical-line"></div>
+                <img src="{{ asset('img/registrar.png') }}" alt="Registrar Logo" style="width: 80px; height: 80px;">
+            </div>
+
+            <!-- Title -->
             <h1>Forget Password</h1>
+
+            <!-- Message Include -->
             @include('layouts._message')
             @if (Session::has('status'))
-            <div class="alert alert-success">{{ Session::get('status') }}</div>
+                <div class="alert alert-success">{{ Session::get('status') }}</div>
+            @endif
+            @if (Session::has('error'))
+                <div class="alert alert-danger">{{ Session::get('error') }}</div>
             @endif
 
-            @if (Session::has('error'))
-            <div class="alert alert-danger">{{ Session::get('error') }}</div>
-            @endif
+            <!-- Form -->
+            @include('layouts._message')
             <form method="post" action="{{ url('/ForgetPassword/Reset') }}">
                 @csrf
                 <label>Email:</label>
                 <div class="mb-3">
-                    <input type="email" placeholder="Ex. example@usep.edu.ph" class="form-control" name="email" required>
+                    <input type="email" placeholder="Ex. example@usep.edu.ph" class="form-control" name="email" required style="width: 200px; margin: 0 auto;">
                     @if($errors->has('email'))
-                    <span class="text-danger">{{ $errors->first('email') }}</span>
+                        <span class="text-danger">{{ $errors->first('email') }}</span>
                     @endif
                 </div>
+                <label for="questions" class="form-label">Security Question:</label>
                 <div class="mb-3">
-                    <label for="questions" class="form-label">Security Question:</label>
-                    <select id="questions" class="form-control underline-input" name="questions" required>
+                    <select id="questions" class="form-control" name="questions" required style="width: 200px; margin: 0 auto;">
                         <option selected disabled>--Select Question--</option>
                         <option value="1">Mother's Maiden Name?</option>
                         <option value="2">First Pet's Name?</option>
@@ -141,25 +133,28 @@
                         <option value="10">Name of Your Best Friend in Childhood?</option>
                     </select>
                     @if($errors->has('questions'))
-                    <span class="text-danger">{{ $errors->first('questions') }}</span>
+                        <span class="text-danger">{{ $errors->first('questions') }}</span>
                     @endif
                 </div>
+
                 <label>Answer:</label>
                 <div class="mb-3">
-                    <input type="password" class="form-control" name="answer" required>
+                    <input type="password" class="form-control" name="answer" required style="width: 200px; margin: 0 auto;">
                     @if($errors->has('answer'))
-                    <span class="text-danger">{{ $errors->first('answer') }}</span>
+                        <span class="text-danger">{{ $errors->first('answer') }}</span>
                     @endif
                 </div>
-                <button type="submit" class="btn w-100 rounded-pill" style="background-color: #fabd7f;">Confirm</button>
+
+                <button type="submit" class="btn-forget" style="width: 200px; margin: 0 auto;">Forget</button >
             </form>
 
-
+            <!-- Forgot Password -->
             <div class="forgot-password">
-                <a href="\">Log In? <span class="text-primary">Click here</span></a>
+                <a href="{{ url('/') }}">Remembered your password? <span class="text-primary"><b>Click here</b></span></a>
             </div>
         </div>
     </div>
+
     <!-- Bootstrap JS (optional) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

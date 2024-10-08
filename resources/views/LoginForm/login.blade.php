@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,123 +5,138 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{ asset('img/registrar.png') }}" rel="icon">
-    <title>Login Form</title>
+    <title>Enrollment and Graduate Report System</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
     <style>
-        body,
-        html {
+        body, html {
             height: 100%;
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         .background {
-            background-image: url('img/BG.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            height: 95vh;
-            position: relative;
+            background-color: #f9f9f9;
             display: flex;
             align-items: center;
             justify-content: center;
+            height: 100vh;
         }
 
         .login-form {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 2rem;
-    border: 1px solid #000; /* Added border */
-    border-radius: 15px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    width: 100%;
-    text-align: center;
-    z-index: 1;
-}
-
-
+            background: white;
+            padding: 2rem;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
 
         .login-form h1 {
+            font-size: 1.5rem;
             margin-bottom: 1.5rem;
         }
 
-        .login-form .form-control {
-            border: 1px solid #000;
-            border-radius: 30px;
-            margin-bottom: 1rem;
+        .login-form img {
+            width: 80px;
+            height: 80px;
         }
 
-      
-        .forgot-password {
+        .login-form .form-control {
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+        }
+
+        .login-form button {
+            background-color: #a00000;
+            color: white;
+            font-weight: bold;
+            padding: 0.75rem;
+            border-radius: 20px;
+            border: none;
+        }
+
+        .login-form .forgot-password {
             margin-top: 1rem;
         }
 
-        header {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            background-color: #e0e0e0;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        .login-form a {
+            color: #007bff;
+            text-decoration: none;
         }
+
+        .login-form a:hover {
+            text-decoration: underline;
+        }
+
+        .logo-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Space between logos and line */
+}
+
+.vertical-line {
+    width: 2px;
+    height: 80px; /* Adjust the height to match the logos */
+    background-color: #000; /* Line color (black in this case) */
+}
+
+
+        .login-title {
+            font-weight: bold;
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
     </style>
 </head>
 
 <body>
-    <header class="d-flex align-items-center justify-content-between p-2 bg-light border-bottom" style="background-color:#f6f8fa;">
-        <div class="d-flex align-items-center border-end mb-2">
-        <img class="rounded-circle mx-1"  src="{{ asset('img/registrar.png') }}"
-        alt="Profile Picture" style="width: 30px; height: 30px; object-fit: cover;">
-        </div>
-        <div class="d-flex align-items-between justify-content-between  w-100">
-            <div class="mx-3 d-flex align-items-center justify-content-center">
-                <h6>Office of the University Registrar</h6>
-            </div>
-            <div class="me-3">
-                <div class="">
-                    <h6>University of Southeastern Philippines</h6>
-                </div>
-                <div class="text-end">
-                    <h6>Enrollment Report System</h6>
-                </div>
-            </div>
-        </div>
-
-        <div class="d-flex align-items-center">
-
-            <div class=" border-start ">
-                <a class=" d-flex align-items-center ">
-                    
-                    <img class="rounded-circle mx-1"  src="{{ asset('img/usep.png') }}"
-                    alt="Profile Picture" style="width: 30px; height: 30px; object-fit: cover;">
-                </a>
-
-            </div>
-        </div>
-    </header>
     <div class="background">
-
-        <div class="secondary-background"></div>
         <div class="login-form">
-            <h1>Log In</h1>
+            <!-- Logo Section -->
+            <div class="logo-section">
+    <img src="{{ asset('img/usep.png') }}" alt="University Logo">
+    
+    <!-- Vertical Line -->
+    <div class="vertical-line"></div>
+    
+    <img src="{{ asset('img/registrar.png') }}" alt="Secondary Logo">
+</div>
+
+            <!-- Title -->
+            <div class="login-title">Enrollment and Graduate Report System</div>
+            <!-- Login Form -->
             @include('layouts._message')
-            <form method="post" action="{{ url('login') }}" >
-            @csrf
-                <label>Username:</label>
-                <div class="mb-3">
-                    <input type="text" class="form-control" name="username" required>
-                </div>
-                <label>Password:</label>
-                <div class="mb-3">
-                    <input type="password" class="form-control" name="password" required>
-                </div>
-                <button type="submit" class="btn w-100 rounded-pill" style="background-color: #fabd7f;">Confirm</button>
+            <form method="post" action="{{ url('login') }}">
+                
+                @csrf
+                <div style="text-align: center;">
+                <label><b>Username</b></label>
+    <input type="text" class="form-control" name="username" placeholder="enter your username" required style="width: 200px; margin: 0 auto;">
+</div>
+<div style="text-align: center; margin-top: 20px;">
+<label><b>Password</b></label>
+    <input type="password" class="form-control" name="password" placeholder="enter your password" required style="width: 200px; margin: 0 auto;">
+</div>
+
+<div style="text-align: center; margin-top: 20px;">
+<button type="submit" class="btn"  style="width: 200px; margin: 0 auto;">Log-in</button>
+</div>
+               
+               
+
             </form>
+            <!-- Forgot Password -->
             <div class="forgot-password">
-                <a href="{{ url('/ForgetPassword') }}">Forgot Password? <span class="text-primary">Click here</span></a>
+                <a href="{{ url('/ForgetPassword') }}">forgot password? <span class="text-primary"><b>Click here</b></span></a>
             </div>
         </div>
     </div>

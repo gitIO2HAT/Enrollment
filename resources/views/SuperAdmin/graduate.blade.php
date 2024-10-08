@@ -7,16 +7,16 @@
 
 
 <!-- Table and Filters -->
-<div class="card p-3 rounded shadow-sm my-4">
+<div class="card p-3 rounded shadow-sm m-5">
     <div>
         <form action="{{ url('/SuperAdmin/Graduate') }}" method="GET" class="d-flex justify-content-between align-items-center mb-3">
             @csrf
 
             <div class="d-flex w-100">
-                <button class="btn btn-success m-1" type="submit">Search</button>
-                <button type="hidden" class="btn btn-light m-1" onclick="clearSearch()">Clear</button>
+              
+            <button type="hidden" title="Clear Search Filter" class="btn m-1" onclick="clearSearch()"><i class="fas fa-backspace" style="color: #e85617;"></i></button>
                 <span class="input-group-text bg-white border-end-0">
-                    <i class="bi bi-search"></i>
+                <button class="btn " title="Search" type="submit"><i class="fas fa-search" style="color: #63E6BE;"></i></button>
                 </span>
                 <input type="search" id="search" class="form-control border-start-0" name="search" placeholder="Search Here" value="{{ request('search') }}" style="width: 100%">
 
@@ -95,7 +95,7 @@
 
 
                 <td>
-                    <a type="button" href="{{ url('/SuperAdmin/Student/' . $student->id) }}">
+                    <a type="button" title="Edit <?php echo $student->lastname; ?>" href="{{ url('/SuperAdmin/Student/' . $student->id) }}">
                         <i class="far fa-edit" style="color: #090909;"></i>
                     </a>
 

@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container my-4">
+<div class="container">
     @include('layouts._message')
 
-    <div class="card p-3 rounded shadow-sm">
+    <div class="card p-3 rounded shadow-sm m-5">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <form action="{{ url('/SuperAdmin/Adduser') }}" class="w-50">
                 @csrf
                 <div class="input-group">
-                    <span class="input-group-text bg-white border-end">
+                    <span title="Search" class="input-group-text bg-white border-end">
                         <i class="bi bi-search"></i>
                     </span>
                     <input type="search" id="search" class="form-control border-start-0 rounded-1" name="search" placeholder="Search Here" value="{{ request('search') }}" style="width: 50%;">
@@ -18,11 +18,11 @@
                 </div>
             </form>
             <div class="">
-                <a type="button" class="btn btn-warning text-white rounded-pill mx-2" data-bs-toggle="modal" data-bs-target="#addUserModal">
-                    Add User
+                <a type="button" title="Add User" class="btn text-white rounded-pill mx-2" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                <i class="fas fa-user-plus bg-gradient-icon"></i>
                 </a>
-                <a type="button" class="btn btn-primary text-white rounded-pill mx-2" href="{{url('SuperAdmin/Adduser/DeleteUser')}}">
-                    Archived
+                <a type="button" title="Archived" class="btn text-white rounded-pill mx-2" href="{{url('SuperAdmin/Adduser/DeleteUser')}}">
+                <i class="fas fa-archive" style="color: #ea281a;"></i>
                 </a>
             </div>
         </div>
@@ -68,10 +68,10 @@
                             <input type="text" id="editable-input-role-{{ $user->id }}" name="role" value="{{ $user->role }}" class="form-control text-center" style="display:none;" onblur="toggleEdit('role', '{{ $user->id }}')">
                         </td>
                         <td>
-                            <button type="submit" style="background: none; border: none; padding: 0; cursor: pointer;">
+                            <button type="submit" title="Save" style="background: none; border: none; padding: 0; cursor: pointer;">
                                 <i class="fas fa-save" style="color: #63E6BE;"></i>
                             </button>
-                            <a href="{{ url('/SuperAdmin/Adduser/Deleted/'.$user->id) }}">
+                            <a title="Delete User" href="{{ url('/SuperAdmin/Adduser/Deleted/'.$user->id) }}">
                                 <i class="fas fa-trash-alt" style="color: #f56666;"></i>
                             </a>
                         </td>

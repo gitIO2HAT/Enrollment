@@ -20,11 +20,11 @@
                             onclick="toggleEdit('college', '{{ $college->id }}')"> {{ $college->college }}</span>
                     </div>
                     <div class="col-6 text-end">
-                        <span><a type="button" class="mx-2"
+                        <span><a type="button" title="Edit" class="mx-2"
                                 onclick="toggleEdit('college', '{{ $college->id }}')">
                                 <i class="fas fa-pen fa-xs" style="color: #dcdde0;"></i>
                             </a>
-                            <a href="{{ url('SuperAdmin/College/DeletedCollege/' . $college->id) }}"
+                            <a title="Delete" href="{{ url('SuperAdmin/College/DeletedCollege/' . $college->id) }}"
                             onclick="return confirm('Are you sure you want to delete this college?');"> <i
                                     class="fas fa-times fa-xs" style="color: #dcdde0;"></i></a>
                         </span>
@@ -56,11 +56,12 @@
                         style="display:none;" onblur="toggleEdit('course', '{{ $course->id }}')" maxlength="100">
                 </div>
                 <div class="col-1 text-end">
-                    <a href="{{ url('SuperAdmin/College/DeletedCourse/' . $course->id) }}"
+                    <!--
+                    <a title="Delete" href="{{ url('SuperAdmin/College/DeletedCourse/' . $course->id) }}"
                         class="delete-icon"
                         onclick="return confirm('Are you sure you want to delete this course?');">
                         <i class="fas fa-times fa-xs" style="color: #973229;"></i>
-                    </a>
+                    </a> -->
 
                 </div>
             </div>
@@ -88,14 +89,14 @@
     </div>
     <div class="sticky-widget mb-5">
         <div class="menu d-flex flex-column">
-            <a type="button" class="mx-2 my-2 py-2 bg-gradient-test  text-white text-center rounded-2" data-bs-toggle="modal" style="width:90px;" data-bs-target="#addCollegeModal">
-                <span class="text-white fs-6"> Add College</span>
+            <a type="button" title="Add College Department" class="mx-2 my-2 py-2   text-white text-center rounded-2" data-bs-toggle="modal" style="width:90px;" data-bs-target="#addCollegeModal">
+                <span class="text-white fs-6"> <i class="fas fa-university bg-gradient-icon "></i></span>
             </a>
-            <a type="button" class="mx-2 my-2 py-2 bg-gradient-test  text-white text-center rounded-2" data-bs-toggle="modal" style="width:90px;" data-bs-target="#addCourseModal">
-                <span class="text-white fs-6"> Add Course</span>
+            <a type="button" title="Add Course"  class="mx-2 my-2 py-2 text-white text-center rounded-2" data-bs-toggle="modal" style="width:90px;" data-bs-target="#addCourseModal">
+                <span class="text-white fs-6"> <i class="fas fa-graduation-cap bg-gradient-icon"></i></span>
             </a>
-            <a type="button" class="mx-2 my-2 py-2 bg-gradient-test  text-white text-center rounded-2" data-bs-toggle="modal" style="width:90px;" data-bs-target="#addMajorModal">
-                <span class="text-white fs-6"> Add Major</span>
+            <a type="button" title="Add Major"  class="mx-2 my-2 py-2  text-white text-center rounded-2" data-bs-toggle="modal" style="width:90px;" data-bs-target="#addMajorModal">
+                <span class="text-white fs-6"> <i class="fas fa-address-book bg-gradient-icon"></i></span>
             </a>
 
         </div>

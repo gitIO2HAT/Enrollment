@@ -149,13 +149,14 @@ class ComposerStaticInit9c491b8531eec05ba41a11d9276a5749
             'Illuminate\\' => 11,
         ),
         'G' => 
-        array (
-            'GuzzleHttp\\UriTemplate\\' => 23,
-            'GuzzleHttp\\Psr7\\' => 16,
-            'GuzzleHttp\\Promise\\' => 19,
-            'GuzzleHttp\\' => 11,
-            'GrahamCampbell\\ResultType\\' => 26,
-        ),
+    array (
+        'GuzzleHttp\\UriTemplate\\' => 23,
+        'GuzzleHttp\\Psr7\\' => 16,
+        'GuzzleHttp\\Promise\\' => 19,
+        'GuzzleHttp\\' => 11,  // This is the corrected line
+        'GrahamCampbell\\ResultType\\' => 26,
+    ),
+
         'F' => 
         array (
             'Fruitcake\\Cors\\' => 15,

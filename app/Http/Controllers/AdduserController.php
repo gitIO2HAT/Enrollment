@@ -13,7 +13,7 @@ class AdduserController extends Controller
     public function adduser(Request $request)
     {
         // Ensure the user is authenticated and authorized to access this method
-        if (Auth::check() && Auth::user()->user_type == 0) {
+        if (Auth::check() && Auth::user()->admin_id == '2024-adm-001') {
             // Fetch all users
             // or paginate if needed, e.g., User::paginate(10);
 
@@ -32,12 +32,13 @@ class AdduserController extends Controller
             return view('superadmin.adduser', ['users' => $users]);
         }
         // Handle unauthorized access
-        return redirect()->route('home')->with('error', 'Unauthorized access');
+        return redirect('/')->with('error', 'Unauthorized access');
+
     }
     public function deleteuser(Request $request)
     {
         // Ensure the user is authenticated and authorized to access this method
-        if (Auth::check() && Auth::user()->user_type == 0) {
+        if (Auth::check() && Auth::user()->admin_id == '2024-adm-001') {
             // Fetch all users
             // or paginate if needed, e.g., User::paginate(10);
 
@@ -56,7 +57,8 @@ class AdduserController extends Controller
             return view('superadmin.deleteuser', ['users' => $users]);
         }
         // Handle unauthorized access
-        return redirect()->route('home')->with('error', 'Unauthorized access');
+        return redirect('/')->with('error', 'Unauthorized access');
+
     }
     public function addadmin(Request $request)
     {
