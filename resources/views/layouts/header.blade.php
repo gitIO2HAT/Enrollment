@@ -1,12 +1,15 @@
 <header class="d-flex align-items-center justify-content-between p-2  border-bottom" style="background-color:#f6f8fa;">
     <div class="d-flex align-items-center">
-        
-        <img class="rounded-circle mx-1"  src="{{ asset('img/registrar.png') }}"
+
+        <img class="rounded-circle mx-3"  src="{{ asset('img/usep.png') }}"
+        alt="Profile Picture" style="width: 30px; height: 30px; object-fit: cover;">
+        <img class="rounded-circle"  src="{{ asset('img/registrar.png') }}"
         alt="Profile Picture" style="width: 30px; height: 30px; object-fit: cover;">
         <div class="vr mx-3"></div>
+
     </div>
 
-    <div class="d-flex align-items-center justify-content-center w-100">
+    <div class="  text-start w-100">
         <div class="btn-group">
             @if(Request::segment(2)== 'Enrollment')
             <a class="btn bg-gradient-test rounded-pill px-4 me-2" href="{{url('/SuperAdmin/Enrollment')}}">Enrollment Report</a>

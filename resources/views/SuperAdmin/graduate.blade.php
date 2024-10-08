@@ -90,7 +90,7 @@
                 <td>{{ $student->course ? $student->course->course : 'N/A' }}</td>
                 <td>{{ $student->major ? $student->major->major : 'N/A' }}</td>
                 <td>{{ $student->yearlevel->status }}</td>
-                <td>{{ $student->awards->status }}</td>
+                <td>{{ $student->awards ? $student->awards->status : 'N/A'}}</td>
                 <td>{{ $student->academic_year_start }} - {{ $student->academic_year_end }}</td>
 
 

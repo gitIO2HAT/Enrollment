@@ -27,6 +27,9 @@ return new class extends Migration
             [
                 'status' => 'Cum Laude',
             ],
+            [
+                'status' => 'N/A',
+            ],
         ]);
     }
 

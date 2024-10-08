@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Semester;
 use App\Models\Student;
 use App\Models\YearLevel;
+use Illuminate\Support\Facades\DB;
 use App\Models\Suffix;
 
 
@@ -22,18 +23,24 @@ class GraduateController extends Controller
         $suffixs = Suffix::all();
 
         $query = Student::with(['college', 'course', 'major', 'yearlevel', 'semesters', 'awards','fix'])
-        ->where('year_level', '=', 6)
+        ->where('year_level', '=', 7)
         ->where('deleted', '=', 1)
         ->orderBy('id', 'desc');
 
+        // Apply filter for search
         if ($request->has('search')) {
             $searchTerm = '%' . $request->search . '%';
             $query->where(function($q) use ($searchTerm) {
                 $q->where('firstname', 'LIKE', $searchTerm)
                   ->orWhere('lastname', 'LIKE', $searchTerm)
                   ->orWhere('middlename', 'LIKE', $searchTerm)
-                  ->orWhere('student_Id', 'LIKE', $searchTerm);
+                  ->orWhere('student_Id', 'LIKE', $searchTerm)
+                  ->orWhere('academic_year_start', 'LIKE', $searchTerm)
+                  ->orWhere('academic_year_end', 'LIKE', $searchTerm)
+                  ->orWhere(DB::raw("CONCAT(academic_year_start, '-', academic_year_end)"), 'LIKE', $searchTerm);
             });
+
+
         }
 
         if ($request->has('collegeId')) {

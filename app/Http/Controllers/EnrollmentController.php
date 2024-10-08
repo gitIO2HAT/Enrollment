@@ -37,15 +37,20 @@ class EnrollmentController extends Controller
         ->orderBy('id', 'desc');
 
 
-    // Apply filters
+    // Apply filter for search
     if ($request->has('search')) {
         $searchTerm = '%' . $request->search . '%';
-        $query->where(function($q) use ($searchTerm) {
-            $q->where('firstname', 'LIKE', $searchTerm)
-              ->orWhere('lastname', 'LIKE', $searchTerm)
-              ->orWhere('middlename', 'LIKE', $searchTerm)
-              ->orWhere('student_Id', 'LIKE', $searchTerm);
-        });
+      $query->where(function($q) use ($searchTerm) {
+    $q->where('firstname', 'LIKE', '%' . $searchTerm . '%')
+      ->orWhere('lastname', 'LIKE', '%' . $searchTerm . '%')
+      ->orWhere('middlename', 'LIKE', '%' . $searchTerm . '%')
+      ->orWhere('student_Id', 'LIKE', '%' . $searchTerm . '%')
+      ->orWhere('academic_year_start', 'LIKE', '%' . $searchTerm . '%')
+      ->orWhere('academic_year_end', 'LIKE', '%' . $searchTerm . '%')
+      ->orWhere(DB::raw("CONCAT(academic_year_start, '-', academic_year_end)"), 'LIKE', '%' . $searchTerm . '%');
+});
+
+
     }
 
     if ($request->has('collegeId')) {
@@ -218,7 +223,7 @@ public function editstudent($id, Request $request){
     // Save the user to the database
     $student->save();
 
-    return redirect('/SuperAdmin/Enrollment')->with('success', 'Student successfully updated');
+    return redirect('/SuperAdmin/Enrollment')->with('success', 'Student(s) successfully updated');
 
 }
 
@@ -256,24 +261,24 @@ public function importStudents(Request $request)
     try {
         // Attempt to import the students using the uploaded file
         Excel::import(new StudentsImport, $request->file('file'));
-        
+
         // If successful, redirect back with a success message
-        return redirect()->back()->with('success', 'Students imported successfully!');
-        
+        return redirect()->back()->with('success', 'Student(s) imported successfully!');
+
     } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
         // Handle validation exceptions from the Excel import process
         $failures = $e->failures();
-        
+
         // Log the validation errors for debugging
         Log::error('Excel import validation errors:', ['errors' => $failures]);
-        
+
         // Return the user back with validation error messages
         return redirect()->back()->with('error', 'There were validation errors in the imported file. Please check and try again.');
-        
+
     } catch (\Exception $e) {
         // Handle any other exceptions that might occur
         Log::error('Error importing students:', ['exception' => $e]);
-        
+
         // Redirect back with a general error message
         return redirect()->back()->with('error', 'An error occurred while importing students. Please try again.');
     }

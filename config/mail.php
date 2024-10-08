@@ -108,7 +108,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'ccmcapon@usep.edu.ph'),
+        'address' => env('MAIL_FROM_ADDRESS', 'apbantalan@usep.edu.ph'),
         'name' => env('MAIL_FROM_NAME', 'Greetings! Admin.'),
     ],
 

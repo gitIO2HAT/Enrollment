@@ -58,14 +58,15 @@
 
             <div>
                 <a type="button" class="btn bg-gradient-test rounded-2 mx-1" data-bs-toggle="modal" data-bs-target="#importModal">
-                    Import
+                    Import Student
                 </a>
             </div>
             <div>
                 <a type="button" class="btn bg-gradient-test  rounded-2 mx-1" data-bs-toggle="modal" data-bs-target="#studentModal">
-                    Student
+                  Add Student
+
                 </a>
-                
+
             </div>
         </form>
     </div>
@@ -93,10 +94,10 @@
             @foreach ($studentdata as $index => $student)
             <tr>
                 <td>
-                   
-                      
+
+
                 <input type="checkbox" name="student_Ids[]" value="{{ $student->id }}" onclick="toggleActionLinks();">
-                    
+
 
                 </td>
                 <td>{{ ($studentdata->currentPage() - 1) * $studentdata->perPage() + $index + 1 }}</td>
@@ -125,8 +126,8 @@
 
         </tbody>
     </table>
-    
-   
+
+
     <div class="d-flex justify-content-between align-items-center mt-3">
         <p class="text-muted">
             Showing {{ $studentdata->firstItem() }} to {{ $studentdata->lastItem() }} of {{ $studentdata->total() }}
@@ -162,7 +163,7 @@
             </div>
         </div>
     </div>
-    
+
 </div>
 <div class="modal fade" id="studentModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true">
     <div class="modal-dialog">

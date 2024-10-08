@@ -65,5 +65,5 @@ class Student extends Model
     {
         return $this->belongsTo(Suffix::class, 'suffix');
     }
-    
+
 }
