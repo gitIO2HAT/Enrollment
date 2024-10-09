@@ -1,8 +1,7 @@
 <header class="d-flex align-items-center justify-content-between p-2 shadow" style="background-color:#f6f8fa;">
     <div class="d-flex align-items-center border-end border-light">
 
-        <img class="rounded-circle mx-3"  src="{{ asset('img/usep.png') }}"
-        alt="Profile Picture" style="width: 30px; height: 30px; object-fit: cover;">
+
         <img class="rounded-circle"  src="{{ asset('img/registrar.png') }}"
         alt="Profile Picture" style="width: 30px; height: 30px; object-fit: cover;">
         <div class="vr mx-3 "></div>
@@ -39,9 +38,9 @@
 
     <div class="d-flex align-items-center">
         <div class="vr mx-3"></div>
-        <div class="dropdown border-start border-light pe-3">
-            <a class="btn d-flex align-items-center " type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                <img class="rounded-circle mx-1"  src="{{ asset('public/accountprofile/' . Auth::user()->profile_pic) }}"
+        <div class="dropdown  pe-3 ">
+            <a class="btn d-flex align-items-center  " type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                <img class="rounded-circle mx-1 "   src="{{ asset('public/accountprofile/' . Auth::user()->profile_pic) }}"
                     alt="Profile Picture" style="width: 30px; height: 30px; object-fit: cover;">
 
                 <span>{{Auth::user()->name}}</span>

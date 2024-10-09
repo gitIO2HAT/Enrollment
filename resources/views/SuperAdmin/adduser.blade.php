@@ -12,8 +12,8 @@
                     <span title="Search" class="input-group-text bg-white border-end">
                         <i class="bi bi-search"></i>
                     </span>
-                    <input type="search" id="search" class="form-control border-start-0 rounded-1" name="search" placeholder="Search Here" value="{{ request('search') }}" style="width: 50%;">
-                    <button style="display: none;" class="btn btn-success m-1" type="submit">Search</button>
+                    <input style="font-size: 12px;"type="search" id="search" class="form-control border-start-0 rounded-1" name="search" placeholder="Search Here" value="{{ request('search') }}" style="width: 50%;">
+                    <button style="display: none;" class="btn btn-success m-1 font" type="submit">Search</button>
                     <button style="display: none;" type="hidden" class="btn btn-success m-1" onclick="clearSearch()">Clear</button>
                 </div>
             </form>
@@ -26,7 +26,7 @@
                 </a>
             </div>
         </div>
-        <table class="table table-striped table-hover">
+        <table class="font table table-striped table-hover">
             <thead>
                 <tr>
                     <th>AdminID</th>
@@ -81,7 +81,7 @@
             </tbody>
         </table>
 
-        <div class="d-flex justify-content-between align-items-center mt-3">
+        <div class="font d-flex justify-content-between align-items-center mt-3">
             <p class="text-muted">
                 Showing {{ $users->firstItem() }} to {{ $users->lastItem() }} of {{ $users->total() }} entries
             </p>
@@ -143,7 +143,12 @@
                     </div>
                     <div class="mb-3">
                         <label for="role" class="form-label">Role:</label>
-                        <input type="text" class="form-control underline-input" id="role" name="role" required>
+                        <select id="role" class="form-control underline-input" name="role">
+                            <option selected disabled="">--Select Role--</option>
+                            <option value="Admin">Admin</option>
+                            <option value="Staff">Staff</option>
+                        </select>
+
                         @if($errors->has('role'))
                             <span class="text-danger">{{ $errors->first('role') }}</span>
                         @endif

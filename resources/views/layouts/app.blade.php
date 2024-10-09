@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
- 
+
     <title>Enrollment Report - {{Request::segment(2)}} - {{Request::segment(3)}}</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
@@ -33,6 +33,9 @@
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
 </head>
+
+
+
 
 
 <body>

@@ -12,7 +12,7 @@
 
                     <div class="bg-white text-center p-4">
 
-                        <h1 class="text-dark">{{$studentdata->student_Id}} - {{$studentdata->lastname}}, {{$studentdata->firstname}} {{$studentdata->middlename}} {{ $studentdata->suffix ? $studentdata->fix->status : '' }}</h1>
+                        <h2 class="text-dark">{{$studentdata->student_Id}} - {{$studentdata->lastname}}, {{$studentdata->firstname}} {{$studentdata->middlename}} {{ $studentdata->suffix ? $studentdata->fix->status : '' }}</h1>
                         <div class="user-head">
                             <form method="POST" action="{{ url('/SuperAdmin/Student/Edit/' . $studentdata->id) }}" enctype="multipart/form-data">
                                 @csrf

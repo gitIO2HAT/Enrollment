@@ -12,35 +12,35 @@
         <form action="{{ url('/SuperAdmin/Enrollment') }}" method="GET" class="d-flex justify-content-between align-items-center mb-3">
             @csrf
 
-            <div class="d-flex w-100">
-                
-                <button type="hidden" title="Clear Search Filter" class="btn m-1" onclick="clearSearch()"><i class="fas fa-backspace" style="color: #e85617;"></i></button>
+            <div class="d-flex w-100 font">
+
+                <button type="hidden" title="Clear Search Filter" class="btn" onclick="clearSearch()"><i class="fas fa-backspace" style="color: #e85617;"></i></button>
                 <span class="input-group-text bg-white border-end-0">
-                <button class="btn " title="Search" type="submit"><i class="fas fa-search" style="color: #63E6BE;"></i></button>
+                <button class="btn " title="Search" type="submit"><i class="fas fa-search" style="color: #e0230a;"></i></button>
                 </span>
-                <input type="search" id="search" class="form-control border-start-0" name="search" placeholder="Search Here" value="{{ request('search') }}" style="width: 100%">
+                <input style="font-size: 15px;" type="search" id="search" class="form-control border-start-0" name="search" placeholder="Search Here" value="{{ request('search') }}" style="width: 100%">
 
 
                 <!-- College Selection -->
-                <select id="collegeSelectSearch" class="form-select mx-1" name="collegeId">
-                    <option value="" selected disabled>--College--</option>
+                <select id="collegeSelectSearch" class="form-select mx-1" name="collegeId" style="font-size: 15px;">
+                    <option value=""  selected disabled>--College--</option>
                     <!-- College options go here -->
                 </select>
 
                 <!-- Course Selection -->
-                <select id="courseSelectSearch" class="form-select mx-1" name="courseId">
+                <select id="courseSelectSearch" class="form-select mx-1" name="courseId" style="font-size: 15px;">
                     <option value="" selected disabled>--Course--</option>
                     <!-- Course options go here -->
                 </select>
 
                 <!-- Major Selection -->
-                <select id="majorSelectSearch" class="form-select mx-1" name="majorId">
+                <select id="majorSelectSearch" class="form-select mx-1" name="majorId" style="font-size: 15px;">
                     <option value="" selected disabled>--Major--</option>
                     <!-- Major options go here -->
                 </select>
 
                 <!-- Year Level Selection -->
-                <select id="yearLevelSelect" class="form-select mx-1" name="yearLevelId">
+                <select id="yearLevelSelect" class="form-select mx-1" name="yearLevelId" style="font-size: 15px;">
                     <option selected disabled>--Year Level--</option>
                     @foreach ($years as $year)
                     <option value="{{ $year->id }}">{{ $year->status }}</option>
@@ -48,7 +48,7 @@
                 </select>
 
                 <!-- Semester Selection -->
-                <select id="semesterSelect" class="form-select mx-1" name="semesterId">
+                <select id="semesterSelect" class="form-select mx-1" name="semesterId" style="font-size: 15px;">
                     <option selected disabled>--Semester--</option>
                     @foreach ($semester as $sem)
                     <option value="{{ $sem->id }}">{{ $sem->status }}</option>
@@ -71,7 +71,7 @@
         </form>
     </div>
 
-    <table class="table table-striped table-hover">
+    <table class="font table table-striped table-hover">
         <thead>
             <tr>
                 <th>Select</th>
@@ -117,13 +117,13 @@
                 <td>{{ $student->academic_year_start }} - {{ $student->academic_year_end }}</td>
                 <td>
                     <a type="button" title="Edit <?php echo $student->lastname; ?>" href="{{ url('/SuperAdmin/Student/' . $student->id) }}">
-                        <i class="far fa-edit" style="color: #090909;"></i>
+                        <i class="far fa-edit" style="color: #39a1ec;"></i>
                     </a>
                 </td>
             </tr>
             @endforeach
             </form>
-       
+
 
         </tbody>
     </table>

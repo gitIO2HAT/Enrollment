@@ -18,7 +18,7 @@
         }
 
         .background {
-         
+
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -32,7 +32,7 @@
         .login-form {
             background: rgba(255, 255, 255, 0.9);
             padding: 2rem;
-            
+
             border-radius: 15px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             max-width: 400px;
@@ -59,9 +59,9 @@
         }
 
         .vertical-line {
-            width: 2px;
-            height: 80px;
-            background-color: #000;
+    width: 0.5px;
+    height: 20px; /* Adjust the height to match the logos */
+    background-color: rgb(203, 203, 203); /* Line color (black in this case) */
         }
 
         .forgot-password {
@@ -93,9 +93,9 @@
                 <div class="vertical-line"></div>
                 <img src="{{ asset('img/registrar.png') }}" alt="Registrar Logo" style="width: 80px; height: 80px;">
             </div>
-
+        </p>
             <!-- Title -->
-            <h1>Forget Password</h1>
+            <h4>Forget Password</h4>
 
             <!-- Message Include -->
             @include('layouts._message')
@@ -110,14 +110,14 @@
             @include('layouts._message')
             <form method="post" action="{{ url('/ForgetPassword/Reset') }}">
                 @csrf
-                <label>Email:</label>
+                <label><b>Email</b>:</label>
                 <div class="mb-3">
                     <input type="email" placeholder="Ex. example@usep.edu.ph" class="form-control" name="email" required style="width: 200px; margin: 0 auto;">
                     @if($errors->has('email'))
                         <span class="text-danger">{{ $errors->first('email') }}</span>
                     @endif
                 </div>
-                <label for="questions" class="form-label">Security Question:</label>
+                <label for="questions" class="form-label"><b>Security Question</b>:</label>
                 <div class="mb-3">
                     <select id="questions" class="form-control" name="questions" required style="width: 200px; margin: 0 auto;">
                         <option selected disabled>--Select Question--</option>
@@ -137,7 +137,7 @@
                     @endif
                 </div>
 
-                <label>Answer:</label>
+                <label><b>Answer</b>:</label>
                 <div class="mb-3">
                     <input type="password" class="form-control" name="answer" required style="width: 200px; margin: 0 auto;">
                     @if($errors->has('answer'))

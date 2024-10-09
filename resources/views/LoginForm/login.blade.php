@@ -79,13 +79,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px; /* Space between logos and line */
+    gap: 12px; /* Space between logos and line */
 }
 
 .vertical-line {
-    width: 2px;
-    height: 80px; /* Adjust the height to match the logos */
-    background-color: #000; /* Line color (black in this case) */
+    width: 0.5px;
+    height: 20px; /* Adjust the height to match the logos */
+    background-color: rgb(203, 203, 203); /* Line color (black in this case) */
 }
 
 
@@ -104,19 +104,19 @@
             <!-- Logo Section -->
             <div class="logo-section">
     <img src="{{ asset('img/usep.png') }}" alt="University Logo">
-    
+
     <!-- Vertical Line -->
     <div class="vertical-line"></div>
-    
+
     <img src="{{ asset('img/registrar.png') }}" alt="Secondary Logo">
 </div>
-
+</p>
             <!-- Title -->
             <div class="login-title">Enrollment and Graduate Report System</div>
             <!-- Login Form -->
             @include('layouts._message')
             <form method="post" action="{{ url('login') }}">
-                
+
                 @csrf
                 <div style="text-align: center;">
                 <label><b>Username</b></label>
@@ -130,13 +130,13 @@
 <div style="text-align: center; margin-top: 20px;">
 <button type="submit" class="btn"  style="width: 200px; margin: 0 auto;">Log-in</button>
 </div>
-               
-               
+
+
 
             </form>
             <!-- Forgot Password -->
             <div class="forgot-password">
-                <a href="{{ url('/ForgetPassword') }}">forgot password? <span class="text-primary"><b>Click here</b></span></a>
+                <a href="{{ url('/ForgetPassword') }}">Forgot password? <span class="text-primary"><b>Click here</b></span></a>
             </div>
         </div>
     </div>

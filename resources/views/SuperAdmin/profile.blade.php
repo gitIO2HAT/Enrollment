@@ -103,7 +103,12 @@
 
                                             <div class="mb-3">
                                                 <label for="role" class="form-label">Role:</label>
-                                                <input type="text" placeholder="Enter Role" class="form-control underline-input" name="role" value="{{ Auth::user()->role }}" required>
+                                                <select id="role" class="form-control underline-input" name="role" required>
+                                                    <option selected disabled="">--Select Role--</option>
+                                                    <option value="Admin" @if(Auth::user()->role == 'Admin') selected @endif>Admin</option>
+                                                    <option value="Staff" @if(Auth::user()->role == 'Staff') selected @endif>Staff</option>
+                                                </select>
+
                                                 @if($errors->has('role'))
                                                 <span class="text-danger">{{ $errors->first('role') }}</span>
                                                 @endif

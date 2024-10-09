@@ -11,14 +11,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
     <style>
-        body, html {
+        body,
+        html {
             height: 100%;
             margin: 0;
             font-family: 'Poppins', sans-serif;
         }
 
         .background {
-         
+
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -32,7 +33,7 @@
         .login-form {
             background: rgba(255, 255, 255, 0.9);
             padding: 2rem;
-            
+
             border-radius: 15px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             max-width: 400px;
@@ -59,9 +60,9 @@
         }
 
         .vertical-line {
-            width: 2px;
-            height: 80px;
-            background-color: #000;
+    width: 0.5px;
+    height: 20px; /* Adjust the height to match the logos */
+    background-color: rgb(203, 203, 203); /* Line color (black in this case) */
         }
 
         .forgot-password {
@@ -80,7 +81,6 @@
         .btn-forget:hover {
             background-color: #800000;
         }
-
     </style>
 </head>
 
@@ -95,7 +95,7 @@
             </div>
 
             <!-- Title -->
-            <h1>Reset Password</h1>
+            <h3>Reset Password</h3>
 
             <!-- Message Include -->
             @include('layouts._message')
@@ -111,30 +111,34 @@
                 @csrf
                 <input type="hidden" name="token" value="{{ $token }}">
 
-                  <label>Email:</label>
+                <label>Email:</label>
                 <div class="mb-3">
-                    <input type="email" id="email" class="form-control" name="email" value="{{ $email ?? old('email') }}" required autofocus style="width: 200px; margin: 0 auto;">
+                    <input type="email" id="email" class="form-control" name="email"
+                        value="{{ $email ?? old('email') }}" required autofocus style="width: 200px; margin: 0 auto;">
                 </div>
-                
+
                 <label>New Password:</label>
                 <div class="mb-3">
-                    <input id="password" type="password" class="form-control" name="password" required onkeyup="checkPasswordMatch();" style="width: 200px; margin: 0 auto;">
+                    <input id="password" type="password" class="form-control" name="password" required
+                        onkeyup="checkPasswordMatch();" style="width: 200px; margin: 0 auto;">
                 </div>
                 <label>Confirm Password:</label>
                 <div class="mb-3">
-                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required onkeyup="checkPasswordMatch();" style="width: 200px; margin: 0 auto;">
+                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
+                        required onkeyup="checkPasswordMatch();" style="width: 200px; margin: 0 auto;">
                 </div>
                 <div id="passwordMatchMessage" style="color:black; text-align:center; margin-top:10px;"></div>
-                <button type="submit" class="btn  rounded-pill" style="background-color: #fabd7f; width: 200px; margin: 0 auto;" >Confirm</button>
+                <button type="submit" class="btn  rounded-pill"
+                    style="background-color: #fabd7f; width: 200px; margin: 0 auto;">Confirm</button>
             </form>
             <div class="forgot-password">
                 <a href="\">Log In? <span class="text-primary"><b>Click here</b></span></a>
             </div>
-               
 
-                
 
-           
+
+
+
         </div>
     </div>
 
@@ -143,5 +147,3 @@
 </body>
 
 </html>
-
-

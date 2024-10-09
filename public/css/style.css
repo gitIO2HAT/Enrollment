@@ -732,3 +732,6 @@ footer a:hover {
 .hover-container:hover .delete-icon {
     opacity: 1; /* Show on hover */
 }
+.font{
+    font-size: 13px;
+}
