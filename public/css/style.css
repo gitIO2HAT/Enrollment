@@ -703,20 +703,108 @@ footer a:hover {
     padding: 10px;
     transform: translate(50%, 50%);
 }
+/* Ensure footer stays at the bottom on small screens with scrollable height */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex-grow: 1;
+}
+
+/* Styling for the images in the footer */
+footer img {
+    max-height: 30px;
+    object-fit: contain;
+}
+
+footer a {
+    color: #6c757d;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 644px) {
+    footer p, footer a {
+        font-size: 12px;
+    }
+
+    footer img {
+        max-height: 25px;
+    }
+
+    /* Adjust spacing for mobile */
+    footer .d-flex {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    footer .text-muted {
+        font-size: 10px;
+    }
+}
 .sticky-widget {
     position: fixed;
-    right: 20px;
+    right: 10px;
     bottom: 50px;
     border-radius: 8px;
     padding: 10px;
     z-index: 1000;
+    width: auto;
 }
 
 .menu button {
-    display: block;
+    display: inline;
     border: none;
     cursor: pointer;
 }
+
+/* Media Query for smaller screens, adjusting the widget position and size */
+@media (max-width: 768px) {
+    .sticky-widget {
+        right: 5px;
+        bottom: 20px;
+        width: 80px; /* Adjust width for small screens */
+    }
+
+    .menu a {
+        width: 70px; /* Adjust buttons for small screens */
+    }
+
+    .close-button, #show-widget {
+        right: 10px;
+        bottom: 20px;
+        width: 35px; /* Adjust size of the toggle button */
+        height: 35px;
+    }
+}
+
+/* Media Query for very small screens, adjusting further */
+@media (max-width: 480px) {
+    .sticky-widget {
+        right: 3px;
+        bottom: 15px;
+        width: 70px; /* Smaller width */
+    }
+
+    .menu a {
+        width: 60px;
+    }
+
+    .close-button, #show-widget {
+        right: 5px;
+        bottom: 15px;
+        width: 30px;
+        height: 30px;
+    }
+}
+
 
 
 
@@ -735,3 +823,117 @@ footer a:hover {
 .font{
     font-size: 13px;
 }
+ /* General styling for header and dropdown */
+ .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f6f8fa;
+}
+
+.dropdown-menu {
+    min-width: 200px;
+}
+
+/* Adjustments for small screens */
+@media (max-width: 644px) {
+    .font-adjust{
+        font-size: 8px;
+    }
+    .line{
+        border: none;
+    }
+    .header-container {
+        flex-direction: column;
+    }
+    
+    /* Center dropdown button */
+    .dropdown {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .dropdown .btn {
+        width: 100%;
+    }
+
+    /* Full-width dropdown menu */
+    .dropdown-menu {
+        width: 100%;
+        left: 0 !important;
+        right: 0 !important;
+    }
+
+    .dropdown-menu .dropdown-item {
+        text-align: center;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 1980px) {
+  
+    .line{
+        border-right: 1px gray;
+    }
+}
+.search-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.search-form .d-flex {
+    width: 100%;
+    gap: 10px;
+}
+
+.search-form .form-control, 
+.search-form .form-select {
+    font-size: 15px;
+}
+
+
+
+/* For smaller screens (644px and below) */
+@media (max-width: 644px) {
+    .search-form {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .search-form .d-flex {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .search-form .form-control,
+    .search-form .form-select {
+        width: 100%;
+        margin-bottom: 10px; /* Adds spacing between input fields */
+    }
+
+    .search-form .btn {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .search-form .action-buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+}
+
+footer {
+    background-color: #f8f9fa;
+    padding: 10px 0;
+    text-align: center;
+    font-size: 14px;
+    position: relative;
+    width: 100%;
+    bottom: 0;
+}
+

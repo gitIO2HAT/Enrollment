@@ -8,69 +8,77 @@
 
 <!-- Table and Filters -->
 <div class="card p-3 rounded shadow-sm m-5">
-    <div>
-        <form action="{{ url('/SuperAdmin/Enrollment') }}" method="GET" class="d-flex justify-content-between align-items-center mb-3">
-            @csrf
+<div>
+    <form action="{{ url('/SuperAdmin/Enrollment') }}" method="GET" class="search-form ">
+        @csrf
 
-            <div class="d-flex w-100 font">
+        <div class="d-flex font">
+            <!-- Clear Search Button -->
+            <button type="button" title="Clear Search Filter" class="btn" onclick="clearSearch()">
+                <i class="fas fa-backspace" style="color: #e85617;"></i>
+            </button>
 
-                <button type="hidden" title="Clear Search Filter" class="btn" onclick="clearSearch()"><i class="fas fa-backspace" style="color: #e85617;"></i></button>
-                <span class="input-group-text bg-white border-end-0">
-                <button class="btn " title="Search" type="submit"><i class="fas fa-search" style="color: #e0230a;"></i></button>
-                </span>
-                <input style="font-size: 15px;" type="search" id="search" class="form-control border-start-0" name="search" placeholder="Search Here" value="{{ request('search') }}" style="width: 100%">
+            <!-- Search Input -->
+            <span class=" bg-white ">
+                <button class="btn" title="Search" type="submit">
+                    <i class="fas fa-search" style="color: #e0230a;"></i>
+                </button>
+            </span>
 
+            <input type="search" id="search" class="form-control " name="search" placeholder="Search Here" value="{{ request('search') }}" style="font-size: 15px;">
 
-                <!-- College Selection -->
-                <select id="collegeSelectSearch" class="form-select mx-1" name="collegeId" style="font-size: 15px;">
-                    <option value=""  selected disabled>--College--</option>
-                    <!-- College options go here -->
-                </select>
+            <!-- College Selection -->
+            <select id="collegeSelectSearch" class="form-select mx-1" name="collegeId">
+                <option value="" selected disabled>--College--</option>
+                <!-- College options go here -->
+            </select>
 
-                <!-- Course Selection -->
-                <select id="courseSelectSearch" class="form-select mx-1" name="courseId" style="font-size: 15px;">
-                    <option value="" selected disabled>--Course--</option>
-                    <!-- Course options go here -->
-                </select>
+            <!-- Course Selection -->
+            <select id="courseSelectSearch" class="form-select mx-1" name="courseId">
+                <option value="" selected disabled>--Course--</option>
+                <!-- Course options go here -->
+            </select>
 
-                <!-- Major Selection -->
-                <select id="majorSelectSearch" class="form-select mx-1" name="majorId" style="font-size: 15px;">
-                    <option value="" selected disabled>--Major--</option>
-                    <!-- Major options go here -->
-                </select>
+            <!-- Major Selection -->
+            <select id="majorSelectSearch" class="form-select mx-1" name="majorId">
+                <option value="" selected disabled>--Major--</option>
+                <!-- Major options go here -->
+            </select>
 
-                <!-- Year Level Selection -->
-                <select id="yearLevelSelect" class="form-select mx-1" name="yearLevelId" style="font-size: 15px;">
-                    <option selected disabled>--Year Level--</option>
-                    @foreach ($years as $year)
-                    <option value="{{ $year->id }}">{{ $year->status }}</option>
-                    @endforeach
-                </select>
+            <!-- Year Level Selection -->
+            <select id="yearLevelSelect" class="form-select mx-1" name="yearLevelId">
+                <option selected disabled>--Year Level--</option>
+                @foreach ($years as $year)
+                <option value="{{ $year->id }}">{{ $year->status }}</option>
+                @endforeach
+            </select>
 
-                <!-- Semester Selection -->
-                <select id="semesterSelect" class="form-select mx-1" name="semesterId" style="font-size: 15px;">
-                    <option selected disabled>--Semester--</option>
-                    @foreach ($semester as $sem)
-                    <option value="{{ $sem->id }}">{{ $sem->status }}</option>
-                    @endforeach
-                </select>
-            </div>
+            <!-- Semester Selection -->
+            <select id="semesterSelect" class="form-select mx-1" name="semesterId">
+                <option selected disabled>--Semester--</option>
+                @foreach ($semester as $sem)
+                <option value="{{ $sem->id }}">{{ $sem->status }}</option>
+                @endforeach
+            </select>
+        </div>
+      
+            <a type="button" title="Import File" class="btn rounded-2 mx-1" data-bs-toggle="modal" data-bs-target="#importModal">
+                <i class="fas fa-file-import bg-gradient-icon"></i>
+            </a>
 
-            <div>
-                <a type="button" title="Import File" class="btn rounded-2 mx-1" data-bs-toggle="modal" data-bs-target="#importModal">
-                <i class="fas fa-file-import bg-gradient-icon" ></i>
-                </a>
-            </div>
-            <div>
-                <a type="button" title="Add Students" class="btn rounded-2 mx-1" data-bs-toggle="modal" data-bs-target="#studentModal">
+            <a type="button" title="Add Students" class="btn rounded-2 mx-1" data-bs-toggle="modal" data-bs-target="#studentModal">
                 <i class="fas fa-user-plus bg-gradient-icon"></i>
+            </a>
+        
+        <!-- Action buttons for importing file and adding students -->
+       
+    </form>
 
-                </a>
+    
+</div>
 
-            </div>
-        </form>
-    </div>
 
+    <div class="table-responsive">
     <table class="font table table-striped table-hover">
         <thead>
             <tr>
@@ -127,6 +135,7 @@
 
         </tbody>
     </table>
+</div>
 
 
     <div class="d-flex justify-content-between align-items-center mt-3">

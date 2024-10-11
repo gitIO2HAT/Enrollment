@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     @include('layouts._message')
 
     <div class="card p-3 rounded shadow-sm m-5">
@@ -26,60 +26,63 @@
                 </a>
             </div>
         </div>
-        <table class="font table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>AdminID</th>
-                    <th>Admin Name</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($users as $user)
-                <tr>
-                    <form action="{{ url('/SuperAdmin/Adduser/UpdateUser/'.$user->id) }}" method="POST">
-                        @csrf
-                        <td>{{ $user->admin_id }}</td>
-                        <td>
-                            <span id="editable-span-name-{{ $user->id }}" onclick="toggleEdit('name', '{{ $user->id }}')">
-                                {{ $user->name }}
-                            </span>
-                            <input type="text" id="editable-input-name-{{ $user->id }}" name="name" value="{{ $user->name }}" class="form-control text-center" style="display:none;" onblur="toggleEdit('name', '{{ $user->id }}')">
-                        </td>
-                        <td>
-                            <span id="editable-span-username-{{ $user->id }}" onclick="toggleEdit('username', '{{ $user->id }}')">
-                                {{ $user->username }}
-                            </span>
-                            <input type="text" id="editable-input-username-{{ $user->id }}" name="username" value="{{ $user->username }}" class="form-control text-center" style="display:none;" onblur="toggleEdit('username', '{{ $user->id }}')">
-                        </td>
-                        <td>
-                            <span id="editable-span-email-{{ $user->id }}" onclick="toggleEdit('email', '{{ $user->id }}')">
-                                {{ $user->email }}
-                            </span>
-                            <input type="email" id="editable-input-email-{{ $user->id }}" name="email" value="{{ $user->email }}" class="form-control text-center" style="display:none;" onblur="toggleEdit('email', '{{ $user->id }}')">
-                        </td>
-                        <td>
-                            <span id="editable-span-role-{{ $user->id }}" onclick="toggleEdit('role', '{{ $user->id }}')">
-                                {{ $user->role }}
-                            </span>
-                            <input type="text" id="editable-input-role-{{ $user->id }}" name="role" value="{{ $user->role }}" class="form-control text-center" style="display:none;" onblur="toggleEdit('role', '{{ $user->id }}')">
-                        </td>
-                        <td>
-                            <button type="submit" title="Save" style="background: none; border: none; padding: 0; cursor: pointer;">
-                                <i class="fas fa-save" style="color: #63E6BE;"></i>
-                            </button>
-                            <a title="Delete User" href="{{ url('/SuperAdmin/Adduser/Deleted/'.$user->id) }}">
-                                <i class="fas fa-trash-alt" style="color: #f56666;"></i>
-                            </a>
-                        </td>
-                    </form>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+        <div class="table-responsive">
+    <table class="table table-striped table-hover font">
+        <thead>
+            <tr>
+                <th>AdminID</th>
+                <th>Admin Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($users as $user)
+            <tr>
+                <form action="{{ url('/SuperAdmin/Adduser/UpdateUser/'.$user->id) }}" method="POST">
+                    @csrf
+                    <td>{{ $user->admin_id }}</td>
+                    <td>
+                        <span id="editable-span-name-{{ $user->id }}" onclick="toggleEdit('name', '{{ $user->id }}')">
+                            {{ $user->name }}
+                        </span>
+                        <input type="text" id="editable-input-name-{{ $user->id }}" name="name" value="{{ $user->name }}" class="form-control text-center" style="display:none;" onblur="toggleEdit('name', '{{ $user->id }}')">
+                    </td>
+                    <td>
+                        <span id="editable-span-username-{{ $user->id }}" onclick="toggleEdit('username', '{{ $user->id }}')">
+                            {{ $user->username }}
+                        </span>
+                        <input type="text" id="editable-input-username-{{ $user->id }}" name="username" value="{{ $user->username }}" class="form-control text-center" style="display:none;" onblur="toggleEdit('username', '{{ $user->id }}')">
+                    </td>
+                    <td>
+                        <span id="editable-span-email-{{ $user->id }}" onclick="toggleEdit('email', '{{ $user->id }}')">
+                            {{ $user->email }}
+                        </span>
+                        <input type="email" id="editable-input-email-{{ $user->id }}" name="email" value="{{ $user->email }}" class="form-control text-center" style="display:none;" onblur="toggleEdit('email', '{{ $user->id }}')">
+                    </td>
+                    <td>
+                        <span id="editable-span-role-{{ $user->id }}" onclick="toggleEdit('role', '{{ $user->id }}')">
+                            {{ $user->role }}
+                        </span>
+                        <input type="text" id="editable-input-role-{{ $user->id }}" name="role" value="{{ $user->role }}" class="form-control text-center" style="display:none;" onblur="toggleEdit('role', '{{ $user->id }}')">
+                    </td>
+                    <td>
+                        <button type="submit" title="Save" style="background: none; border: none; padding: 0; cursor: pointer;">
+                            <i class="fas fa-save" style="color: #63E6BE;"></i>
+                        </button>
+                        <a title="Delete User" href="{{ url('/SuperAdmin/Adduser/Deleted/'.$user->id) }}">
+                            <i class="fas fa-trash-alt" style="color: #f56666;"></i>
+                        </a>
+                    </td>
+                </form>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+
 
         <div class="font d-flex justify-content-between align-items-center mt-3">
             <p class="text-muted">

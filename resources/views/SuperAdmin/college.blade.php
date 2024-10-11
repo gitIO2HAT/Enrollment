@@ -4,29 +4,29 @@
 @include('layouts._message')
 
 
-<div class="row g-4  my-4 d-flex justify-content-center">
+<div class="row g-4 my-4 d-flex justify-content-center">
     @foreach ($colleges as $college)
-    <div class="col-2  rounded-1  me-2" style="width: 350px;">
+    <div class="col-lg-3 col-md-4 col-sm-6 col-12 rounded-1 me-2">
         <div class="card bg-gradient-test p-3 rounded text-white">
             <form action="{{ url('SuperAdmin/College/EditCollege/' . $college->id) }}" method="post">
                 @csrf
-                <div class="row ">
+                <div class="row">
                     <div class="col-6 text-start">
                         <input type="text" id="editable-input-college-{{ $college->id }}" name="college"
                             value="{{ $college->college }}" class="form-control text-center" style="display:none;"
                             onblur="toggleEdit('college', '{{ $college->id }}')" maxlength="10">
-                       
                         <span id="editable-span-college-{{ $college->id }}" class="text-start"
-                            onclick="toggleEdit('college', '{{ $college->id }}')"> {{ $college->college }}</span>
+                            onclick="toggleEdit('college', '{{ $college->id }}')">{{ $college->college }}</span>
                     </div>
                     <div class="col-6 text-end">
-                        <span><a type="button" title="Edit" class="mx-2"
-                                onclick="toggleEdit('college', '{{ $college->id }}')">
+                        <span>
+                            <a type="button" title="Edit" class="mx-2" onclick="toggleEdit('college', '{{ $college->id }}')">
                                 <i class="fas fa-pen fa-xs" style="color: #dcdde0;"></i>
                             </a>
                             <a title="Delete" href="{{ url('SuperAdmin/College/DeletedCollege/' . $college->id) }}"
-                            onclick="return confirm('Are you sure you want to delete this college?');"> <i
-                                    class="fas fa-times fa-xs" style="color: #dcdde0;"></i></a>
+                               onclick="return confirm('Are you sure you want to delete this college?');">
+                                <i class="fas fa-times fa-xs" style="color: #dcdde0;"></i>
+                            </a>
                         </span>
                     </div>
                 </div>
@@ -44,36 +44,24 @@
         @foreach ($courses as $course)
         @if ($college->id === $course->college_id)
         <form action="{{ url('SuperAdmin/College/EditCourse/' . $course->id) }}" method="post">
-
             @csrf
-            <div class="row card-modify  rounded-1 text-dark hover-container">
+            <div class="row card-modify rounded-1 text-dark hover-container">
                 <div class="col-11 text-start">
-      
-                    <span id="editable-span-course-{{ $course->id }}" style="font-size: 14px"
+                    <span id="editable-span-course-{{ $course->id }}" style="font-size: 14px;"
                         onclick="toggleEdit('course', '{{ $course->id }}')">{{ $course->course }}</span>
                     <input type="text" id="editable-input-course-{{ $course->id }}" name="course"
-                        value="{{ $course->course }}" class="form-control text-center"
-                        style="display:none;" onblur="toggleEdit('course', '{{ $course->id }}')" maxlength="100">
-                </div>
-                <div class="col-1 text-end">
-                    <!--
-                    <a title="Delete" href="{{ url('SuperAdmin/College/DeletedCourse/' . $course->id) }}"
-                        class="delete-icon"
-                        onclick="return confirm('Are you sure you want to delete this course?');">
-                        <i class="fas fa-times fa-xs" style="color: #973229;"></i>
-                    </a> -->
-
+                        value="{{ $course->course }}" class="form-control text-center" style="display:none;"
+                        onblur="toggleEdit('course', '{{ $course->id }}')" maxlength="100">
                 </div>
             </div>
             <button type="submit" style="display:none;"></button>
         </form>
         @endif
         @endforeach
-
-
     </div>
     @endforeach
 </div>
+
 <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
         <div class="col-sm-12 col-xl-12">
@@ -87,24 +75,8 @@
             </div>
         </div>
     </div>
-    <div class="sticky-widget mb-5">
-        <div class="menu d-flex flex-column">
-            <a type="button" title="Add College Department" class="mx-2 my-2 py-2   text-white text-center rounded-2" data-bs-toggle="modal" style="width:90px;" data-bs-target="#addCollegeModal">
-                <span class="text-white fs-6"> <i class="fas fa-university bg-gradient-icon "></i></span>
-            </a>
-            <a type="button" title="Add Course"  class="mx-2 my-2 py-2 text-white text-center rounded-2" data-bs-toggle="modal" style="width:90px;" data-bs-target="#addCourseModal">
-                <span class="text-white fs-6"> <i class="fas fa-graduation-cap bg-gradient-icon"></i></span>
-            </a>
-            <a type="button" title="Add Major"  class="mx-2 my-2 py-2  text-white text-center rounded-2" data-bs-toggle="modal" style="width:90px;" data-bs-target="#addMajorModal">
-                <span class="text-white fs-6"> <i class="fas fa-address-book bg-gradient-icon"></i></span>
-            </a>
-
-        </div>
-        <div class="text-end">
-            <button class="bg-gradient-test rounded-3 close-button" style="position: fixed; width:40px; height:40px; right: 20px; bottom: 60px;"><i class="far fa-arrow-alt-circle-down" style="color: #ffffff;"></i></button>
-        </div>
-    </div>
-    <button id="show-widget" class="bg-gradient-test rounded-3" style="position: fixed;width:40px; height:40px; right: 20px; bottom: 60px; display: none;"><i class="far fa-arrow-alt-circle-up" style="color: #fff;"></i></button>
+    
+    
     <div class="modal fade" id="addCollegeModal" tabindex="-1" aria-labelledby="addCollegeModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
@@ -238,7 +210,4 @@
             </div>
         </div>
     </div>
-
-
-
     @endsection

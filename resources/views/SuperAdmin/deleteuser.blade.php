@@ -27,6 +27,7 @@
                 </a>
             </div>
         </div>
+        <div class="table-responsive">
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
@@ -80,6 +81,7 @@
             </tbody>
 
         </table>
+</div>
 
         <div class="d-flex justify-content-between align-items-center mt-3">
             <p class="text-muted">
