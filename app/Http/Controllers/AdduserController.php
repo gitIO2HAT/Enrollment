@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 
 class AdduserController extends Controller
@@ -62,51 +63,120 @@ class AdduserController extends Controller
     }
     public function addadmin(Request $request)
     {
-        // Create a new user instance
+        // Maximum length for the name
+        $maxNameLength = 150;
+    
+        // Check if the name field is empty or exceeds the max length
+        if (empty($request->name) || strlen($request->name) > $maxNameLength) {
+            // Log that the name is invalid
+            Log::warning('Name field is invalid:', ['name' => $request->name]);
+    
+            // Redirect back with an error message for name validation
+            return redirect()->back()->with(['error' => 'The name field is required and must not exceed ' . $maxNameLength . ' characters.']);
+        }
+    
+        // Check if the username already exists
+        if (User::where('username', $request->username)->exists()) {
+            // Log that the username is already taken
+            Log::warning('Username already exists:', ['username' => $request->username]);
+    
+            // Redirect back with an error message for username uniqueness
+            return redirect()->back()->with(['error' => 'This username has already been taken.']);
+        }
+    
+        // Check if the email is valid and already exists
+        if (!filter_var($request->email, FILTER_VALIDATE_EMAIL)) {
+            // Log that the email format is invalid
+            Log::warning('Invalid email format:', ['email' => $request->email]);
+    
+            // Redirect back with an error message for email format
+            return redirect()->back()->with(['error' => 'The email format is invalid.']);
+        }
+    
+        if (User::where('email', $request->email)->exists()) {
+            // Log that the email is already taken
+            Log::warning('Email already exists:', ['email' => $request->email]);
+    
+            // Redirect back with an error message for email uniqueness
+            return redirect()->back()->with(['error' => 'This email has already been taken.']);
+        }
+    
+        // Proceed with adding the user if no validation errors
         $user = new User;
-
-        $request->validate([
-            'name' => 'required|string|max:150',
-            'username' => 'required|string|unique:users,username',
-            'email' => 'required|email|unique:users,email',
-        ], [
-            'name.required' => 'The name field is required.',
-            'username.unique' => 'This username has already been taken.',
-            'email.unique' => 'This email has already been taken.',
-        ]);
-        // Assign values to user properties
         $user->name = $request->name;
         $user->username = trim($request->username);
         $user->role = $request->role;
         $user->email = trim($request->email);
         $user->password = Hash::make($request->password);
+    
         // Generate custom ID
         $currentYear = Carbon::now()->format('Y');
         $latestUserId = User::latest('id')->first(); // Get the latest user ID
         $nextUserId = ($latestUserId) ? $latestUserId->id + 1 : 1; // Increment the latest user ID
-        $admin_id = $currentYear . '-' . 'adm' . '-' .sprintf('%03d', $nextUserId); // Format the custom ID
-        // Assign the custom ID to the user
+        $admin_id = $currentYear . '-' . 'adm' . '-' . sprintf('%03d', $nextUserId); // Format the custom ID
         $user->admin_id = $admin_id;
+    
         // Save the user to the database
         $user->save();
+    
         return redirect()->back()->with('success', 'User successfully added');
     }
+    
     public function updateuser($id, Request $request)
-    {
-        $user = User::getId($id);
-        $request->validate([
-            'name' => 'required|string|max:150',
-            'email' => 'required|email|unique:users,email,' . $request->id,
-        ], [
-            'email.unique' => 'This name has already been taken.',
-        ]);
-        $user->name = $request->name;
-        $user->email = trim($request->email);
-        $user->username = trim($request->username);
-        $user->role = $request->role;
-        $user->save();
-        return redirect()->back()->with('success', 'Users successfully updated');
+{
+    // Retrieve the user by ID
+    $user = User::find($id);
+    if (!$user) {
+        // Log that the user was not found
+        Log::warning('User not found:', ['id' => $id]);
+
+        // Redirect back with an error message if the user does not exist
+        return redirect()->back()->with(['error' => 'User not found.']);
     }
+
+    // Maximum length for the name
+    $maxNameLength = 150;
+
+    // Check if the name field is empty or exceeds the max length
+    if (empty($request->name) || strlen($request->name) > $maxNameLength) {
+        // Log that the name is invalid
+        Log::warning('Name field is invalid:', ['name' => $request->name]);
+
+        // Redirect back with an error message for name validation
+        return redirect()->back()->with(['error' => 'The name field is required and must not exceed ' . $maxNameLength . ' characters.']);
+    }
+
+    // Check if the email is valid
+    if (!filter_var($request->email, FILTER_VALIDATE_EMAIL)) {
+        // Log that the email format is invalid
+        Log::warning('Invalid email format:', ['email' => $request->email]);
+
+        // Redirect back with an error message for email format
+        return redirect()->back()->with(['error' => 'The email format is invalid.']);
+    }
+
+    // Check if the email already exists in the database, excluding the current user
+    if (User::where('email', $request->email)->where('id', '!=', $id)->exists()) {
+        // Log that the email is already taken
+        Log::warning('Email already exists:', ['email' => $request->email]);
+
+        // Redirect back with an error message for email uniqueness
+        return redirect()->back()->with(['error' => 'This email has already been taken.']);
+    }
+
+    // Update user properties
+    $user->name = $request->name;
+    $user->email = trim($request->email);
+    $user->username = trim($request->username);
+    $user->role = $request->role;
+
+    // Save the updated user to the database
+    $user->save();
+
+    // Redirect back with a success message
+    return redirect()->back()->with('success', 'User successfully updated');
+}
+
     public function delete($id)
     {
         $user = User::getId($id);
