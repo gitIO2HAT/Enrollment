@@ -697,7 +697,7 @@ progress {
     display: flex;
     flex-wrap: wrap;
     margin-top: calc(var(--bs-gutter-y) * -1);
-  
+
 }
 
 .row>* {
@@ -7468,7 +7468,7 @@ fieldset:disabled .btn {
 }
 
 .border-light {
-    border-color: #8a8a8a !important
+    border-color: #dddddd !important
 }
 
 .border-dark {

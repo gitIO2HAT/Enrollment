@@ -85,7 +85,7 @@
 .vertical-line {
     width: 0.5px;
     height: 20px; /* Adjust the height to match the logos */
-    background-color: rgb(203, 203, 203); /* Line color (black in this case) */
+    background-color: #dddddd; /* Line color (black in this case) */
 }
 
 

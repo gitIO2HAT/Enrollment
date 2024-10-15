@@ -1,6 +1,6 @@
 
-<header class="header-container shadow">
-    <div class=" line">
+<header class="header-container shadow ">
+    <div class="   border-end border-light px-3">
         <img class="rounded-circle d-flex align-items-center " src="{{ asset('img/registrar.png') }}" alt="Profile Picture" style="width: 30px; height: 30px; object-fit: cover;">
         <div class="vr mx-3"></div>
     </div>

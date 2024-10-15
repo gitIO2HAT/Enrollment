@@ -516,5 +516,81 @@ document.querySelector('#show-widget').addEventListener('click', function() {
     });
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const collegeSelect = document.getElementById('collegeSelectGraduate');
+        const courseSelect = document.getElementById('courseSelectGraduate');
+        const majorSelect = document.getElementById('majorSelectGraduate');
+
+        // Function to fetch and populate colleges
+        function fetchAndPopulateColleges() {
+            fetch('/colleges')
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(college => {
+                        let option = new Option(college.college, college.id);
+                        collegeSelect.add(option);
+                    });
+                });
+        }
+
+        // Function to fetch and populate courses based on selected college
+        function fetchAndPopulateCourses(collegeId) {
+            fetch(`/courses/${collegeId}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(course => {
+                        let option = new Option(course.course, course.id);
+                        courseSelect.add(option);
+                    });
+                });
+        }
+
+        // Function to fetch and populate majors based on selected course
+        function fetchAndPopulateMajors(courseId) {
+            fetch(`/majors/${courseId}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(major => {
+                        let option = new Option(major.major, major.id);
+                        majorSelect.add(option);
+                    });
+                });
+        }
+
+        // Event listener for when college is selected
+        collegeSelect.addEventListener('change', function() {
+            courseSelect.length = 1; // Remove all options except the default
+            majorSelect.length = 1; // Remove all options except the default
+            majorSelect.disabled = true;
+
+            const selectedCollegeId = this.value;
+            if (selectedCollegeId) {
+                courseSelect.disabled = false;
+                fetchAndPopulateCourses(selectedCollegeId);
+            } else {
+                courseSelect.disabled = true;
+                majorSelect.disabled = true;
+            }
+        });
+
+        // Event listener for when course is selected
+        courseSelect.addEventListener('change', function() {
+            majorSelect.length = 1; // Remove all options except the default
+
+            const selectedCourseId = this.value;
+            if (selectedCourseId) {
+                majorSelect.disabled = false;
+                fetchAndPopulateMajors(selectedCourseId);
+            } else {
+                majorSelect.disabled = true;
+            }
+        });
+
+        // Initialize the process by fetching colleges
+        fetchAndPopulateColleges();
+    });
+</script>
+
 
 </html>

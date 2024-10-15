@@ -61,7 +61,7 @@
                 @endforeach
             </select>
         </div>
-      
+
             <a type="button" title="Import File" class="btn rounded-2 mx-1" data-bs-toggle="modal" data-bs-target="#importModal">
                 <i class="fas fa-file-import bg-gradient-icon"></i>
             </a>
@@ -69,12 +69,12 @@
             <a type="button" title="Add Students" class="btn rounded-2 mx-1" data-bs-toggle="modal" data-bs-target="#studentModal">
                 <i class="fas fa-user-plus bg-gradient-icon"></i>
             </a>
-        
+
         <!-- Action buttons for importing file and adding students -->
-       
+
     </form>
 
-    
+
 </div>
 
 
@@ -165,7 +165,7 @@
                     @csrf
                     <input type="file" class="form-control" name="file" required>
                     <!-- Corrected the download link -->
-                    <a href="{{ asset('public/accountprofile/Format.xlsx') }}" download>Download Excel Format Here</a>
+                    <a href="{{ asset('public/accountprofile/Enrollment Format for Listing MS Excel Worksheet.xlsx') }}" download><u>Download Enrollment Excel Format Here</u></a>
                 </form>
             </div>
             <div class="modal-footer">

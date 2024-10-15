@@ -14,7 +14,7 @@
 
             <div class="d-flex w-100">
                 <!-- Clear Search Button -->
-                <button type="button" title="Clear Search Filter" class="btn m-1" onclick="clearSearch()">
+                <button type="button" title="Clear Search Filter" class="btn" onclick="clearSearch()">
                     <i class="fas fa-backspace" style="color: #e85617;"></i>
                 </button>
 
@@ -55,7 +55,7 @@
             </div>
 
             <!-- Action buttons for importing file and adding students -->
-           
+
                 <a type="button" title="Import File" class="btn rounded-2 mx-1" data-bs-toggle="modal" data-bs-target="#importModal">
                     <i class="fas fa-file-import bg-gradient-icon"></i>
                 </a>
@@ -63,7 +63,7 @@
                 <a type="button" title="Add Students" class="btn rounded-2 mx-1" data-bs-toggle="modal" data-bs-target="#studentModal">
                     <i class="fas fa-user-plus bg-gradient-icon"></i>
                 </a>
-            
+
         </form>
     </div>
 
@@ -152,7 +152,7 @@
                         @csrf
                         <input type="file" class="form-control" name="file" required>
                         <!-- Corrected the download link -->
-                        <a href="{{ asset('public/accountprofile/Format.xlsx') }}" download>Download Excel Format Here</a>
+                        <a href="{{ asset('public/accountprofile/Graduate Format for Listing MS Excel Worksheet.xlsx') }}" download><u>Download Graduate Excel Format Here</u></a>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -232,9 +232,9 @@
                         </div>
                         <!-- College -->
                         <div class="mb-3">
-                            <label for="collegeSelect" class="form-label">College<span
+                            <label for="collegeSelectGraduate" class="form-label">College<span
                                     class="text-primary">*</span>:</label>
-                            <select id="collegeSelect" class="form-control underline-input" name="collegeId">
+                            <select id="collegeSelectGraduate" class="form-control underline-input" name="collegeId">
                                 <option value="">Select College</option>
                                 <!-- College options go here -->
                             </select>
@@ -244,8 +244,8 @@
                         </div>
                         <!-- Course -->
                         <div class="mb-3">
-                            <label for="courseSelect" class="form-label">Course:</label>
-                            <select id="courseSelect" disabled class="form-control underline-input" name="courseId">
+                            <label for="courseSelectGraduate" class="form-label">Course:</label>
+                            <select id="courseSelectGraduate" disabled class="form-control underline-input" name="courseId">
                                 <option value="">Select Course</option>
                                 <!-- Course options go here -->
                             </select>
@@ -255,8 +255,8 @@
                         </div>
                         <!-- Major -->
                         <div class="mb-3">
-                            <label for="majorSelect" class="form-label">Major:</label>
-                            <select id="majorSelect" disabled class="form-control underline-input" name="majorId">
+                            <label for="majorSelectGraduate" class="form-label">Major:</label>
+                            <select id="majorSelectGraduate" disabled class="form-control underline-input" name="majorId">
                                 <option value="">Select Major</option>
                                 <!-- Major options go here -->
                             </select>
@@ -269,10 +269,10 @@
                             <label for="year_levelSelect" class="form-label">Year Level<span
                                     class="text-primary">*</span>:</label>
                             <select id="year_levelSelect" class="form-control underline-input" name="year_level">
-                                <option value="7" selected disabled>Graduated</option>
-                     
-                 
-                          
+                                <option value="7" selected >Graduated</option>
+
+
+
                             </select>
                             @if ($errors->has('year_level'))
                             <span class="text-danger">{{ $errors->first('year_level') }}</span>
@@ -283,9 +283,9 @@
                             <label for="semesterSelect" class="form-label">Semester<span
                                     class="text-primary">*</span>:</label>
                             <select id="semesterSelect" class="form-control underline-input" name="semester">
-                                <option value="4" selected disabled>N/A</option>
-                              
-                             
+                                <option value="4" selected >N/A</option>
+
+
                             </select>
                             @if ($errors->has('semester'))
                             <span class="text-danger">{{ $errors->first('semester') }}</span>

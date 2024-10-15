@@ -38,7 +38,7 @@ class StudentsImport implements ToModel, WithHeadingRow
             $sex = 1;
         } elseif ($row['sex'] == 'Male') {
             $sex = 2;
-        } 
+        }
         return new Student([
             'student_Id'           => $student_Id,
             'firstname'            => $row['firstname'],
