@@ -90,9 +90,17 @@ class CollegeController extends Controller
         return redirect()->back()->with('success', 'College successfully added');
     }
 
-
     public function addcourse(Request $request)
     {
+        // Check if the course name is null
+        if (is_null($request->course)) {
+            // Log that the course name is missing
+            Log::warning('Course name is null');
+            
+            // Redirect back with an error message for missing course name
+            return redirect()->back()->with(['error' => 'The course name cannot be null.']);
+        }
+    
         // Maximum allowed length for the course name
         $maxCourseLength = 100;
     
@@ -134,6 +142,7 @@ class CollegeController extends Controller
         // Redirect back with a success message
         return redirect()->back()->with('success', 'Course successfully added');
     }
+    
     
 
     public function addmajor(Request $request)
