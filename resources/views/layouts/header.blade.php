@@ -8,19 +8,19 @@
     <div class="font">
         <div class=" btn-group">
         @if(Request::segment(2) == 'Enrollment')
-            <a class="btn  bg-gradient-test rounded-pill  text-center font-adjust px-4" href="{{ url('/SuperAdmin/Enrollment') }}">Enrollment Report</a>
+            <a class="btn  bg-gradient-test rounded-pill  text-center font-adjust px-4" href="{{ url('/SuperAdmin/Enrollment') }}">Enrollment Reports</a>
             @else
-            <a class="btn  bg-hover rounded-pill  text-light text-center font-adjust px-4" href="{{ url('/SuperAdmin/Enrollment') }}">Enrollment Report</a>
+            <a class="btn  bg-hover rounded-pill  text-light text-center font-adjust px-4" href="{{ url('/SuperAdmin/Enrollment') }}">Enrollment Reports</a>
             @endif
             @if(Request::segment(2) == 'Graduate')
-            <a class="btn  bg-gradient-test rounded-pill  text-center font-adjust px-4" href="{{ url('/SuperAdmin/Graduate') }}">Graduate</a>
+            <a class="btn  bg-gradient-test rounded-pill  text-center font-adjust px-4" href="{{ url('/SuperAdmin/Graduate') }}">Graduate Reports</a>
             @else
-            <a class="btn  bg-hover rounded-pill  text-light text-center font-adjust px-4" href="{{ url('/SuperAdmin/Graduate') }}">Graduate</a>
+            <a class="btn  bg-hover rounded-pill  text-light text-center font-adjust px-4" href="{{ url('/SuperAdmin/Graduate') }}">Graduate Reports</a>
             @endif
             @if(Request::segment(2) == 'College')
-            <a class="btn  bg-gradient-test rounded-pill  text-center font-adjust px-4 " href="{{ url('/SuperAdmin/College') }}">College</a>
+            <a class="btn  bg-gradient-test rounded-pill  text-center font-adjust px-4 " href="{{ url('/SuperAdmin/College') }}">Colleges</a>
             @else
-            <a class="btn  bg-hover rounded-pill  text-light text-center font-adjust px-4" href="{{ url('/SuperAdmin/College') }}">College</a>
+            <a class="btn  bg-hover rounded-pill  text-light text-center font-adjust px-4" href="{{ url('/SuperAdmin/College') }}">Colleges</a>
             @endif
             @if(Auth::user()->admin_id == '2024-adm-001')
             @if(Request::segment(2) == 'Adduser')
