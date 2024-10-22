@@ -24,7 +24,7 @@
                                 <i class="fas fa-pen fa-xs" style="color: #dcdde0;"></i>
                             </a>
                             <a title="Delete" href="{{ url('SuperAdmin/College/DeletedCollege/' . $college->id) }}"
-                               onclick="return confirm('Are you sure you want to delete this college?');">
+                                onclick="return confirm('Are you sure you want to delete this college?');">
                                 <i class="fas fa-times fa-xs" style="color: #dcdde0;"></i>
                             </a>
                         </span>
@@ -75,8 +75,8 @@
             </div>
         </div>
     </div>
-    
-    
+
+
     <div class="modal fade" id="addCollegeModal" tabindex="-1" aria-labelledby="addCollegeModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
@@ -149,90 +149,157 @@
     </div>
 
     <div class="modal fade" id="addMajorModal" tabindex="-1" aria-labelledby="addMajorModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            
-            <div class="modal-header">
-                <h5 class="modal-title text-dark" id="addMajorModalLabel">Add Major</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Form for adding a new major -->
-                <form id="add-major-form" action="/SuperAdmin/College/AddMajor" method="POST">
-                    @csrf
-                    <div class="row g-4">
-                    <Span style="color:red;font-size:12px;" >*To view the already added Majors on a course, select a specific course*</Span>
-                        <div class="text-center">
-                       
-                            <label for="course">Select Course</label>
-                            <select id="course" name="course_id" class="form-control underline-input">
-                                <option value="f" selected>Select Course</option>
-                                @foreach ($courses as $course)
-                                <option value="{{ $course->id }}">{{ $course->course }}</option>
-                                @endforeach
-                            </select>
-                            <input type="text" placeholder="Major Name" class="form-control underline-input" name="major" value="" maxlength="100">
-                            @if ($errors->has('major'))
-                            <span class="text-danger">{{ $errors->first('major') }}</span>
-                            @endif
-                        </div>
-                    </div>
-                </form>
+        <div class="modal-dialog">
+            <div class="modal-content">
 
-                <div class="text-center bg-gradient-test rounded-1 mt-4">
-                    <span style="font-size:20px;" class="text-white">Major Table List</span>
+                <div class="modal-header">
+                    <h5 class="modal-title text-dark" id="addMajorModalLabel">Add Major</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-
-                <div id="majors-list">
-                    @foreach ($majors as $major)
-                    <!-- Form for editing an existing major -->
-                    <form id="edit-major-form-{{ $major->id }}" action="{{ url('SuperAdmin/College/EditMajor/' . $major->id) }}" method="POST">
+                <div class="modal-body">
+                    <!-- Form for adding a new major -->
+                    <form id="add-major-form" action="/SuperAdmin/College/AddMajor" method="POST">
                         @csrf
-                        <div class="row hover-container major-row" data-course-id="{{ $major->course_id }}">
-                            <div class="col-11 text-start">
-                                <span id="editable-span-major-{{ $major->id }}" class="text-start" onclick="toggleEdit('major', '{{ $major->id }}')">{{ $major->major }}</span>
-                                <input type="text" id="editable-input-major-{{ $major->id }}" name="major" value="{{ $major->major }}" class="form-control text-center" style="display:none;" onblur="toggleEdit('major', '{{ $major->id }}')" maxlength="100">
-                            </div>
-                            <div class="col-1">
-                                <a href="{{ url('SuperAdmin/College/DeletedMajor/' . $major->id) }}" class="delete-icon" onclick="return confirm('Are you sure you want to delete this major?');">
-                                    <i class="fas fa-times fa-xs" style="color: #973229;"></i>
-                                </a>
+                        <div class="row g-4">
+
+                            <div class="text-center">
+
+                                <label for="course">Select Course</label>
+                                <select id="course" name="course_id" class="form-control underline-input">
+                                    <option value="f" selected>Select Course</option>
+                                    @foreach ($courses as $course)
+                                    <option value="{{ $course->id }}">{{ $course->course }}</option>
+                                    @endforeach
+                                </select>
+                                <input type="text" placeholder="Major Name" class="form-control underline-input" name="major" value="" maxlength="100">
+                                @if ($errors->has('major'))
+                                <span class="text-danger">{{ $errors->first('major') }}</span>
+                                @endif
                             </div>
                         </div>
                     </form>
-                    @endforeach
+
+                    <div class="text-center bg-gradient-test rounded-1 mt-4">
+                        <a style="font-size:20px;" class="text-white" data-bs-toggle="modal" data-bs-target="#addMajorListModal">Major Table List</a>
+                    </div>
+
+
+
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-white text-center mt-2" style="width:400px;" form="add-major-form">Add Major</button>
+                    </div>
                 </div>
 
-                <div class="text-center">
-                    <button type="submit" class="btn btn-white text-center mt-2" style="width:400px;" form="add-major-form">Add Major</button>
-                </div>
             </div>
-
         </div>
     </div>
-</div>
 
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Reference to the course select dropdown and majors list
-        var courseSelect = document.getElementById('course');
-        var majorsList = document.getElementById('majors-list');
-        
-        // Function to toggle the majors list based on the course selection
-        function toggleMajorList() {
-            if (courseSelect.value === 'f') {
-                majorsList.style.display = 'none'; // Hide majors list if "Select Course" is selected
-            } else {
-                majorsList.style.display = 'block'; // Show majors list if another course is selected
+    <div class="modal fade" data-modal-id="addMajorListModal" id="addMajorListModal" tabindex="-1" aria-labelledby="addMajorListModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-lg modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-dark" id="addMajorListModalLabel">Major List</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body overflow-auto" style="max-height: 400px;">
+                    <form action="{{ url('/SuperAdmin/College') }}" method="GET" class="search-form">
+                        @csrf
+                        <div class="d-flex mb-3">
+                            <!-- Search Input -->
+                            <input type="search" id="search" class="form-control" name="search" placeholder="Search Course" value="{{ request('search') }}" style="font-size: 15px;">
+
+                            <!-- Select Dropdown for Courses -->
+                            <select id="course_id" name="course_id" class="form-control mx-2">
+                                <option value="">Select a Course</option> <!-- Default option -->
+                                @foreach($courses as $course)
+                                <option value="{{ $course->id }}" {{ request('course_id') == $course->id ? 'selected' : '' }}>
+                                    {{ $course->course }}
+                                </option>
+                                @endforeach
+                            </select>
+
+                            <!-- Search Button -->
+                            <button class="btn btn-primary" type="submit" title="Search">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+
+                            <!-- Clear Search Button -->
+                            <button type="button" title="Clear Search" class="btn btn-secondary" onclick="clearSearch()">
+                                <i class="fas fa-backspace"></i> Clear
+                            </button>
+                        </div>
+                    </form>
+                    <div class="table-responsive" style="text-align: center;">
+                        <table class="table"
+                            style="font-size: 16px; border: 1px solid black; margin: 0 auto; width: 100%;">
+                            <thead>
+                                <tr class="fw-bold" style="color: black;">
+                                    @foreach($courseslist as $course)
+                                    <th style="border: 1px solid black; text-align: center; vertical-align: middle; 
+                           white-space: nowrap;">
+                                        {{ $course->course }}
+                                    </th>
+                                    @endforeach
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                // Get the maximum number of majors for a course to ensure equal rows
+                                $maxMajorsCount = $courseslist->map(function($course) {
+                                return $course->major->count();
+                                })->max();
+                                @endphp
+
+                                @for($i = 0; $i < $maxMajorsCount; $i++)
+                                    <tr>
+                                    @foreach($courseslist as $course)
+                                    <td style="border: 1px solid black; text-align: center; vertical-align: middle;">
+                                        @if(isset($course->major[$i]))
+                                        {{ $course->major[$i]->major }}
+                                        @else
+                                        <em>No more majors</em>
+                                        @endif
+                                    </td>
+                                    @endforeach
+                                    </tr>
+                                    @endfor
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if there is a saved modal state in localStorage
+            const openModalId = localStorage.getItem('openModal');
+
+            if (openModalId) {
+                const modal = new bootstrap.Modal(document.getElementById(openModalId));
+                modal.show(); // Open the modal that was previously open
             }
-        }
 
-        // Initial check on page load
-        toggleMajorList();
+            // Add event listeners to all modals to save state when opened or closed
+            document.querySelectorAll('.modal').forEach(modalElement => {
+                const modalId = modalElement.getAttribute('id');
+                const bsModal = new bootstrap.Modal(modalElement);
 
-        // Add event listener to course dropdown to hide/show major list when course changes
-        courseSelect.addEventListener('change', toggleMajorList);
-    });
-</script>
+                // When modal is opened, save its state
+                modalElement.addEventListener('shown.bs.modal', () => {
+                    localStorage.setItem('openModal', modalId);
+                });
+
+                // When modal is closed, remove its state
+                modalElement.addEventListener('hidden.bs.modal', () => {
+                    localStorage.removeItem('openModal');
+                });
+            });
+        });
+    </script>
+
     @endsection

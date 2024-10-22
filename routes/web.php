@@ -50,10 +50,10 @@ Route::group(['middleware' => 'superadmin'], function () {
 
     Route::get('/SuperAdmin/Graduate', [GraduateController::class, 'graduate']);
 
-    
- Route::get('/SuperAdmin/Adduser', [AdduserController::class, 'adduser']);
 
-   
+    Route::get('/SuperAdmin/Adduser', [AdduserController::class, 'adduser']);
+
+
     Route::post('/SuperAdmin/Addadmin', [AdduserController::class, 'addadmin']);
     Route::post('/SuperAdmin/Adduser/UpdateUser/{id}', [AdduserController::class, 'updateuser']);
     Route::get('/SuperAdmin/Adduser/Deleted/{id}', [AdduserController::class, 'delete']);
@@ -74,5 +74,6 @@ Route::group(['middleware' => 'superadmin'], function () {
     Route::post('/SuperAdmin/College/EditMajor/{id}', [CollegeController::class, 'editmajor']);
     Route::get('/SuperAdmin/College/DeletedMajor/{id}', [CollegeController::class, 'deletemajor']);
 
-   
+
+
 });
