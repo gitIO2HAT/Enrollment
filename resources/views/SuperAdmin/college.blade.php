@@ -202,12 +202,12 @@
                                 @endif
                             </div>
                         </div>
-                        
+
                     </form>
 
 
 
-                    
+
 
                     <!--     <select id="collegeSelectSearch" class="form-select mx-1" name="collegeId">
                 <option value="" selected disabled>--College--</option>
@@ -229,9 +229,9 @@
 
 
                     <div class="text-center">
-                    <a type="button" title="Add Major" class="mx-2 my-2 py-2 btn  text-white  bg-gradient-test text-center rounded-2" data-bs-toggle="modal"  data-bs-target="#addMajorlistModal">
-                        <span class="fs-6"> Major Table List</span>
-                    </a>
+                        <a type="button" title="Add Major" class="mx-2 my-2 py-2 btn  text-white  bg-gradient-test text-center rounded-2" data-bs-toggle="modal" data-bs-target="#addMajorlistModal">
+                            <span class="fs-6"> Major Table List</span>
+                        </a>
                         <button type="submit" class="btn btn-white text-center mt-2" style="width:400px;" form="add-major-form">Add Course</button>
                     </div>
                 </div>
@@ -241,70 +241,75 @@
     </div>
 
     <div class="modal fade" id="addMajorlistModal" tabindex="-1" aria-labelledby="addMajorlistModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-dark" id="addMajorlistModalLabel">Major List</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="container mx-1">
-                    <form method="post" action=" {{ url('/Reports/College') }}" id="collegeForm">
-                        @csrf
-                        <select id="college" name="selectedID" class="form-control underline-input" onchange="submitForm()">
-                            <option value="">Select College</option>
-                            @foreach ($colleges as $college)
-                            <option value="{{ $college->id }}" @if($selectedID==$college->id) selected @endif>
-                                {{ $college->college }}
-                            </option>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-dark" id="addMajorlistModalLabel">Major List</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container mx-1">
+                        <form method="post" action=" {{ url('/Reports/College') }}" id="collegeForm">
+                            @csrf
+
+                            <select id="college" name="selectedID" class="form-control underline-input" onchange="submitForm()">
+                                <option value="">Select College</option>
+                                @foreach ($colleges as $college)
+                                <option value="{{ $college->id }}" @if($selectedID==$college->id) selected @endif>
+                                    {{ $college->college }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </form>
+
+                        <script>
+                            function submitForm() {
+                                document.getElementById('collegeForm').submit();
+                            }
+
+                            document.getElementById('collegeForm').addEventListener('submit', function(event) {
+                                // Prevent submit on Enter if editing
+                                event.preventDefault();
+                            });
+                        </script>
+
+                        <select id="course" name="course_id" class="form-control underline-input mt-1">
+                            <option value="s" selected>Select Course</option>
+                            @foreach ($courses as $course)
+                            @if($selectedID == $course->college_id)
+                            <option value="{{ $course->id }}">{{ $course->course }}</option>
+                            @endif
                             @endforeach
                         </select>
-                    </form>
+                    
+                            <div id="majors-list" class="border mt-1" >
+                                <h4 class="text-dark text-center">Majors</h4>
+                                @foreach ($majors as $major)
+                                <form id="edit-major-form-{{ $major->id }}" action="{{ url('Reports/College/EditMajor/' . $major->id) }}" method="POST">
+                                    @csrf
 
-                    <script>
-                        function submitForm() {
-                            document.getElementById('collegeForm').submit();
-                        }
-
-                        document.getElementById('collegeForm').addEventListener('submit', function(event) {
-                            // Prevent submit on Enter if editing
-                            event.preventDefault();
-                        });
-                    </script>
-
-                    <select id="course" name="course_id" class="form-control underline-input">
-                        <option value="s" selected>Select Course</option>
-                        @foreach ($courses as $course)
-                        @if($selectedID == $course->college_id)
-                        <option value="{{ $course->id }}">{{ $course->course }}</option>
-                        @endif
-                        @endforeach
-                    </select>
-
-                    <div id="majors-list">
-                        <h4 class="text-dark text-center">Majors</h4>
-                        @foreach ($majors as $major)
-                        <form id="edit-major-form-{{ $major->id }}" action="{{ url('Reports/College/EditMajor/' . $major->id) }}" method="POST">
-                            @csrf
-                            <div class="row hover-container major-row" data-course-id="{{ $major->course_id }}">
-                                <div class="col-11 text-start">
-                                    <span id="editable-span-major-{{ $major->id }}" class="text-start" onclick="toggleEdit('major', '{{ $major->id }}')">{{ $major->major }}</span>
-                                    <input type="text" id="editable-input-major-{{ $major->id }}" name="major" value="{{ $major->major }}" class="form-control text-center" style="display:none;" onblur="toggleEdit('major', '{{ $major->id }}')" maxlength="100">
-                                </div>
-                                <div class="col-1">
-                                    <a href="{{ url('Reports/College/DeletedMajor/' . $major->id) }}" class="delete-icon" onclick="return confirm('Are you sure you want to delete this major?');">
-                                        <i class="fas fa-times fa-xs" style="color: #973229;"></i>
-                                    </a>
-                                </div>
+                                    <div class="row hover-container major-row" data-course-id="{{ $major->course_id }}">
+                                        <div class="col-11 text-start">
+                                            <span id="editable-span-major-{{ $major->id }}" class="text-start" onclick="toggleEdit('major', '{{ $major->id }}')">{{ $major->major }}</span>
+                                            <input type="text" id="editable-input-major-{{ $major->id }}" name="major" value="{{ $major->major }}" class="form-control text-center" style="display:none;" onblur="toggleEdit('major', '{{ $major->id }}')" maxlength="100">
+                                        </div>
+                                        <div class="col-1">
+                                            <a href="{{ url('Reports/College/DeletedMajor/' . $major->id) }}" class="delete-icon" onclick="return confirm('Are you sure you want to delete this major?');">
+                                                <i class="fas fa-times fa-xs" style="color: #973229;"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </form>
+                      
+                          
+                                @endforeach
                             </div>
-                        </form>
-                        @endforeach
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
