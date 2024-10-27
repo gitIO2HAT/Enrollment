@@ -377,27 +377,7 @@ document.querySelector('#show-widget').addEventListener('click', function() {
 </script>
 
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-    const courseSelect = document.getElementById('course');
-    const majorsList = document.getElementById('majors-list');
 
-    courseSelect.addEventListener('change', function () {
-        const selectedCourseId = this.value;
-        const majors = majorsList.querySelectorAll('.major-row');
-
-        majors.forEach(function (major) {
-            const majorCourseId = major.getAttribute('data-course-id');
-            if (selectedCourseId === majorCourseId || selectedCourseId === '') {
-                major.style.display = '';
-            } else {
-                major.style.display = 'none';
-            }
-        });
-    });
-});
-
-    </script>
 
 <script>
     function selectAllCheckboxes() {
@@ -517,78 +497,169 @@ document.querySelector('#show-widget').addEventListener('click', function() {
 </script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const collegeSelect = document.getElementById('collegeSelectGraduate');
-        const courseSelect = document.getElementById('courseSelectGraduate');
-        const majorSelect = document.getElementById('majorSelectGraduate');
+  document.addEventListener('DOMContentLoaded', function () {
+    const collegeSelect = document.getElementById('collegeSelectlist');
+    const courseSelect = document.getElementById('courseSelectlist');
+    const majorTableBody = document.querySelector('#majorTable tbody');
 
-        // Function to fetch and populate colleges
-        function fetchAndPopulateColleges() {
-            fetch('/colleges')
-                .then(response => response.json())
-                .then(data => {
-                    data.forEach(college => {
-                        let option = new Option(college.college, college.id);
-                        collegeSelect.add(option);
-                    });
+    // Fetch and populate colleges
+    function fetchAndPopulateColleges() {
+        fetch('/colleges')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(college => {
+                    let option = new Option(college.college, college.id);
+                    collegeSelect.add(option);
                 });
-        }
+            });
+    }
 
-        // Function to fetch and populate courses based on selected college
-        function fetchAndPopulateCourses(collegeId) {
-            fetch(`/courses/${collegeId}`)
-                .then(response => response.json())
-                .then(data => {
-                    data.forEach(course => {
-                        let option = new Option(course.course, course.id);
-                        courseSelect.add(option);
-                    });
+    // Fetch and populate courses based on selected college
+    function fetchAndPopulateCourses(collegeId) {
+        fetch(`/courses/${collegeId}`)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(course => {
+                    let option = new Option(course.course, course.id);
+                    courseSelect.add(option);
                 });
-        }
+            });
+    }
 
-        // Function to fetch and populate majors based on selected course
-        function fetchAndPopulateMajors(courseId) {
-            fetch(`/majors/${courseId}`)
-                .then(response => response.json())
-                .then(data => {
+    // Fetch and populate majors in the table
+    function fetchAndPopulateMajors(courseId) {
+        fetch(`/majors/${courseId}`)
+            .then(response => response.json())
+            .then(data => {
+                majorTableBody.innerHTML = ''; // Clear existing rows
+
+                if (data.length === 0) {
+                    majorTableBody.innerHTML = `<tr><td colspan="2" class="text-center">No majors available</td></tr>`;
+                } else {
                     data.forEach(major => {
-                        let option = new Option(major.major, major.id);
-                        majorSelect.add(option);
+                        const row = document.createElement('tr');
+
+                        const idCell = document.createElement('td');
+                        idCell.textContent = major.id;
+
+                        const nameCell = document.createElement('td');
+                        nameCell.innerHTML = `
+                            <span id="editable-span-major-${major.id}" class="text-start" 
+                                  onclick="toggleEdit('major', '${major.id}')">${major.major}</span>
+                            <input type="text" id="editable-input-major-${major.id}" name="major" 
+                                   value="${major.major}" class="form-control text-center" 
+                                   style="display:none;" maxlength="100" 
+                                   onblur="toggleEdit('major', '${major.id}')"
+                                   onkeydown="submitOnEnter(event, '${major.id}')">
+                        `;
+
+                        row.appendChild(idCell);
+                        row.appendChild(nameCell);
+                        majorTableBody.appendChild(row);
                     });
-                });
+                }
+            });
+    }
+
+    // Toggle between span and input
+    window.toggleEdit = function (type, id) {
+        const span = document.getElementById(`editable-span-${type}-${id}`);
+        const input = document.getElementById(`editable-input-${type}-${id}`);
+
+        if (span.style.display === 'none') {
+            span.style.display = 'inline';
+            input.style.display = 'none';
+        } else {
+            span.style.display = 'none';
+            input.style.display = 'inline';
+            input.focus();
         }
+    };
 
-        // Event listener for when college is selected
-        collegeSelect.addEventListener('change', function() {
-            courseSelect.length = 1; // Remove all options except the default
-            majorSelect.length = 1; // Remove all options except the default
-            majorSelect.disabled = true;
+    // Handle Enter key press to submit the form
+    window.submitOnEnter = function (event, id) {
+        if (event.key === 'Enter') {
+            const input = document.getElementById(`editable-input-major-${id}`);
+            submitMajorUpdate(id, input.value);
+        }
+    };
 
-            const selectedCollegeId = this.value;
-            if (selectedCollegeId) {
-                courseSelect.disabled = false;
-                fetchAndPopulateCourses(selectedCollegeId);
-            } else {
-                courseSelect.disabled = true;
-                majorSelect.disabled = true;
-            }
-        });
+    // Submit the updated major via AJAX
+    function submitMajorUpdate(id, newValue) {
+        fetch(`/Reports/College/EditMajor/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            },
+            body: JSON.stringify({ major: newValue }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Update the span with the new value
+                    const span = document.getElementById(`editable-span-major-${id}`);
+                    span.textContent = newValue;
+                    toggleEdit('major', id); // Switch back to span view
+                } else {
+                    alert('Failed to update major.');
+                }
+            })
+            .catch(error => {
+                console.error('Error updating major:', error);
+            });
+    }
 
-        // Event listener for when course is selected
-        courseSelect.addEventListener('change', function() {
-            majorSelect.length = 1; // Remove all options except the default
+    // Event listeners for college and course selection
+    collegeSelect.addEventListener('change', function () {
+        courseSelect.length = 1;
+        majorTableBody.innerHTML = '<tr><td colspan="2" class="text-center">No majors available</td></tr>';
 
+        const selectedCollegeId = this.value;
+        if (selectedCollegeId) {
+            courseSelect.disabled = false;
+            fetchAndPopulateCourses(selectedCollegeId);
+        } else {
+            courseSelect.disabled = true;
+        }
+    });
+
+    courseSelect.addEventListener('change', function () {
+        majorTableBody.innerHTML = '<tr><td colspan="2" class="text-center">No majors available</td></tr>';
+
+        const selectedCourseId = this.value;
+        if (selectedCourseId) {
+            fetchAndPopulateMajors(selectedCourseId);
+        }
+    });
+
+    fetchAndPopulateColleges(); // Initialize by fetching colleges
+});
+
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const courseSelect = document.getElementById('course');
+        const majorsList = document.getElementById('majors-list');
+
+        // Initially hide all majors
+        const majors = majorsList.querySelectorAll('.major-row');
+        majors.forEach(major => major.style.display = 'none');
+
+        courseSelect.addEventListener('change', function () {
             const selectedCourseId = this.value;
-            if (selectedCourseId) {
-                majorSelect.disabled = false;
-                fetchAndPopulateMajors(selectedCourseId);
-            } else {
-                majorSelect.disabled = true;
-            }
-        });
 
-        // Initialize the process by fetching colleges
-        fetchAndPopulateColleges();
+            majors.forEach(function (major) {
+                const majorCourseId = major.getAttribute('data-course-id');
+                if (selectedCourseId === majorCourseId) {
+                    major.style.display = ''; // Show the matching majors
+                } else {
+                    major.style.display = 'none'; // Hide non-matching majors
+                }
+            });
+        });
     });
 </script>
 

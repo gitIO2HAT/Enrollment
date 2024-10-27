@@ -10,7 +10,7 @@
     <div class="card p-3 rounded shadow-sm">
         <h4 class="text-dark text-center">Archived User</h4>
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <form action="{{ url('SuperAdmin/Adduser/DeleteUser') }}" class="w-50">
+            <form action="{{ url('Reports/Adduser/DeleteUser') }}" class="w-50">
                 @csrf
                 <div class="input-group">
                     <span class="input-group-text bg-white border-end">
@@ -22,7 +22,7 @@
                 </div>
             </form>
             <div class="">
-                <a type="button" class="btn btn-primary text-white rounded-pill mx-2" href="{{url('SuperAdmin/Adduser')}}">
+                <a type="button" class="btn btn-primary text-white rounded-pill mx-2" href="{{url('Reports/Adduser')}}">
                     Back
                 </a>
             </div>
@@ -71,7 +71,7 @@
 
                     </td>
                     <td class="">
-                        <a href="{{ url('/SuperAdmin/Adduser/Restore/'.$user->id) }}">
+                        <a href="{{ url('/Reports/Adduser/Restore/'.$user->id) }}">
                             <i class="fas fa-trash-alt" style="color: #f56666;"></i>
                         </a>
                     </td>

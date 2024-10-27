@@ -10,7 +10,7 @@
 
                     <div class="bg-white text-center p-4">
                         <div class="user-head">
-                            <form method="POST" action="{{ url('/SuperAdmin/Updateprofile/' . Auth::user()->id) }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ url('/Reports/Updateprofile/' . Auth::user()->id) }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row g-4 d-flex align-items-center">
                                     <div class="col-sm-4 col-xl-4">
@@ -117,7 +117,7 @@
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-success">Submit</button>
-                                <a href="{{ url('SuperAdmin/Enrollment') }}" class="btn btn-primary">Done</a>
+                                <a href="{{ url('Reports/Enrollment') }}" class="btn btn-primary">Done</a>
                             </form>
                         </div>
                     </div>

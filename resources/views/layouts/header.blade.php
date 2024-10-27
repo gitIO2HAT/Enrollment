@@ -8,25 +8,25 @@
     <div class="font">
         <div class=" btn-group">
         @if(Request::segment(2) == 'Enrollment')
-            <a class="btn  bg-gradient-test rounded-pill  text-center font-adjust px-4" href="{{ url('/SuperAdmin/Enrollment') }}">Enrollment Reports</a>
+            <a class="btn  bg-gradient-test rounded-pill  text-center font-adjust px-4" href="{{ url('/Reports/Enrollment') }}">Enrollment Reports</a>
             @else
-            <a class="btn  bg-hover rounded-pill  text-light text-center font-adjust px-4" href="{{ url('/SuperAdmin/Enrollment') }}">Enrollment Reports</a>
+            <a class="btn  bg-hover rounded-pill  text-light text-center font-adjust px-4" href="{{ url('/Reports/Enrollment') }}">Enrollment Reports</a>
             @endif
             @if(Request::segment(2) == 'Graduate')
-            <a class="btn  bg-gradient-test rounded-pill  text-center font-adjust px-4" href="{{ url('/SuperAdmin/Graduate') }}">Graduate Reports</a>
+            <a class="btn  bg-gradient-test rounded-pill  text-center font-adjust px-4" href="{{ url('/Reports/Graduate') }}">Graduate Reports</a>
             @else
-            <a class="btn  bg-hover rounded-pill  text-light text-center font-adjust px-4" href="{{ url('/SuperAdmin/Graduate') }}">Graduate Reports</a>
+            <a class="btn  bg-hover rounded-pill  text-light text-center font-adjust px-4" href="{{ url('/Reports/Graduate') }}">Graduate Reports</a>
             @endif
             @if(Request::segment(2) == 'College')
-            <a class="btn  bg-gradient-test rounded-pill  text-center font-adjust px-4 " href="{{ url('/SuperAdmin/College') }}">Colleges</a>
+            <a class="btn  bg-gradient-test rounded-pill  text-center font-adjust px-4 " href="{{ url('/Reports/College') }}">Colleges</a>
             @else
-            <a class="btn  bg-hover rounded-pill  text-light text-center font-adjust px-4" href="{{ url('/SuperAdmin/College') }}">Colleges</a>
+            <a class="btn  bg-hover rounded-pill  text-light text-center font-adjust px-4" href="{{ url('/Reports/College') }}">Colleges</a>
             @endif
             @if(Auth::user()->admin_id == '2024-adm-001')
             @if(Request::segment(2) == 'Adduser')
-            <a class="btn  bg-gradient-test rounded-pill text-center font-adjust px-4" href="{{ url('/SuperAdmin/Adduser') }}">Add User</a>
+            <a class="btn  bg-gradient-test rounded-pill text-center font-adjust px-4" href="{{ url('/Reports/Adduser') }}">Add User</a>
             @else
-            <a class="btn  bg-hover rounded-pill text-light text-center font-adjust px-4" href="{{ url('/SuperAdmin/Adduser') }}">Add User</a>
+            <a class="btn  bg-hover rounded-pill text-light text-center font-adjust px-4" href="{{ url('/Reports/Adduser') }}">Add User</a>
             @endif
             @endif
         </div>
@@ -41,7 +41,7 @@
                 <i class="bi bi-caret-down-fill ms-2" style="color: #000000;"></i>
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                <li><a class="dropdown-item" href="{{ url('/SuperAdmin/Profile') }}">Profile</a></li>
+                <li><a class="dropdown-item" href="{{ url('/Reports/Profile') }}">Profile</a></li>
                 <li><a class="dropdown-item" href="{{ route('logoutButton') }}" onclick="return confirm('Are you sure you want to logout?');">Logout</a></li>
             </ul>
         </div>

@@ -9,7 +9,7 @@
 <!-- Table and Filters -->
 <div class="card p-3 rounded shadow-sm m-5">
 <div>
-    <form action="{{ url('/SuperAdmin/Enrollment') }}" method="GET" class="search-form ">
+    <form action="{{ url('/Reports/Enrollment') }}" method="GET" class="search-form ">
         @csrf
 
         <div class="d-flex font">
@@ -97,7 +97,7 @@
             </tr>
         </thead>
         <tbody>
-        <form id="export-form" action="{{ url('SuperAdmin/Export') }}" method="POST">
+        <form id="export-form" action="{{ url('Reports/Export') }}" method="POST">
         @csrf
             @foreach ($studentdata as $index => $student)
             <tr>
@@ -124,7 +124,7 @@
                 <td>{{ $student->semesters->status }}</td>
                 <td>{{ $student->academic_year_start }} - {{ $student->academic_year_end }}</td>
                 <td>
-                    <a type="button" title="Edit <?php echo $student->lastname; ?>" href="{{ url('/SuperAdmin/Student/' . $student->id) }}">
+                    <a type="button" title="Edit <?php echo $student->lastname; ?>" href="{{ url('/Reports/Student/' . $student->id) }}">
                         <i class="far fa-edit" style="color: #39a1ec;"></i>
                     </a>
                 </td>
@@ -161,7 +161,7 @@
             </div>
             <div class="modal-body">
                 <!-- Form content here -->
-                <form class="text-center" id="import_file" method="POST" action="{{ url('SuperAdmin/Student/Import') }}" enctype="multipart/form-data">
+                <form class="text-center" id="import_file" method="POST" action="{{ url('Reports/Student/Import') }}" enctype="multipart/form-data">
                     @csrf
                     <input type="file" class="form-control" name="file" required>
                     <!-- Corrected the download link -->
@@ -185,7 +185,7 @@
             <div class="modal-body">
 
                 <!-- Form content here -->
-                <form class="text-center" method="POST" action="{{ url('/SuperAdmin/Enrollment/AddStudent') }}">
+                <form class="text-center" method="POST" action="{{ url('/Reports/Enrollment/AddStudent') }}">
                     @csrf
 
                     <!-- First Name -->

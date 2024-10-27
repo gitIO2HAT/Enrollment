@@ -223,7 +223,7 @@ public function editstudent($id, Request $request){
     // Save the user to the database
     $student->save();
 
-    return redirect('/SuperAdmin/Enrollment')->with('success', 'Student(s) successfully updated');
+    return redirect('/Reports/Enrollment')->with('success', 'Student(s) successfully updated');
 
 }
 

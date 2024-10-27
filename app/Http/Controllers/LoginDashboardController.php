@@ -41,7 +41,7 @@ class LoginDashboardController extends Controller
 
     if (Auth::attempt($credentials, true)) {
         $viewPath = Auth::user()->user_type == 0
-            ? 'SuperAdmin/Enrollment'
+            ? 'Reports/Enrollment'
             : '';
 
         return redirect($viewPath);

@@ -6,7 +6,7 @@
 
     <div class="card p-3 rounded shadow-sm m-5">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <form action="{{ url('/SuperAdmin/Adduser') }}" class="w-50">
+            <form action="{{ url('/Reports/Adduser') }}" class="w-50">
                 @csrf
                 <div class="input-group">
                     <span title="Search" class="input-group-text bg-white border-end">
@@ -21,7 +21,7 @@
                 <a type="button" title="Add User" class="btn text-white rounded-pill mx-2" data-bs-toggle="modal" data-bs-target="#addUserModal">
                 <i class="fas fa-user-plus bg-gradient-icon"></i>
                 </a>
-                <a type="button" title="Archived" class="btn text-white rounded-pill mx-2" href="{{url('SuperAdmin/Adduser/DeleteUser')}}">
+                <a type="button" title="Archived" class="btn text-white rounded-pill mx-2" href="{{url('Reports/Adduser/DeleteUser')}}">
                 <i class="fas fa-archive" style="color: #ea281a;"></i>
                 </a>
             </div>
@@ -41,7 +41,7 @@
         <tbody>
             @foreach ($users as $user)
             <tr>
-                <form action="{{ url('/SuperAdmin/Adduser/UpdateUser/'.$user->id) }}" method="POST">
+                <form action="{{ url('/Reports/Adduser/UpdateUser/'.$user->id) }}" method="POST">
                     @csrf
                     <td>{{ $user->admin_id }}</td>
                     <td>
@@ -72,7 +72,7 @@
                         <button type="submit" title="Save" style="background: none; border: none; padding: 0; cursor: pointer;">
                             <i class="fas fa-save" style="color: #63E6BE;"></i>
                         </button>
-                        <a title="Delete User" href="{{ url('/SuperAdmin/Adduser/Deleted/'.$user->id) }}">
+                        <a title="Delete User" href="{{ url('/Reports/Adduser/Deleted/'.$user->id) }}">
                             <i class="fas fa-trash-alt" style="color: #f56666;"></i>
                         </a>
                     </td>
@@ -128,7 +128,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="text-center" method="POST" action="{{ url('/SuperAdmin/Addadmin') }}">
+                <form class="text-center" method="POST" action="{{ url('/Reports/Addadmin') }}">
                     @csrf
                     <div class="mb-3">
                         <label for="name" class="form-label">Name:</label>

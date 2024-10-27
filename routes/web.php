@@ -37,42 +37,43 @@ Route::post('/password/reset', [ResetPasswordController::class, 'reset']);
 
 
 Route::group(['middleware' => 'superadmin'], function () {
-    Route::get('/SuperAdmin/Enrollment', [EnrollmentController::class, 'enrollment']);
+    Route::get('/Reports/Enrollment', [EnrollmentController::class, 'enrollment']);
     Route::get('/colleges', [EnrollmentController::class, 'getColleges']);
     Route::get('/courses/{college_id}', [EnrollmentController::class, 'getCourses']);
     Route::get('/majors/{course_id}', [EnrollmentController::class, 'getMajors']);
-    Route::post('/SuperAdmin/Enrollment/AddStudent', [EnrollmentController::class, 'addstudent']);
-    Route::get('/SuperAdmin/Student/{id}', [EnrollmentController::class, 'student']);
-    Route::post('/SuperAdmin/Student/Edit/{id}', [EnrollmentController::class, 'editstudent']);
-    Route::post('/SuperAdmin/Student/Import', [EnrollmentController::class, 'importStudents']);
-    Route::post('/SuperAdmin/Export', [EnrollmentController::class, 'ExportStudents']);
+    Route::post('/Reports/Enrollment/AddStudent', [EnrollmentController::class, 'addstudent']);
+    Route::get('/Reports/Student/{id}', [EnrollmentController::class, 'student']);
+    Route::post('/Reports/Student/Edit/{id}', [EnrollmentController::class, 'editstudent']);
+    Route::post('/Reports/Student/Import', [EnrollmentController::class, 'importStudents']);
+    Route::post('/Reports/Export', [EnrollmentController::class, 'ExportStudents']);
 
 
-    Route::get('/SuperAdmin/Graduate', [GraduateController::class, 'graduate']);
+    Route::get('/Reports/Graduate', [GraduateController::class, 'graduate']);
 
 
-    Route::get('/SuperAdmin/Adduser', [AdduserController::class, 'adduser']);
+    Route::get('/Reports/Adduser', [AdduserController::class, 'adduser']);
 
 
-    Route::post('/SuperAdmin/Addadmin', [AdduserController::class, 'addadmin']);
-    Route::post('/SuperAdmin/Adduser/UpdateUser/{id}', [AdduserController::class, 'updateuser']);
-    Route::get('/SuperAdmin/Adduser/Deleted/{id}', [AdduserController::class, 'delete']);
-    Route::get('/SuperAdmin/Adduser/Restore/{id}', [AdduserController::class, 'restore']);
-    Route::get('/SuperAdmin/Adduser/DeleteUser', [AdduserController::class, 'deleteuser']);
+    Route::post('/Reports/Addadmin', [AdduserController::class, 'addadmin']);
+    Route::post('/Reports/Adduser/UpdateUser/{id}', [AdduserController::class, 'updateuser']);
+    Route::get('/Reports/Adduser/Deleted/{id}', [AdduserController::class, 'delete']);
+    Route::get('/Reports/Adduser/Restore/{id}', [AdduserController::class, 'restore']);
+    Route::get('/Reports/Adduser/DeleteUser', [AdduserController::class, 'deleteuser']);
 
-    Route::get('/SuperAdmin/Profile', [ProfileController::class, 'profile']);
-    Route::post('/SuperAdmin/Updateprofile/{id}', [ProfileController::class, 'updateprofile']);
+    Route::get('/Reports/Profile', [ProfileController::class, 'profile']);
+    Route::post('/Reports/Updateprofile/{id}', [ProfileController::class, 'updateprofile']);
 
-    Route::get('/SuperAdmin/College', [CollegeController::class, 'college']);
-    Route::post('/SuperAdmin/College/AddCollege', [CollegeController::class, 'addcollege']);
-    Route::post('/SuperAdmin/College/AddCourse', [CollegeController::class, 'addcourse']);
-    Route::post('/SuperAdmin/College/AddMajor', [CollegeController::class, 'addmajor']);
-    Route::post('/SuperAdmin/College/EditCollege/{id}', [CollegeController::class, 'editcollege']);
-    Route::get('/SuperAdmin/College/DeletedCollege/{id}', [CollegeController::class, 'deletecollege']);
-    Route::post('/SuperAdmin/College/EditCourse/{id}', [CollegeController::class, 'editcourse']);
-    Route::get('/SuperAdmin/College/DeletedCourse/{id}', [CollegeController::class, 'deletecourse']);
-    Route::post('/SuperAdmin/College/EditMajor/{id}', [CollegeController::class, 'editmajor']);
-    Route::get('/SuperAdmin/College/DeletedMajor/{id}', [CollegeController::class, 'deletemajor']);
+    Route::match(['get', 'post'], '/Reports/College', [CollegeController::class, 'college']);
+    Route::post('/Reports/College/AddCollege', [CollegeController::class, 'addcollege']);
+    Route::post('/Reports/College/AddCourse', [CollegeController::class, 'addcourse']);
+    Route::post('/Reports/College/AddMajor', [CollegeController::class, 'addmajor']);
+    Route::post('/Reports/College/EditCollege/{id}', [CollegeController::class, 'editcollege']);
+    Route::get('/Reports/College/DeletedCollege/{id}', [CollegeController::class, 'deletecollege']);
+    Route::post('/Reports/College/EditCourse/{id}', [CollegeController::class, 'editcourse']);
+    Route::get('/Reports/College/DeletedCourse/{id}', [CollegeController::class, 'deletecourse']);
+    Route::post('/Reports/College/EditMajor/{id}', [CollegeController::class, 'editmajor']);
+    Route::get('/Reports/College/DeletedMajor/{id}', [CollegeController::class, 'deletemajor']);
+   
 
 
 

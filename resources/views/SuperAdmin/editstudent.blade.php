@@ -14,7 +14,7 @@
 
                         <h2 class="text-dark">{{$studentdata->student_Id}} - {{$studentdata->lastname}}, {{$studentdata->firstname}} {{$studentdata->middlename}} {{ $studentdata->suffix ? $studentdata->fix->status : '' }}</h1>
                         <div class="user-head">
-                            <form method="POST" action="{{ url('/SuperAdmin/Student/Edit/' . $studentdata->id) }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ url('/Reports/Student/Edit/' . $studentdata->id) }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row g-4 d-flex align-items-center">
                                     <div class="col-sm-4 col-xl-4">
