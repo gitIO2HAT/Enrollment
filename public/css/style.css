@@ -937,3 +937,8 @@ footer {
     bottom: 0;
 }
 
+
+
+.custom-modal .modal-content {
+    height: 400px;
+}
